@@ -1,5 +1,16 @@
+import React from "react"
+import { Route } from "react-router-dom"
+
 function App() {
-  return <>chunnab.com</>
+  return (
+    <>
+      <Routes>
+        <Route path='*' element={<DefaultLayout />}>
+        
+        </Route>
+      </Routes>
+    </>
+  )
 }
 
 export default App
