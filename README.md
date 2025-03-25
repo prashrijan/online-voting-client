@@ -1,12 +1,45 @@
-# React + Vite
+# Chunaab Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+Chunaab is a platform for u to host voting events. This project aims to make hosting voting  and elections super-easy, with real time updates and role based access. Users and Guests can quickly join the voting event with a event code and vote for their best candidate.
 
-Currently, two official plugins are available:
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/chunaab-client.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd chunaab-client
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Usage
+1. Start the development server:
+   ```bash
+   npm start
+   ```
+2. Open your browser and navigate to `http://localhost:3000`.
 
-## Expanding the ESLint configuration
+## Contributing
+Contributions are welcome! Please follow these steps:
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add feature-name"
+   ```
+4. Push to your branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Open a pull request.
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## License
+This project is licensed under the [Your License Name]. See the LICENSE file for details.
