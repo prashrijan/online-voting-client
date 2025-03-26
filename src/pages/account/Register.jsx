@@ -1,7 +1,7 @@
 import React from "react"
 
 function Register() {
-  return <>Signup</>
+  return <>Register</>
 }
 
 export default Register
