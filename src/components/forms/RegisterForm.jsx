@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 
+import CustomFormInput from "./CustomFormInput"
 const RegisterForm = () => {
   const formInitialValues = {
     fullName: "",
@@ -65,8 +66,8 @@ const RegisterForm = () => {
       required: true,
     },
     {
-      label: "Password",
-      name: "password",
+      label: "Confirm Password",
+      name: "confirmPassword",
       type: "password",
       placeholder: "Re-enter password",
       // value: form.password,
@@ -74,23 +75,26 @@ const RegisterForm = () => {
     },
   ]
 
+  const handleOnChange = (e) => {
+    const updatedForm = {
+      ...form,
+      [e.target.name]: e.target.value,
+    }
+
+    setForm(updatedForm)
+  }
+  const handleOnSubmit = () => {
+    console.log("Submitted")
+  }
+
   return (
-    <Form className='d-flex flex-column justify-content-center p-5 border'>
-      <Form.Group className='mb-3' controlId='formBasicusername'>
-        <Form.Label>username</Form.Label>
-        <Form.Control type='username' placeholder='Enter username' />
-      </Form.Group>
-
-      <Form.Group className='mb-3' controlId='formBasicEmail'>
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type='email' placeholder='Enter email' />
-      </Form.Group>
-
-      <Form.Group className='mb-3' controlId='formBasicPassword'>
-        <Form.Label>Password</Form.Label>
-        <Form.Control type='password' placeholder='Password' />
-      </Form.Group>
-
+    <Form
+      className='d-flex flex-column justify-content-center p-5 border'
+      onSubmit={handleOnSubmit}
+    >
+      {formFields.map((input) => (
+        <CustomFormInput key={input.name} {...input} onChange={handleOnChange} />
+      ))}
       <Button variant='primary' type='submit' className='mx-5'>
         Register
       </Button>
@@ -102,8 +106,6 @@ export default RegisterForm
 
 //
 //
-// TODO create custom form fields
-// TODO create initial stage
 // TODO create custom input loop
 // TODO create handle on change
 // TODO create handle on submit
