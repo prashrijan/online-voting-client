@@ -106,7 +106,6 @@ export default RegisterForm
 
 //
 //
-// TODO create custom input loop
 // TODO create handle on change
 // TODO create handle on submit
 // TODO create additional form buttons and links to login and to signup using google
