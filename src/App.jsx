@@ -1,3 +1,4 @@
+
 import React from "react"
 import { Routes, Route } from "react-router-dom"
 import DefaultLayout from "./components/layout/DefaultLayout"
@@ -23,4 +24,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
