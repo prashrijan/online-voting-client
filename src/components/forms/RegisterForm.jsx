@@ -83,7 +83,8 @@ const RegisterForm = () => {
 
     setForm(updatedForm)
   }
-  const handleOnSubmit = () => {
+  const handleOnSubmit = async (event) => {
+    event.preventDefault()
     console.log("Submitted")
   }
 
@@ -104,8 +105,5 @@ const RegisterForm = () => {
 
 export default RegisterForm
 
-//
-//
-// TODO create handle on change
 // TODO create handle on submit
 // TODO create additional form buttons and links to login and to signup using google
