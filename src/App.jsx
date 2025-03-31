@@ -19,7 +19,7 @@ function App() {
                         path="/forgetPassword"
                         element={<ForgetPassword />}
                     />
-                    <Route path="/contact" element={<Contact />} />
+                    {/* <Route path="/contact" element={<Contact />} /> */}
                 </Route>
                 {/* private routes */}
                 <Route>{/* please add private routes (todo) */}</Route>
