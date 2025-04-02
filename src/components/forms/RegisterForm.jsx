@@ -14,7 +14,7 @@ const RegisterForm = () => {
     const formInitialValues = {
         fullName: "Prashrijan Shrestha  ",
         email: "admin@admin.com",
-        phone: "12345",
+        phone: "1234567890",
         address: "sydney",
         dob: "19-12-2021",
         password: "Pr@sh4484",

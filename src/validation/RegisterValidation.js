@@ -3,7 +3,7 @@ import * as Yup from "yup";
 export const registerValidationSchema = Yup.object().shape({
     fullName: Yup.string().required("Full Name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
-    phoneNumber: Yup.string()
+    phone: Yup.string()
         .matches(/^[0-9]{10}$/, "Phone number must be 10 digits")
         .required("Phone number is required"),
     address: Yup.string().required("Address is required"),
