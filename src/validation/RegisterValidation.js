@@ -7,7 +7,9 @@ export const registerValidationSchema = Yup.object().shape({
         .matches(/^[0-9]{10}$/, "Phone number must be 10 digits")
         .required("Phone number is required"),
     address: Yup.string().required("Address is required"),
-    dob: Yup.date().required("Date of Birth is required"),
+    dob: Yup.date()
+        .max(new Date(), "Date of Birth cannot be in the future.")
+        .required("Date of Birth is required"),
     password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
