@@ -12,13 +12,13 @@ import { BarLoader } from "react-spinners";
 
 const RegisterForm = () => {
     const formInitialValues = {
-        fullName: "Prashrijan Shrestha  ",
-        email: "admin@admin.com",
-        phone: "1234567890",
-        address: "sydney",
-        dob: "19-12-2021",
-        password: "Pr@sh4484",
-        confirmPassword: "Pr@sh4484",
+        fullName: "",
+        email: "",
+        phone: "",
+        address: "",
+        dob: "",
+        password: "",
+        confirmPassword: "",
     };
 
     const [loading, setLoading] = useState(false);
@@ -33,7 +33,7 @@ const RegisterForm = () => {
         try {
             const res = await signUpUserApi(form);
             setLoading(false);
-            res && resetForm();
+            res && res.success && resetForm();
         } catch (error) {
             setLoading(false);
             console.log(error);
