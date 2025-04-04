@@ -1,23 +1,48 @@
-import React from "react"
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-
-
-
+import React from "react";
+import Button from "react-bootstrap/Button";
+import { Form, Card } from "react-bootstrap";
+import CustomFormInput from "../../components/forms/customFormInput";
 
 const Login = () => {
-  return <> <Card style={{ width: '18rem' }}>
-  <Card.Img variant="top" src="holder.js/100px180" />
-  <Card.Body>
-    <Card.Title>Card Title</Card.Title>
-    <Card.Text>
-      Some quick example text to build on the card title and make up the
-      bulk of the card's content.
-    </Card.Text>
-    <Button variant="primary">Go somewhere</Button>
-  </Card.Body>
-</Card>
-  </>
-}
+  return (
+    <div className="login-page d-flex justify-content-center align-items-center">
+      <Card style={{ width: "18rem" }}>
+        <Card.Body>
+          <Card.Title>Welcome back to chunab</Card.Title>
+          <hr />
+          <Form>
+            <CustomFormInput
+              label="Email"
+              name="email"
+              type="email"
+              required
+              placeholder="name@email.com"
+            />
 
-export default Login
+            <CustomFormInput
+              label="Password"
+              name="password"
+              type="password"
+              required
+              placeholder="********"
+            />
+            <div className="d-grid">
+              <Button type="submit" variant="primary">
+                {" "}
+                Log In{" "}
+              </Button>
+            </div>
+
+            <div className="text-end my-3">
+              {" "}
+              Forget Password?
+              <a href="/forgetPassword">Reset now?</a>
+            </div>
+          </Form>
+        </Card.Body>
+      </Card>
+    </div>
+  );
+};
+
+export default Login;
