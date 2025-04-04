@@ -19,7 +19,7 @@ const LoginForm = () => {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
-    const { form, handleOnChange, handleOnSubmit, errors } = useForm(
+    const { form, handleOnChange, handleOnSubmit, errors, resetForm } = useForm(
         formInitialValues,
         loginValidationSchema
     );
@@ -34,9 +34,6 @@ const LoginForm = () => {
                 localStorage.setItem("refreshToken", data.refreshToken);
             }
             setLoading(false);
-            if (res && res.success) {
-                // Handle successful login (e.g., redirect)
-            }
         } catch (error) {
             setLoading(false);
             console.log(error);

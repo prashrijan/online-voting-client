@@ -6,6 +6,7 @@ import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
 import ForgetPassword from "../pages/auth/ForgetPassword";
 import ProtectedLayout from "../components/layout/ProtectedLayout";
+import Dashboard from "../pages/dashboard/Dashboard";
 
 const AppRoutes = () => {
     return (
@@ -20,7 +21,7 @@ const AppRoutes = () => {
             </Route>
             {/* private routes */}
             <Route path="/user" element={<ProtectedLayout />}>
-                <Route index element={<Dashoboard />} />
+                <Route index element={<Dashboard />} />
             </Route>
         </Routes>
     );
