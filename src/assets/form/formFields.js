@@ -15,7 +15,7 @@ export const registerFormFields = [
     },
     {
         label: "Phone Number",
-        name: "phoneNumber",
+        name: "phone",
         type: "number",
         placeholder: "Enter Phone Number",
         required: true,
