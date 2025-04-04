@@ -45,3 +45,11 @@ export const loginUserApi = async (payload) => {
         console.error(error);
     }
 };
+
+export const googleAuth = async () => {
+    try {
+        window.location.href = `${authApiEndPoint}/google`;
+    } catch (error) {
+        console.error(error);
+    }
+};

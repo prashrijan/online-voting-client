@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { formFields } from "../../assets/form/formFields";
 import useForm from "../../hooks/useForm";
 import { registerValidationSchema } from "../../validation/RegisterValidation";
-import { signUpUserApi } from "../../services/authApi";
+import { googleAuth, signUpUserApi } from "../../services/authApi";
 import { BarLoader } from "react-spinners";
 import InputGroup from "react-bootstrap/InputGroup";
 
@@ -44,6 +44,11 @@ const RegisterForm = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleGoogleRegister = async () => {
+        const res = await googleAuth();
+        console.log(res);
     };
 
     const togglePasswordVisibility = () => {
@@ -156,6 +161,7 @@ const RegisterForm = () => {
                     <Button
                         variant="outline-primary"
                         className="w-100 py-2 d-flex justify-content-center align-items-center gap-2"
+                        onClick={handleGoogleRegister}
                     >
                         <FcGoogle size={20} />
                         Continue with Google

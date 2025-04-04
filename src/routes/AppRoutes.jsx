@@ -7,6 +7,7 @@ import Login from "../pages/auth/Login";
 import ForgetPassword from "../pages/auth/ForgetPassword";
 import ProtectedLayout from "../components/layout/ProtectedLayout";
 import Dashboard from "../pages/dashboard/Dashboard";
+import GoogleAuthSuccess from "../pages/auth/GoogleAuthSuccess";
 
 const AppRoutes = () => {
     return (
@@ -17,6 +18,10 @@ const AppRoutes = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgetPassword" element={<ForgetPassword />} />
+                <Route
+                    path="/google-auth-success"
+                    element={<GoogleAuthSuccess />}
+                />
                 {/* <Route path="/contact" element={<Contact />} /> */}
             </Route>
             {/* private routes */}
