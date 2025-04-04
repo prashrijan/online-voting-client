@@ -1,4 +1,4 @@
-export const formFields = [
+export const registerFormFields = [
     {
         label: "Full Name",
         name: "fullName",
