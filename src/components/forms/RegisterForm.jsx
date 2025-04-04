@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { registerFormFields } from "../../assets/form/formFields";
 import useForm from "../../hooks/useForm";
 import { registerValidationSchema } from "../../validation/RegisterValidation";
-import { signUpUserApi } from "../../services/authApi";
+import { googleAuth, signUpUserApi } from "../../services/authApi";
 import { BarLoader } from "react-spinners";
 import InputGroup from "react-bootstrap/InputGroup";
 
