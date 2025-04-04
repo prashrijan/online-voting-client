@@ -8,6 +8,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { loginValidationSchema } from "../../validation/LoginValidation";
 // import { loginUserApi } from "../../services/authApi";
 import useForm from "../../hooks/useForm";
+import { loginUserApi } from "../../services/authApi";
 
 const LoginForm = () => {
     const formInitialValues = {
@@ -26,7 +27,12 @@ const LoginForm = () => {
     const handleLogin = async () => {
         setLoading(true);
         try {
-            // const res = await loginUserApi(form);
+            const { data } = await loginUserApi(form);
+
+            if (data?.accessToken && data?.refreshToken) {
+                sessionStorage.setItem("accessToken", data.accessToken);
+                localStorage.setItem("refreshToken", data.refreshToken);
+            }
             setLoading(false);
             if (res && res.success) {
                 // Handle successful login (e.g., redirect)

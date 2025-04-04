@@ -5,6 +5,7 @@ import Homepage from "../pages/home/Homepage";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
 import ForgetPassword from "../pages/auth/ForgetPassword";
+import ProtectedLayout from "../components/layout/ProtectedLayout";
 
 const AppRoutes = () => {
     return (
@@ -18,7 +19,9 @@ const AppRoutes = () => {
                 {/* <Route path="/contact" element={<Contact />} /> */}
             </Route>
             {/* private routes */}
-            <Route>{/* please add private routes (todo) */}</Route>
+            <Route path="/user" element={<ProtectedLayout />}>
+                <Route index element={<Dashoboard />} />
+            </Route>
         </Routes>
     );
 };

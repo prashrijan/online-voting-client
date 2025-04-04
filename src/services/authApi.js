@@ -41,5 +41,7 @@ export const loginUserApi = async (payload) => {
         });
 
         return result;
-    } catch (error) {}
+    } catch (error) {
+        console.error(error);
+    }
 };
