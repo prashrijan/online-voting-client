@@ -14,6 +14,7 @@ import { apiProcessor } from "./apiProcessor";
 
 const authApiEndPoint = conf.baseUrl + "/api/v1/auth";
 
+// signining user
 export const signUpUserApi = async (payload) => {
     try {
         const result = await apiProcessor({
@@ -27,4 +28,18 @@ export const signUpUserApi = async (payload) => {
     } catch (error) {
         console.error(error);
     }
+};
+
+// logging in user
+export const loginUserApi = async (payload) => {
+    try {
+        const result = await apiProcessor({
+            url: authApiEndPoint + "/login",
+            method: "POST",
+            payload,
+            showToast: true,
+        });
+
+        return result;
+    } catch (error) {}
 };
