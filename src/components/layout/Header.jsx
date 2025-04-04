@@ -56,7 +56,7 @@ const Header = () => {
                                 variant="outline-primary"
                                 className="nav-button"
                             >
-                                Sign In
+                                Log In
                             </Button>
                         </Nav.Link>
                         <Nav.Link href="/register" className="ps-2">
