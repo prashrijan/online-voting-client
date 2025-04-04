@@ -30,7 +30,11 @@ const useForm = (initialValue, validationSchema) => {
         }
     };
 
-    return { form, handleOnChange, handleOnSubmit, errors };
+    const resetForm = () => {
+        setForm({ ...initialValue });
+    };
+
+    return { form, handleOnChange, handleOnSubmit, errors, resetForm };
 };
 
 export default useForm;

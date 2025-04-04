@@ -5,25 +5,14 @@ import Homepage from "./pages/home/Homepage";
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import ForgetPassword from "./pages/auth/ForgetPassword";
+import AppRoutes from "./routes/AppRoutes";
+import { ToastContainer } from "react-toastify";
 
 function App() {
     return (
         <>
-            <Routes>
-                {/* public routes */}
-                <Route path="/" element={<DefaultLayout />}>
-                    <Route index element={<Homepage />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route
-                        path="/forgetPassword"
-                        element={<ForgetPassword />}
-                    />
-                    {/* <Route path="/contact" element={<Contact />} /> */}
-                </Route>
-                {/* private routes */}
-                <Route>{/* please add private routes (todo) */}</Route>
-            </Routes>
+            <AppRoutes />
+            <ToastContainer />
         </>
     );
 }
