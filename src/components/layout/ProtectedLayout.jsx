@@ -1,18 +1,19 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import ProtectedRoute from "../auth/ProtectedRoute";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import { Outlet } from "react-router-dom";
 
-const DefaultLayout = () => {
+const ProtectedLayout = () => {
     return (
-        <div>
+        <ProtectedRoute>
             <Header />
             <main className="main-content">
                 <Outlet />
             </main>
             <Footer />
-        </div>
+        </ProtectedRoute>
     );
 };
 
-export default DefaultLayout;
+export default ProtectedLayout;
