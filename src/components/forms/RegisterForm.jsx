@@ -4,10 +4,10 @@ import Form from "react-bootstrap/Form";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as Yup from "yup";
-import { formFields } from "../../assets/form/formFields";
+import { registerFormFields } from "../../assets/form/formFields";
 import useForm from "../../hooks/useForm";
 import { registerValidationSchema } from "../../validation/RegisterValidation";
-import { googleAuth, signUpUserApi } from "../../services/authApi";
+import { signUpUserApi } from "../../services/authApi";
 import { BarLoader } from "react-spinners";
 import InputGroup from "react-bootstrap/InputGroup";
 
@@ -81,7 +81,7 @@ const RegisterForm = () => {
                         Register to become a voter and make your voice heard!
                     </h3>
 
-                    {formFields.map((input) => (
+                    {registerFormFields.map((input) => (
                         <Form.Group key={input.name} className="mb-3">
                             <Form.Label className="fw-semibold">
                                 {input.label}
@@ -183,3 +183,5 @@ const RegisterForm = () => {
 };
 
 export default RegisterForm;
+
+// this is a check commit
