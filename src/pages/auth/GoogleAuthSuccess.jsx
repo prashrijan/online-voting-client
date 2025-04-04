@@ -10,12 +10,14 @@ const GoogleAuthSuccess = () => {
         const refreshToken = urlParams.get("refreshToken");
 
         if (accessToken && refreshToken) {
-            localStorage.setItem("accessToken", accessToken);
+            sessionStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
+
+            navigate("/user/dashboard");
         } else {
             navigate("/login");
         }
-    });
+    }, [navigate]);
     return <div>GoogleAuthSuccess</div>;
 };
 
