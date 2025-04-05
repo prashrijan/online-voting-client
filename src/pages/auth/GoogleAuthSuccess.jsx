@@ -14,15 +14,19 @@ const GoogleAuthSuccess = () => {
             sessionStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
 
-            navigate("/user/dashboard");
+            setTimeout(() => {
+                console.log("navigating to user");
+                navigate("/user");
+            }, 1000);
         } else {
             navigate("/login");
         }
     }, [navigate]);
     return (
-        <>
-            <BarLoader />
-        </>
+        <div className="d-flex flex-column justify-content-center align-items-center min-vh-100">
+            <BarLoader color="#0d6efd" />
+            <p className="mt-2 text-muted">Logging you in...</p>
+        </div>
     );
 };
 
