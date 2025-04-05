@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BarLoader } from "react-spinners";
+import { fetchUserAction } from "../../features/user/userAction";
 
 const GoogleAuthSuccess = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -18,6 +21,8 @@ const GoogleAuthSuccess = () => {
                 console.log("navigating to user");
                 navigate("/user");
             }, 1000);
+
+            dispatch(fetchUserAction());
         } else {
             navigate("/login");
         }
