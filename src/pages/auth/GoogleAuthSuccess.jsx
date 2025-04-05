@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { BarLoader } from "react-spinners";
 
 const GoogleAuthSuccess = () => {
     const navigate = useNavigate();
@@ -18,7 +19,11 @@ const GoogleAuthSuccess = () => {
             navigate("/login");
         }
     }, [navigate]);
-    return <div>GoogleAuthSuccess</div>;
+    return (
+        <>
+            <BarLoader />
+        </>
+    );
 };
 
 export default GoogleAuthSuccess;
