@@ -66,7 +66,7 @@ const Footer = () => {
                     <Col md={3}>
                         <h6 className="footer-subheading">Contact</h6>
                         <ul className="footer-links">
-                            <li>chunaab@support.com</li>
+                            <li>chunaabs@gmail.com</li>
                             <li>+61290935151</li>
                             <li>
                                 Level 11, 10 Barrack Street Sydney NSW 2000,
