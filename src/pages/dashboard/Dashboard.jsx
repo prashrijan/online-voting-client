@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { fetchUserApi } from "../../features/user/userApi";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+    const { user } = useSelector((state) => state.user);
 
-export default Dashboard
+    console.log(user);
+    return <div>{user.fullName} hello</div>;
+};
+
+export default Dashboard;
