@@ -38,7 +38,7 @@ const LoginForm = () => {
                 sessionStorage.setItem("accessToken", data.accessToken);
                 localStorage.setItem("refreshToken", data.refreshToken);
 
-                dispatch(fetchUserAction());
+                await dispatch(fetchUserAction());
                 navigate("/user");
             }
             setLoading(false);

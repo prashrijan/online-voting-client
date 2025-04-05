@@ -7,8 +7,11 @@ import Logo from "../Logo";
 import { FaVoteYea, FaChartBar, FaUserShield } from "react-icons/fa";
 import { RiLiveFill } from "react-icons/ri";
 import "./HeaderStyles.css";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+    const { user } = useSelector((state) => state.user);
+
     return (
         <Navbar collapseOnSelect expand="lg" className="light-navbar">
             <Container>
@@ -51,19 +54,37 @@ const Header = () => {
                     </div>
 
                     <Nav className="auth-buttons">
-                        <Nav.Link href="/login" className="px-2">
-                            <Button
-                                variant="outline-primary"
-                                className="nav-button"
-                            >
-                                Log In
-                            </Button>
-                        </Nav.Link>
-                        <Nav.Link href="/register" className="ps-2">
-                            <Button variant="primary" className="nav-button">
-                                Register
-                            </Button>
-                        </Nav.Link>
+                        {user._id ? (
+                            <>
+                                <Nav.Link href="/logout" className="ps-2">
+                                    <Button
+                                        variant="danger"
+                                        className="nav-button"
+                                    >
+                                        Logout
+                                    </Button>
+                                </Nav.Link>
+                            </>
+                        ) : (
+                            <>
+                                <Nav.Link href="/login" className="px-2">
+                                    <Button
+                                        variant="outline-primary"
+                                        className="nav-button"
+                                    >
+                                        Log In
+                                    </Button>
+                                </Nav.Link>
+                                <Nav.Link href="/register" className="ps-2">
+                                    <Button
+                                        variant="primary"
+                                        className="nav-button"
+                                    >
+                                        Register
+                                    </Button>
+                                </Nav.Link>
+                            </>
+                        )}
                     </Nav>
                 </Navbar.Collapse>
             </Container>
