@@ -66,9 +66,12 @@ const Footer = () => {
                     <Col md={3}>
                         <h6 className="footer-subheading">Contact</h6>
                         <ul className="footer-links">
-                            <li>support@chunaab.com</li>
-                            <li>+1 (555) 123-4567</li>
-                            <li>123 Election St, Democracy City</li>
+                            <li>chunaabs@gmail.com</li>
+                            <li>+61290935151</li>
+                            <li>
+                                Level 11, 10 Barrack Street Sydney NSW 2000,
+                                Australia
+                            </li>
                         </ul>
                     </Col>
                 </Row>

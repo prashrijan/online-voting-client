@@ -9,6 +9,9 @@ import { loginValidationSchema } from "../../validation/LoginValidation";
 // import { loginUserApi } from "../../services/authApi";
 import useForm from "../../hooks/useForm";
 import { loginUserApi } from "../../services/authApi";
+import { useDispatch } from "react-redux";
+import { fetchUserAction } from "../../features/user/userAction";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
     const formInitialValues = {
@@ -18,6 +21,8 @@ const LoginForm = () => {
 
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { form, handleOnChange, handleOnSubmit, errors, resetForm } = useForm(
         formInitialValues,
@@ -32,6 +37,9 @@ const LoginForm = () => {
             if (data?.accessToken && data?.refreshToken) {
                 sessionStorage.setItem("accessToken", data.accessToken);
                 localStorage.setItem("refreshToken", data.refreshToken);
+
+                dispatch(fetchUserAction());
+                navigate("/user");
             }
             setLoading(false);
         } catch (error) {
