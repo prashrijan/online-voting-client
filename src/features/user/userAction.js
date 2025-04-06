@@ -1,7 +1,7 @@
-import { fetchUserApi } from "./userApi";
-import { setUser } from "./userSlice";
-import { apiProcessor } from "../../services/apiProcessor";
-import { refreshTokenApi } from "../../services/authApi";
+import { fetchUserApi } from './userApi';
+import { setUser } from './userSlice';
+import { apiProcessor } from '../../services/apiProcessor';
+import { refreshTokenApi } from '../../services/authApi';
 
 export const fetchUserAction = () => async (dispatch) => {
   try {
@@ -16,8 +16,8 @@ export const fetchUserAction = () => async (dispatch) => {
 };
 
 export const autologin = async (dispatch) => {
-  const accessToken = sessionStorage.getItem("accessToken");
-  const refreshToken = localStorage.getItem("refreshToken");
+  const accessToken = sessionStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
 
   //when access token is available
   if (accessToken) {
@@ -29,11 +29,11 @@ export const autologin = async (dispatch) => {
   //if refresh token is available
   if (refreshToken) {
     try {
-      const {data} = await refreshTokenApi()
-    sessionStorage.setItem("accessToken", data)
-    dispatch(fetchUserAction())
+      const { data } = await refreshTokenApi();
+      sessionStorage.setItem('accessToken', data);
+      dispatch(fetchUserAction());
     } catch (error) {
-      console.error("Autologin failed with refresh token", error.message);
+      console.error('Autologin failed with refresh token', error.message);
     }
   }
 };
