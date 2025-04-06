@@ -53,3 +53,20 @@ export const googleAuth = async () => {
         console.error(error);
     }
 };
+
+
+export const refreshTokenApi = async () => {
+    try {
+        const res = await apiProcessor({
+            url: authApiEndPoint + "/refresh-token",
+            method: "GET",
+            isPrivate: true,
+            isRefresh: true   
+        })
+
+        return res
+        
+    } catch (error) {
+        console.error(error)
+    }
+}

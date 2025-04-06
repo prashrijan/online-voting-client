@@ -1,5 +1,7 @@
 import { fetchUserApi } from "./userApi";
 import { setUser } from "./userSlice";
+import { apiProcessor } from "../../services/apiProcessor";
+import { refreshTokenApi } from "../../services/authApi";
 
 export const fetchUserAction = () => async (dispatch) => {
   try {
@@ -27,20 +29,9 @@ export const autologin = async (dispatch) => {
   //if refresh token is available
   if (refreshToken) {
     try {
-      const result = await apiProcessor({
-        method: "POST",
-        url: "/api/v1/auth/refresh-token",
-        payload: { refreshToken },
-        isPrivate: true,
-        isRefresh: true,
-      });
-
-      //if response has access token save it in session storage
-      //and dispatch fetch user action
-      if (result?.accessToken) {
-        sessionStorage.setItem("accessToken", result.acccessToken);
-        dispatch(fetchUserAction());
-      }
+      const {data} = await refreshTokenApi()
+    sessionStorage.setItem("accessToken", data)
+    dispatch(fetchUserAction())
     } catch (error) {
       console.error("Autologin failed with refresh token", error.message);
     }

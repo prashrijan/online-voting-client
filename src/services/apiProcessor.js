@@ -28,6 +28,7 @@
  */
 import axios from "axios";
 import { toast } from "react-toastify";
+import { refreshTokenApi } from "./authApi";
 export const getRefreshToken = () => {
     return localStorage.getItem("refreshToken");
 };
@@ -87,6 +88,24 @@ export const apiProcessor = async ({
             error.message ||
             "An unknown error occured. Please try again.";
 
+
+        if(errorMessage == "jwt expired"){
+            const {data} = await refreshTokenApi()
+
+            data && sessionStorage.setItem("accessToken", data)
+                
+            return  await apiProcessor({
+                url, 
+                method, 
+                payload, 
+                showToast, 
+                isPrivate, 
+                isRefresh
+            })
+        }else{
+            sessionStorage.removeItem("accessToken")
+            localStorage.removeItem("refreshToken")
+        }
         showToast &&
             toast.error(errorMessage, {
                 autoClose: 3000,

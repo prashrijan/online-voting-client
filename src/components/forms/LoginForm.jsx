@@ -28,14 +28,13 @@ const LoginForm = () => {
   //user from reduxstore
   const { user } = useSelector((state) => state.user);
 
-  useEffect(() => {
-    autologin(dispatch);
-  }, [dispatch]);
 
   useEffect(() => {
     if (user?._id) {
       // if user is already logged in, redirect to user page
       navigate("/user");
+    }else{
+      dispatch(autologin())
     }
   }, [user?._id, navigate]);
 
