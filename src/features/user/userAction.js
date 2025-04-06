@@ -15,7 +15,7 @@ export const fetchUserAction = () => async (dispatch) => {
   }
 };
 
-export const autologin = async (dispatch) => {
+export const autologin = () => async (dispatch) => {
   const accessToken = sessionStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
 
