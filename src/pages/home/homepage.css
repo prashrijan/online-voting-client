@@ -1,27 +1,25 @@
+/* Hero Section  */
+
 .hero {
   background-color: white;
 }
 
 .getStartedbtn {
-  width: 200px;
+  min-width: 200px;
   height: 50px;
-  border: 2px solid rgb(0, 62, 139);
 }
 
 .joinSection {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  height: 80px;
-  width: auto;
-  background-color: #ececec;
-  padding: 0px 80px;
+  min-height: 80px;
+  background-color: #e8e8e8;
 }
 
 .eventCodeInput {
-  max-width: 100px;
-  height: 40px;
+  max-width: 90px;
+  height: 45px;
   border: none;
-  border-radius: 10px;
+}
+
+.eventCodeInput::placeholder {
+  color: #adb5bd;
 }
