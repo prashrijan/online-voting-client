@@ -1,0 +1,32 @@
+export const cardData = [
+  {
+    id: '1',
+    title: 'Shubik Election',
+    image: '',
+    startDate: '20/04/2025',
+    EndDate: '30/04/2025',
+    status: 'Active',
+    noOfCandidates: '2',
+    createdBy: 'shubik',
+  },
+  {
+    id: '2',
+    image: '',
+    title: 'John Election',
+    startDate: '20/05/2025',
+    EndDate: '30/05/2025',
+    status: 'Active',
+    noOfCandidates: '2',
+    createdBy: 'john',
+  },
+  {
+    id: '3',
+    image: '',
+    title: 'Erike Election',
+    startDate: '20/06/2025',
+    EndDate: '30/06/2025',
+    status: 'Active',
+    noOfCandidates: '2',
+    createdBy: 'Erike',
+  },
+];

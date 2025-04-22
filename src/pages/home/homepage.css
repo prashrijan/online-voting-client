@@ -1,0 +1,26 @@
+/* Hero Section  */
+
+.hero {
+  background-color: white;
+}
+
+.getStartedbtn {
+  width: 200px;
+  height: 50px;
+}
+
+.joinSection {
+  min-height: 80px;
+  max-width: 700px;
+  background-color: #e8e8e8;
+}
+
+.eventCodeInput {
+  max-width: 90px;
+  height: 45px;
+  border: none;
+}
+
+.eventCodeInput::placeholder {
+  color: #adb5bd;
+}
