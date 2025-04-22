@@ -9,3 +9,9 @@
 .logo-font {
   font-family: 'Mitr', 'sans-serif';
 }
+
+.election-card {
+  height: 450px;
+  width: 360px;
+  overflow: hidden;
+}

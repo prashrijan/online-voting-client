@@ -2,6 +2,8 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import './homepage.css';
 
+import { CgArrowRight } from 'react-icons/cg';
+
 const Hero = () => {
   return (
     <div className=" hero w-100  d-flex flex-column justify-content-between align-items-center">
@@ -15,13 +17,18 @@ const Hero = () => {
       </p>
       <Button
         variant="primary"
-        className="getStartedbtn m-3 px-5 d-flex justify-content-center align-items-center rounded-5 border-3 border-black fs-4 "
+        className="getStartedbtn d-flex justify-content-center align-items-center fs-5 rounded-5 border-2 border-black  "
       >
         Get Started
+        <span className="ms-1 mb-1 fs-3">
+          <CgArrowRight />
+        </span>
       </Button>
 
-      <div className="joinSection m-4 p-3 d-flex justify-content-center align-items-center rounded-5 w-75 flex-wrap  ">
-        <span className=" fs-4 text-center">Enter code to join Live Chunaab</span>
+      <div className="joinSection m-4 p-3 d-flex justify-content-center align-items-center rounded-pill w-75 flex-wrap  ">
+        <span className=" fs-5 text-center">
+          Enter code to join Live Chunaab
+        </span>
 
         <input
           type="text"
