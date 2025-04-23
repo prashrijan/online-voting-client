@@ -1,5 +1,5 @@
-import { conf } from "../conf/conf";
-import { apiProcessor } from "./apiProcessor";
+import { conf } from '../conf/conf';
+import { apiProcessor } from './apiProcessor';
 
 /**
  * Sends a POST request to the authentication API endpoint to register a new user.
@@ -12,61 +12,75 @@ import { apiProcessor } from "./apiProcessor";
  * @throws Will log an error to the console if the API request fails.
  */
 
-const authApiEndPoint = conf.baseUrl + "/api/v1/auth";
+const authApiEndPoint = conf.baseUrl + '/api/v1/auth';
 
 // signining user
 export const signUpUserApi = async (payload) => {
-    try {
-        const result = await apiProcessor({
-            url: authApiEndPoint + "/register",
-            method: "POST",
-            payload,
-            showToast: true,
-        });
+  try {
+    const result = await apiProcessor({
+      url: authApiEndPoint + '/register',
+      method: 'POST',
+      payload,
+      showToast: true,
+    });
 
-        return result;
-    } catch (error) {
-        console.error(error);
-    }
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // logging in user
 export const loginUserApi = async (payload) => {
-    try {
-        const result = await apiProcessor({
-            url: authApiEndPoint + "/login",
-            method: "POST",
-            payload,
-            showToast: true,
-        });
+  try {
+    const result = await apiProcessor({
+      url: authApiEndPoint + '/login',
+      method: 'POST',
+      payload,
+      showToast: true,
+    });
 
-        return result;
-    } catch (error) {
-        console.error(error);
-    }
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const googleAuth = async () => {
-    try {
-        window.location.href = `${authApiEndPoint}/google`;
-    } catch (error) {
-        console.error(error);
-    }
+  try {
+    window.location.href = `${authApiEndPoint}/google`;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-
 export const refreshTokenApi = async () => {
-    try {
-        const res = await apiProcessor({
-            url: authApiEndPoint + "/refresh-token",
-            method: "GET",
-            isPrivate: true,
-            isRefresh: true   
-        })
+  try {
+    const res = await apiProcessor({
+      url: authApiEndPoint + '/refresh-token',
+      method: 'GET',
+      isPrivate: true,
+      isRefresh: true,
+    });
 
-        return res
-        
-    } catch (error) {
-        console.error(error)
-    }
-}
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const verifyEmail = async (token) => {
+  try {
+    const res = apiProcessor({
+      method: 'POST',
+      url: authApiEndPoint + '/verify-email',
+      payload: { token },
+      showToast: true,
+    });
+
+    return res;
+  } catch (error) {
+    console.error('Email verification failed: ', error);
+    return error;
+  }
+};

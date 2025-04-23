@@ -11,6 +11,7 @@ import GoogleAuthSuccess from '../pages/auth/GoogleAuthSuccess';
 import CreateElection from '../pages/CreateElection';
 import About from '../pages/About';
 import Contact from '../pages/Contact';
+import VerifyAccount from '../pages/auth/VerifyAccount';
 
 const AppRoutes = () => {
   return (
@@ -20,9 +21,10 @@ const AppRoutes = () => {
         <Route index element={<Homepage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/verify-email" element={<VerifyAccount />} />
         <Route path="/forgetPassword" element={<ForgetPassword />} />
         <Route path="/google-auth-success" element={<GoogleAuthSuccess />} />
-        <Route path="/createElection" element={<CreateElection/>} />
+        <Route path="/createElection" element={<CreateElection />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Route>
