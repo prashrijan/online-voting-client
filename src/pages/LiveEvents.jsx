@@ -1,10 +1,10 @@
 import React from 'react';
-import ElectionCard from '../../components/ElectionCard';
+import ElectionCard from '../components/ElectionCard';
 
 const LiveEvents = () => {
   return (
     <>
-      <h2 className="ps-5 ms-5">Live Events</h2>
+      <h2 className=" text-center fs-2 m-5 p-2 bg-light">Live Events</h2>
       <ElectionCard />
     </>
   );
