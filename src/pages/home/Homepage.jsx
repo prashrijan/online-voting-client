@@ -3,6 +3,8 @@ import Hero from './Hero';
 import './homepage.css';
 import LiveEvents from './LiveEvents';
 
+// homepage
+
 const Homepage = () => {
   return (
     <>
