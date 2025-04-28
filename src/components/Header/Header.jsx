@@ -6,10 +6,10 @@ import Navbar from 'react-bootstrap/Navbar';
 import Logo from '../Logo';
 import './HeaderStyles.css';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom'; // 🔥 import Link
+import { Link } from 'react-router-dom';
 
 const GuestNavbar = () => (
-  <Navbar collapseOnSelect expand="lg" className="light-navbar fs-5">
+  <Navbar collapseOnSelect expand="lg" className="light-navbar fs-6">
     <Container>
       <Navbar.Brand href="/" className="d-flex align-items-center">
         <Logo darkMode={false} />
@@ -38,12 +38,12 @@ const GuestNavbar = () => (
 
         <Nav className="auth-buttons">
           <Nav.Link as={Link} to="/login" className="px-2">
-            <Button variant="outline-primary" className="nav-button">
+            <Button variant="outline-primary" className="nav-button ">
               Log In
             </Button>
           </Nav.Link>
-          <Nav.Link as={Link} to="/register" className="ps-2">
-            <Button variant="primary" className="nav-button">
+          <Nav.Link as={Link} to="/register" className="ps-2 ">
+            <Button variant="primary" className="nav-button ">
               Register
             </Button>
           </Nav.Link>
@@ -54,7 +54,7 @@ const GuestNavbar = () => (
 );
 
 const UserNavbar = () => (
-  <Navbar collapseOnSelect expand="lg" className="light-navbar fs-5">
+  <Navbar collapseOnSelect expand="lg" className="light-navbar fs-6">
     <Container>
       <Navbar.Brand href="/" className="d-flex align-items-center">
         <Logo darkMode={false} />

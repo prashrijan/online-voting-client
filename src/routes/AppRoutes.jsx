@@ -8,7 +8,7 @@ import ForgetPassword from '../pages/auth/ForgetPassword';
 import ProtectedLayout from '../components/layout/ProtectedLayout';
 import Dashboard from '../pages/dashboard/Dashboard';
 import GoogleAuthSuccess from '../pages/auth/GoogleAuthSuccess';
-import CreateElection from '../pages/CreateElection';
+import CreateElection from '../pages/Election/CreateElection';
 import About from '../pages/About';
 import Contact from '../pages/Contact';
 import VerifyAccount from '../pages/auth/VerifyAccount';

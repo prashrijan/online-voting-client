@@ -1,5 +1,5 @@
 import React from 'react';
-import ElectionCard from '../components/ElectionCard';
+import ElectionCard from '../../components/ElectionCard';
 
 const LiveEvents = () => {
   return (
