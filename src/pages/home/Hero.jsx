@@ -3,8 +3,16 @@ import { Button } from 'react-bootstrap';
 import './homepage.css';
 
 import { CgArrowRight } from 'react-icons/cg';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const getStarted = () => {
+    console.log('get Started');
+    navigate('/register');
+  };
+
   return (
     <div className=" hero w-100  d-flex flex-column justify-content-between align-items-center">
       <h1 className="p-4 fw-bold fs-1 text-center">
@@ -18,6 +26,7 @@ const Hero = () => {
       <Button
         variant="primary"
         className="getStartedbtn d-flex justify-content-center align-items-center fs-5 rounded-5 border-2 border-black  "
+        onClick={getStarted}
       >
         Get Started
         <span className="ms-1 mb-1 fs-3">
