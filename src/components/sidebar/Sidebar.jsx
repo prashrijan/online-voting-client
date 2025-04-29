@@ -22,7 +22,7 @@ const Sidebar = () => {
   return (
     <div
       className="sidebar p-1 fixed top bg-info h-screen"
-      style={{ width: '360px' }}
+      style={{ width: '300px', minWidth: '300px' }}
     >
       <div>
         <h1 className="ms-4">

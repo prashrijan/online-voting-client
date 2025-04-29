@@ -9,8 +9,8 @@ const ProtectedLayout = () => {
   return (
     <ProtectedRoute>
       <Header />
-      <Sidebar />
-      <main className="main-content">
+      <main className="main-content d-flex flex-row ">
+        <Sidebar />
         <Outlet />
       </main>
       <Footer />
