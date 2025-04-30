@@ -26,11 +26,11 @@ const AppRoutes = () => {
         <Route path="/google-auth-success" element={<GoogleAuthSuccess />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/createElection" element={<CreateElection />} />
       </Route>
       {/* private routes */}
       <Route path="/user" element={<ProtectedLayout />}>
         <Route index element={<Dashboard />} />
+        <Route path="create-election" element={<CreateElection />} />
       </Route>
     </Routes>
   );

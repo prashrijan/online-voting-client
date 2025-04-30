@@ -1,13 +1,13 @@
 import React from 'react';
 import ElectionCard from '../../components/elections/ElectionCard';
 
-const LiveElections = () => {
+const UpcomingElections = () => {
   return (
     <>
-      <h2 className="m-3 fs-2">Live Events</h2>
+      <h2 className="m-3 fs-2">Upcoming Events</h2>
       <ElectionCard />
     </>
   );
 };
 
-export default LiveElections;
+export default UpcomingElections;

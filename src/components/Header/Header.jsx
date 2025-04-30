@@ -56,7 +56,7 @@ const GuestNavbar = () => (
 const UserNavbar = () => (
   <Navbar collapseOnSelect expand="lg" className="light-navbar fs-6">
     <Container>
-      <Navbar.Brand href="/" className="d-flex align-items-center">
+      <Navbar.Brand href="/user" className="d-flex align-items-center">
         <Logo darkMode={false} />
       </Navbar.Brand>
 
@@ -82,7 +82,7 @@ const UserNavbar = () => (
         </Nav>
 
         <Nav className="auth-buttons">
-          <Nav.Link as={Link} to="#" className="ps-2">
+          <Nav.Link as={Link} to="/user/create-election" className="ps-2">
             <Button variant="danger" className="nav-button">
               Create Election
             </Button>

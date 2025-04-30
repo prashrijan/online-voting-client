@@ -3,9 +3,8 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
-import { cardData } from '../assets/form/dummyCardData';
-
-import defaultImg from '../assets/images/Chunaab.png';
+import { cardData } from '../../assets/form/dummyCardData';
+import defaultImg from '../../assets/images/Chunaab.png';
 
 function ElectionCard() {
   return (

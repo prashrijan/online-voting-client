@@ -120,7 +120,7 @@ const SearchCandidateForm = () => {
         </Dropdown.Menu>
       )}
 
-      {electionData.candidates.length > 0 && (
+      {electionData.candidates.length > 0 ? (
         <div className="mt-4">
           <h5>Selected Candidates</h5>
           <Table bordered hover responsive>
@@ -164,6 +164,8 @@ const SearchCandidateForm = () => {
             </tbody>
           </Table>
         </div>
+      ) : (
+        <p className="text-danger">No Candidates Added Yet.</p>
       )}
     </>
   );
