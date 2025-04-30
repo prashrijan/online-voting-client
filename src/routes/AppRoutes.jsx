@@ -24,9 +24,9 @@ const AppRoutes = () => {
         <Route path="/verify-email" element={<VerifyAccount />} />
         <Route path="/forgetPassword" element={<ForgetPassword />} />
         <Route path="/google-auth-success" element={<GoogleAuthSuccess />} />
-        <Route path="/createElection" element={<CreateElection />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/createElection" element={<CreateElection />} />
       </Route>
       {/* private routes */}
       <Route path="/user" element={<ProtectedLayout />}>
