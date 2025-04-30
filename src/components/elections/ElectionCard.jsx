@@ -1,67 +1,134 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
-import { cardData } from '../../assets/form/dummyCardData';
 import defaultImg from '../../assets/images/Chunaab.png';
+import {
+  FiClock,
+  FiUser,
+  FiUsers,
+  FiCalendar,
+  FiAlertCircle,
+} from 'react-icons/fi';
+import './ElectionCard.css';
 
-function ElectionCard() {
+function ElectionCard({ cardData }) {
+  // Function to calculate time remaining
+  const getTimeRemaining = (endDate) => {
+    const end = new Date(endDate.split('/').reverse().join('-'));
+    const now = new Date();
+    const diff = end - now;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    if (days > 0) return `Ends in ${days} day${days !== 1 ? 's' : ''}`;
+    if (hours > 0) return `Ends in ${hours} hour${hours !== 1 ? 's' : ''}`;
+    return 'Ending soon';
+  };
+
+  // Function to get button text based on status
+  const getButtonText = (status) => {
+    switch (status) {
+      case 'Live':
+        return 'Vote Now';
+      case 'Active':
+        return 'View Election';
+      case 'Upcoming':
+        return 'View Details';
+      default:
+        return 'View Results';
+    }
+  };
+
+  // Function to get button variant based on status
+  const getButtonVariant = (status) => {
+    switch (status) {
+      case 'Live':
+        return 'danger';
+      case 'Active':
+        return 'primary';
+      case 'Upcoming':
+        return 'warning';
+      default:
+        return 'secondary';
+    }
+  };
+
   return (
-    <div className="d-flex flex-wrap gap-4 justify-content-center">
+    <div className="election-card-container">
       {cardData.map((election) => (
-        <Card
-          key={election.id}
-          className="rounded-4 overflow-hidden"
-          style={{ width: '350px' }}
-        >
-          <Card.Img
-            variant="top"
-            src={election.image || defaultImg}
-            className="rounded-0 object-fit-cover"
-            style={{ height: '250px' }}
-          />
-          <Card.Body className="pb-1 pt-3">
-            <Card.Title className="fw-bold fs-5 mb-2">
-              {election.title}
-            </Card.Title>
-            <div className="d-flex align-items-center mb-2">
-              <Badge
-                bg={election.status === 'Active' ? 'success' : 'secondary'}
-                className="rounded-circle p-2 me-2"
-                style={{ width: '10px', height: '10px' }}
-              />
-              <span
-                className={`small text-${election.status === 'Active' ? 'success' : 'secondary'}`}
-              >
-                {election.status}
-              </span>
+        <Card key={election.id} className="election-card">
+          <div className="card-image-container">
+            <Card.Img
+              variant="top"
+              src={election.image || defaultImg}
+              className="card-image"
+            />
+            <div className={`status-badge ${election.status.toLowerCase()}`}>
+              {election.status}
+              {election.status === 'Live' && (
+                <span className="pulse-dot"></span>
+              )}
             </div>
-            <div className="mb-2 small">
-              <div>
-                <strong>Organized By:</strong> {election.createdBy}
+          </div>
+
+          <Card.Body>
+            <Card.Title className="card-title">{election.title}</Card.Title>
+
+            {election.description && (
+              <div className="election-description">
+                <FiAlertCircle className="icon" />
+                <span>{election.description}</span>
               </div>
-              <div>
-                <strong>Start Date:</strong> {election.startDate}
+            )}
+
+            <div className="organizer-info">
+              <FiUser className="icon" />
+              <span>Organized by: {election.createdBy}</span>
+            </div>
+
+            <div className="date-time-info">
+              <div className="date-time-group">
+                <FiCalendar className="icon" />
+                <div>
+                  <div className="date-time">
+                    <span className="label">Start:</span>
+                    {election.startDate} at {election.startTime}
+                  </div>
+                  <div className="date-time">
+                    <span className="label">End:</span>
+                    {election.endDate} at {election.endTime}
+                  </div>
+                </div>
               </div>
-              <div>
-                <strong>End Date:</strong> {election.endDate}
+            </div>
+
+            <div className="stats-container">
+              <div className="stat-item">
+                <FiUsers className="icon" />
+                <span>{election.noOfCandidates} Candidates</span>
+              </div>
+              <div className="stat-item">
+                <FiUsers className="icon" />
+                <span>{election.voters || '99+'} Voters</span>
               </div>
             </div>
           </Card.Body>
-          <ListGroup className="list-group-flush border-0">
-            <ListGroup.Item className="d-flex justify-content-between px-3 small">
-              <span className="bg-light rounded-pill px-2">
-                {election.noOfCandidates} Candidates
-              </span>
-              <span className="bg-light rounded-pill px-2">99+ voters</span>
-            </ListGroup.Item>
-          </ListGroup>
-          <Card.Body className="pt-2 text-center">
-            <Button variant="primary" className="w-50 rounded-pill fw-bold">
-              Vote
+
+          <Card.Footer className="card-footer">
+            <Button
+              variant={getButtonVariant(election.status)}
+              className="vote-button"
+            >
+              {getButtonText(election.status)}
             </Button>
-          </Card.Body>
+            {election.status === 'Active' && (
+              <div className="time-remaining">
+                <FiClock className="icon" />
+                <span>{getTimeRemaining(election.endDate)}</span>
+              </div>
+            )}
+          </Card.Footer>
         </Card>
       ))}
     </div>
