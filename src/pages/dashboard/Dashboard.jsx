@@ -1,176 +1,32 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Button,
-  Badge,
-  Alert,
-} from 'react-bootstrap';
-import dayjs from 'dayjs';
+import { Button } from 'react-bootstrap';
+import LiveElections from '../Election/LiveElections';
 
 const Dashboard = () => {
-  const { user } = useSelector((state) => state.user);
-
-  // Dummy data
-  const dummyElections = [
-    {
-      _id: '1',
-      title: 'Student Council Election',
-      startDate: '2025-4-04',
-      endDate: '2025-5-06',
-      candidates: ['1', '2', '3'],
-      createdBy: 'admin1',
-    },
-    {
-      _id: '2',
-      title: 'Department Representative',
-      startDate: '2025-5-04',
-      endDate: '2025-5-06',
-      candidates: ['4', '5'],
-      createdBy: 'admin2',
-    },
-    {
-      _id: '3',
-      title: 'Annual Sports Captain',
-      startDate: '2024-01-05',
-      endDate: '2024-01-10',
-      candidates: ['6', '7', '8', '9'],
-      createdBy: 'admin1',
-    },
-  ];
-
-  const categorizeElections = () => {
-    const now = dayjs();
-
-    return dummyElections.reduce(
-      (acc, election) => {
-        const startDate = election.startDate;
-        const endDate = election.endDate;
-
-        //   election is ongoing
-        if (now.isAfter(startDate) && now.isBefore(endDate)) {
-          acc.ongoing.push(election);
-        } else if (now.isBefore(startDate)) {
-          acc.upcoming.push(election);
-        }
-
-        return acc;
-      },
-      { ongoing: [], upcoming: [] }
-    );
-  };
-
-  const { upcoming, ongoing } = categorizeElections();
-
   return (
     <>
-      <Container className="py-4">
-        {/* Welcome Section */}
-        <Row className="mb-4">
-          <Col>
-            <h2 className="fw-light border-bottom pb-2">
-              Welcome, <span className="fw-normal">{user.fullName}</span>
-            </h2>
-            <p className="text-muted">Cast your vote and make a difference</p>
-          </Col>
-        </Row>
+      <div className="w-100">
+        <div className="d-flex justify-content-center align-items-center flex-column ">
+          <h1 className="mt-5 fw-bold">Welcome To Chunaab</h1>
+          <p className="fs-5">All-in-one Digital Voting Platform</p>
 
-        {/* Ongoing Elections */}
-        <Row className="mb-5">
-          <Col>
-            <h4 className="mb-4">
-              Ongoing Elections <Badge bg="danger">{ongoing.length}</Badge>
-            </h4>
+          <div className="joinSection m-4 p-3 d-flex justify-content-center align-items-center rounded-pill w-75 flex-wrap  ">
+            <span className=" fs-5 text-center">
+              Enter code to join Live Election
+            </span>
 
-            {ongoing.length > 0 ? (
-              <Row xs={1} md={2} lg={3} className="g-4">
-                {ongoing.map((election) => (
-                  <Col key={election._id}>
-                    <Card className="h-100 shadow-sm border-primary">
-                      <Card.Body>
-                        <Card.Title>{election.title}</Card.Title>
-                        <div className="text-muted small">
-                          <div className="mb-1">
-                            <strong>Status:</strong>{' '}
-                            <Badge bg="success">Active</Badge>
-                          </div>
-                          <div className="mb-1">
-                            <strong>Closes in:</strong>{' '}
-                            {dayjs(election.endDate).diff(dayjs(), 'day')} days
-                          </div>
-                          <div>
-                            <strong>Candidates:</strong>{' '}
-                            {election.candidates.length}
-                          </div>
-                        </div>
-                        <Button variant="primary" className="w-100">
-                          Vote Now
-                        </Button>
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                ))}
-              </Row>
-            ) : (
-              <Alert variant="info">No elections currently running</Alert>
-            )}
-          </Col>
-        </Row>
-
-        {/* Upcoming Elections */}
-        <Row>
-          <Col>
-            <h4 className="mb-4">
-              Upcoming Elections <Badge bg="secondary">{upcoming.length}</Badge>
-            </h4>
-
-            {upcoming.length > 0 ? (
-              <Row xs={1} md={2} lg={3} className="g-4">
-                {upcoming.map((election) => (
-                  <Col key={election._id}>
-                    <Card className="h-100 shadow-sm">
-                      <Card.Body>
-                        <Card.Title>{election.title}</Card.Title>
-                        <div className="text-muted small">
-                          <div className="mb-1">
-                            <strong>Starts:</strong>{' '}
-                            {dayjs(election.startDate).format('MMM D, YYYY')}
-                          </div>
-                          <div className="mb-1">
-                            <strong>Duration:</strong>{' '}
-                            {dayjs(election.endDate).diff(
-                              election.startDate,
-                              'day'
-                            )}{' '}
-                            days
-                          </div>
-                          <div>
-                            <strong>Candidates:</strong>{' '}
-                            {election.candidates.length}
-                          </div>
-                        </div>
-                        <Button
-                          variant="outline-secondary"
-                          className="w-100"
-                          disabled
-                        >
-                          Starts in{' '}
-                          {dayjs(election.startDate).diff(dayjs(), 'day')} days
-                        </Button>
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                ))}
-              </Row>
-            ) : (
-              <Alert variant="info">No upcoming elections scheduled</Alert>
-            )}
-          </Col>
-        </Row>
-      </Container>
+            <input
+              type="text"
+              className="eventCodeInput m-2 rounded-3 text-center fs-5"
+              placeholder="123 456"
+            />
+            <Button variant="primary" className="px-4 m-2 rounded-3 fs-5 ">
+              Join
+            </Button>
+          </div>
+        </div>
+        <LiveElections />
+      </div>
     </>
   );
 };
