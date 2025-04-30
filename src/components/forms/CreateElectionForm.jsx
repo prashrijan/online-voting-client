@@ -1,24 +1,51 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import './styles/CreateElectionForm.styles.css';
-import { useElection } from '../../context/ElectionContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateElectionField } from '../../features/election/elecitonSlice';
 
 const CreateElectionForm = () => {
-  const { electionData, updateElectionData } = useElection();
+  const { electionData } = useSelector((state) => state.election);
+  const dispatch = useDispatch();
+  const [coverImageFile, setCoverImageFile] = useState(null);
 
   useEffect(() => {
-    if (electionData.coverImageFile) {
-      const objectUrl = URL.createObjectURL(electionData.coverImageFile);
-      updateElectionData('coverImagePreview', objectUrl);
-      return () => URL.revokeObjectURL(objectUrl);
-    } else {
-      updateElectionData('coverImagePreview', null);
+    if (electionData.coverImagePreview && !coverImageFile) {
+      fetch(electionData.coverImagePreview)
+        .then((res) => {
+          res.blob();
+        })
+        .then((blob) => {
+          const file = new File([blob], 'cover-image.jpg', { type: blob.type });
+
+          setCoverImageFile(file);
+        });
     }
-  }, [electionData.coverImageFile]);
+  }, [electionData.coverImagePreview]);
+
+  const handleUpdate = (key, value) => {
+    dispatch(updateElectionField({ key, value }));
+  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) setSelectedFile(file);
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert('File size must be less than 2MB');
+        return;
+      }
+      setCoverImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        dispatch(
+          updateElectionField({
+            key: 'coverImagePreview',
+            value: reader.result,
+          })
+        );
+      };
+      reader.readAsDataURL(file);
+    }
   };
   return (
     <Form>
@@ -28,7 +55,7 @@ const CreateElectionForm = () => {
           type="text"
           placeholder="Enter title"
           value={electionData.title}
-          onChange={(e) => updateElectionData('title', e.target.value)}
+          onChange={(e) => handleUpdate('title', e.target.value)}
         />
       </Form.Group>
 
@@ -37,7 +64,7 @@ const CreateElectionForm = () => {
         <Form.Control
           type="date"
           value={electionData.startDate}
-          onChange={(e) => updateElectionData('startDate', e.target.value)}
+          onChange={(e) => handleUpdate('startDate', e.target.value)}
         />
       </Form.Group>
 
@@ -46,7 +73,7 @@ const CreateElectionForm = () => {
         <Form.Control
           type="time"
           value={electionData.startTime}
-          onChange={(e) => updateElectionData('startTime', e.target.value)}
+          onChange={(e) => handleUpdate('startTime', e.target.value)}
         />
       </Form.Group>
 
@@ -55,7 +82,7 @@ const CreateElectionForm = () => {
         <Form.Control
           type="date"
           value={electionData.endDate}
-          onChange={(e) => updateElectionData('endDate', e.target.value)}
+          onChange={(e) => handleUpdate('endDate', e.target.value)}
         />
       </Form.Group>
 
@@ -64,7 +91,7 @@ const CreateElectionForm = () => {
         <Form.Control
           type="time"
           value={electionData.endTime}
-          onChange={(e) => updateElectionData('endTime', e.target.value)}
+          onChange={(e) => handleUpdate('endTime', e.target.value)}
         />
       </Form.Group>
 
@@ -74,9 +101,7 @@ const CreateElectionForm = () => {
           <Form.Control
             type="file"
             accept="image/*"
-            onChange={(e) =>
-              updateElectionData('coverImageFile', e.target.files[0])
-            }
+            onChange={handleFileChange}
           />
           {electionData.coverImagePreview ? (
             <img
@@ -99,7 +124,7 @@ const CreateElectionForm = () => {
                 <br />
                 Browse Local Files
               </p>
-              <p className="file-hint">Max File Size: 2Mb</p>
+              <p className="file-hint">Max File Size: 2MB</p>
             </>
           )}
         </div>
@@ -111,7 +136,7 @@ const CreateElectionForm = () => {
           type="radio"
           name="visibility"
           value={electionData.visibility}
-          onChange={(val) => updateElectionData('visibility', val)}
+          onChange={(val) => handleUpdate('visibility', val)}
         >
           <ToggleButton id="public" value="public" variant="outline-primary">
             Public

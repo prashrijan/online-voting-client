@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Form,
   Dropdown,
@@ -7,7 +7,14 @@ import {
   Col,
   Image,
   InputGroup,
+  Table,
+  Button,
 } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  addCandidate,
+  removeCandidate,
+} from '../../features/election/elecitonSlice';
 
 const dummyCandidates = [
   {
@@ -37,30 +44,44 @@ const dummyCandidates = [
 const SearchCandidateForm = () => {
   const [search, setSearch] = useState('');
   const [filtered, setFiltered] = useState([]);
+  const { electionData } = useSelector((state) => state.election);
+  const dispatch = useDispatch();
 
-  const handleSearch = (e) => {
-    const value = e.target.value;
-    setSearch(value);
-    if (value.length > 1) {
-      const matches = dummyCandidates.filter((c) =>
-        c.email.toLowerCase().includes(value.toLowerCase())
-      );
-      setFiltered(matches);
-    } else {
-      setFiltered([]);
-    }
+  useEffect(() => {
+    const debounceFunction = setTimeout(() => {
+      if (search) {
+        const matches = dummyCandidates.filter((candidate) =>
+          candidate.email.toLowerCase().includes(search.toLowerCase())
+        );
+        setFiltered(matches);
+      } else {
+        setFiltered([]);
+      }
+    }, 500);
+
+    return () => clearTimeout(debounceFunction);
+  }, [search]);
+
+  const handleAddCandidate = (candidate) => {
+    dispatch(addCandidate(candidate));
+    setSearch('');
+    setFiltered([]);
+  };
+
+  const handleDeleteCandidate = (candidateId) => {
+    dispatch(removeCandidate({ id: candidateId }));
   };
 
   return (
     <>
-      <Form.Group controlId="candidateSearch">
+      <Form.Group controlId="candidateSearch" className="mb-4">
         <Form.Label>Search Candidate by Email</Form.Label>
         <InputGroup>
           <Form.Control
             type="text"
             placeholder="Enter candidate email"
             value={search}
-            onChange={handleSearch}
+            onChange={(e) => setSearch(e.target.value)}
           />
         </InputGroup>
       </Form.Group>
@@ -68,7 +89,11 @@ const SearchCandidateForm = () => {
       {filtered.length > 0 && (
         <Dropdown.Menu show className="mt-2 shadow" style={{ width: '25rem' }}>
           {filtered.map((candidate) => (
-            <Dropdown.Item key={candidate.id} className="p-2">
+            <Dropdown.Item
+              key={candidate.id}
+              className="p-2"
+              onClick={() => handleAddCandidate(candidate)}
+            >
               <Card className="p-2">
                 <Row className="align-items-center">
                   <Col xs={9}>
@@ -93,6 +118,52 @@ const SearchCandidateForm = () => {
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>
+      )}
+
+      {electionData.candidates.length > 0 && (
+        <div className="mt-4">
+          <h5>Selected Candidates</h5>
+          <Table bordered hover responsive>
+            <thead>
+              <tr>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Slogan</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {electionData.candidates.map((candidate) => (
+                <tr key={candidate.id}>
+                  <td>
+                    <Image
+                      src={candidate.profilePic}
+                      roundedCircle
+                      style={{
+                        width: '50px',
+                        height: '50px',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  </td>
+                  <td>{candidate.name}</td>
+                  <td>{candidate.email}</td>
+                  <td>{candidate.slogan}</td>
+                  <td>
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      onClick={() => handleDeleteCandidate(candidate.id)}
+                    >
+                      Remove
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
       )}
     </>
   );
