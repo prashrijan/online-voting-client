@@ -12,6 +12,7 @@ import CreateElection from '../pages/Election/CreateElection';
 import About from '../pages/About';
 import Contact from '../pages/Contact';
 import VerifyAccount from '../pages/auth/VerifyAccount';
+import { ElectionProvider } from '../context/ElectionContext';
 
 const AppRoutes = () => {
   return (
@@ -26,7 +27,14 @@ const AppRoutes = () => {
         <Route path="/google-auth-success" element={<GoogleAuthSuccess />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/createElection" element={<CreateElection />} />
+        <Route
+          path="/createElection"
+          element={
+            <ElectionProvider>
+              <CreateElection />
+            </ElectionProvider>
+          }
+        />
       </Route>
       {/* private routes */}
       <Route path="/user" element={<ProtectedLayout />}>
