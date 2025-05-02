@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchElectionsAction } from '../../features/election/electionAction';
 
 const LaunchElectionForm = () => {
-  const { electionData } = useSelector((state) => state.election);
+  const { electionData, candidates } = useSelector((state) => state.election);
   const dispatch = useDispatch();
+  console.log(electionData);
 
   const handleSubmit = () => {
     const formData = new FormData();
@@ -16,12 +17,20 @@ const LaunchElectionForm = () => {
     formData.append('endDate', electionData.endDate);
     formData.append('endTime', electionData.endTime);
     formData.append('visibility', electionData.visibility);
-    formData.append('coverImage', electionData.coverImageFile);
 
+    formData.append('candidate', JSON.stringify(electionData.candidateIds));
+
+    if (electionData.coverImageFile) {
+      formData.append('coverImage', electionData.coverImageFile);
+    }
     for (let [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
   };
+
+  const displayData = electionData.candidateIds
+    .map((id) => candidates.find((c) => c._id === id))
+    .filter(Boolean);
 
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto' }}>
@@ -66,7 +75,7 @@ const LaunchElectionForm = () => {
       <Card>
         <Card.Header as="h5">Candidates</Card.Header>
         <Card.Body>
-          {electionData.candidates?.length > 0 ? (
+          {displayData?.length > 0 ? (
             <Table striped bordered hover responsive>
               <thead>
                 <tr>
@@ -78,7 +87,7 @@ const LaunchElectionForm = () => {
                 </tr>
               </thead>
               <tbody>
-                {electionData.candidates.map((candidate, index) => (
+                {displayData.map((candidate, index) => (
                   <tr key={candidate.id}>
                     <td>{index + 1}</td>
                     <td>

@@ -45,10 +45,10 @@ const dummyCandidates = [
 const SearchCandidateForm = () => {
   const [search, setSearch] = useState('');
   const [filtered, setFiltered] = useState([]);
-  const { electionData } = useSelector((state) => state.election);
+  const { electionData, candidates } = useSelector((state) => state.election);
   const { activeUsers } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  console.log(activeUsers);
+
   useEffect(() => {
     const debounceFunction = setTimeout(() => {
       if (search) {
@@ -65,14 +65,19 @@ const SearchCandidateForm = () => {
   }, [search]);
 
   const handleAddCandidate = (candidate) => {
+    console.log(candidate);
     dispatch(addCandidate(candidate));
     setSearch('');
     setFiltered([]);
   };
 
   const handleDeleteCandidate = (candidateId) => {
-    dispatch(removeCandidate({ id: candidateId }));
+    dispatch(removeCandidate({ _id: candidateId }));
   };
+
+  const displayData = electionData.candidateIds
+    .map((id) => candidates.find((c) => c._id === id))
+    .filter(Boolean);
 
   return (
     <>
@@ -126,7 +131,7 @@ const SearchCandidateForm = () => {
         </Dropdown.Menu>
       )}
 
-      {electionData.candidates.length > 0 ? (
+      {displayData?.length > 0 ? (
         <div className="mt-4">
           <h5>Selected Candidates</h5>
           <Table bordered hover responsive>
@@ -140,7 +145,7 @@ const SearchCandidateForm = () => {
               </tr>
             </thead>
             <tbody>
-              {electionData.candidates.map((candidate) => (
+              {displayData.map((candidate) => (
                 <tr key={candidate.id}>
                   <td>
                     <Image
