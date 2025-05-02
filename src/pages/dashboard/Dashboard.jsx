@@ -14,7 +14,6 @@ const Dashboard = () => {
     dispatch(fetchElectionsAction());
   }, [publicElections]);
 
-  console.log(publicElections);
   return (
     <Container className="p-5">
       <div className="w-100">

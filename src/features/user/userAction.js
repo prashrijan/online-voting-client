@@ -1,5 +1,5 @@
-import { fetchUserApi } from './userApi';
-import { setUser } from './userSlice';
+import { fetchAllUserApi, fetchUserApi } from './userApi';
+import { setActiveUsers, setUser } from './userSlice';
 
 import { refreshTokenApi } from '../../services/authApi';
 
@@ -35,5 +35,17 @@ export const autologin = () => async (dispatch) => {
     } catch (error) {
       console.error('Autologin failed with refresh token', error.message);
     }
+  }
+};
+
+export const fetchAllUserAction = () => async (dispatch) => {
+  try {
+    const { data } = await fetchAllUserApi();
+
+    console.log(data);
+
+    data && dispatch(setActiveUsers(data));
+  } catch (error) {
+    console.error(error);
   }
 };

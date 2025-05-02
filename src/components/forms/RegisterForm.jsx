@@ -33,7 +33,7 @@ const RegisterForm = () => {
     setLoading(true);
     try {
       const res = await signUpUserApi(form);
-      
+
       setLoading(false);
       res && res.success && resetForm();
     } catch (error) {
