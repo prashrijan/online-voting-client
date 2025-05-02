@@ -1,6 +1,6 @@
 import { fetchUserApi } from './userApi';
 import { setUser } from './userSlice';
-import { apiProcessor } from '../../services/apiProcessor';
+
 import { refreshTokenApi } from '../../services/authApi';
 
 export const fetchUserAction = () => async (dispatch) => {

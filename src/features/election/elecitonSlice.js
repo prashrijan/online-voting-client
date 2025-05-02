@@ -12,6 +12,7 @@ const initialState = {
     coverImageFile: null,
     coverImagePreview: null,
   },
+  publicElections: [],
 };
 
 const electionSlice = createSlice({
@@ -20,6 +21,9 @@ const electionSlice = createSlice({
   reducers: {
     setElection: (state, action) => {
       state.electionData = action.payload;
+    },
+    setPublicElection: (state, action) => {
+      state.publicElections = action.payload;
     },
     updateElectionField: (state, action) => {
       const { key, value } = action.payload;
@@ -46,6 +50,8 @@ const electionSlice = createSlice({
 });
 
 export const {
+  setElection,
+  setPublicElection,
   updateElectionField,
   addCandidate,
   removeCandidate,

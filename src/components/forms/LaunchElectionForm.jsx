@@ -1,9 +1,11 @@
 import React from 'react';
 import { Button, Card, Table } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchElectionsAction } from '../../features/election/electionAction';
 
 const LaunchElectionForm = () => {
   const { electionData } = useSelector((state) => state.election);
+  const dispatch = useDispatch();
 
   const handleSubmit = () => {
     const formData = new FormData();

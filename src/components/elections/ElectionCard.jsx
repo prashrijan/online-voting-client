@@ -11,6 +11,8 @@ import {
 } from 'react-icons/fi';
 import './ElectionCard.css';
 
+import { formatDate } from '../../utils/date';
+
 function ElectionCard({ cardData }) {
   // Function to calculate time remaining
   const getTimeRemaining = (endDate) => {
@@ -29,11 +31,9 @@ function ElectionCard({ cardData }) {
   // Function to get button text based on status
   const getButtonText = (status) => {
     switch (status) {
-      case 'Live':
+      case 'active':
         return 'Vote Now';
-      case 'Active':
-        return 'View Election';
-      case 'Upcoming':
+      case 'pending':
         return 'View Details';
       default:
         return 'View Results';
@@ -43,11 +43,9 @@ function ElectionCard({ cardData }) {
   // Function to get button variant based on status
   const getButtonVariant = (status) => {
     switch (status) {
-      case 'Live':
+      case 'active':
         return 'danger';
-      case 'Active':
-        return 'primary';
-      case 'Upcoming':
+      case 'pending':
         return 'warning';
       default:
         return 'secondary';
@@ -56,17 +54,17 @@ function ElectionCard({ cardData }) {
 
   return (
     <div className="election-card-container">
-      {cardData.map((election) => (
+      {cardData?.map((election) => (
         <Card key={election.id} className="election-card">
           <div className="card-image-container">
             <Card.Img
               variant="top"
-              src={election.image || defaultImg}
+              src={election.coverImage || defaultImg}
               className="card-image"
             />
             <div className={`status-badge ${election.status.toLowerCase()}`}>
-              {election.status}
-              {election.status === 'Live' && (
+              {election.status == 'active' ? 'Active' : 'Upcoming'}
+              {election.status === 'active' && (
                 <span className="pulse-dot"></span>
               )}
             </div>
@@ -93,11 +91,11 @@ function ElectionCard({ cardData }) {
                 <div>
                   <div className="date-time">
                     <span className="label">Start:</span>
-                    {election.startDate} at {election.startTime}
+                    {formatDate(election.startDate)} at {election.startTime}
                   </div>
                   <div className="date-time">
                     <span className="label">End:</span>
-                    {election.endDate} at {election.endTime}
+                    {formatDate(election.endDate)} at {election.endTime}
                   </div>
                 </div>
               </div>
@@ -106,7 +104,7 @@ function ElectionCard({ cardData }) {
             <div className="stats-container">
               <div className="stat-item">
                 <FiUsers className="icon" />
-                <span>{election.noOfCandidates} Candidates</span>
+                <span>{election.candidates?.length} Candidates</span>
               </div>
               <div className="stat-item">
                 <FiUsers className="icon" />
@@ -122,7 +120,7 @@ function ElectionCard({ cardData }) {
             >
               {getButtonText(election.status)}
             </Button>
-            {election.status === 'Active' && (
+            {election.status === 'active' && (
               <div className="time-remaining">
                 <FiClock className="icon" />
                 <span>{getTimeRemaining(election.endDate)}</span>
