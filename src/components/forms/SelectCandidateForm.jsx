@@ -15,6 +15,7 @@ import {
   addCandidate,
   removeCandidate,
 } from '../../features/election/elecitonSlice';
+import { fetchAllUserAction } from '../../features/user/userAction';
 
 const dummyCandidates = [
   {
@@ -44,13 +45,14 @@ const dummyCandidates = [
 const SearchCandidateForm = () => {
   const [search, setSearch] = useState('');
   const [filtered, setFiltered] = useState([]);
-  const { electionData } = useSelector((state) => state.election);
+  const { electionData, candidates } = useSelector((state) => state.election);
+  const { activeUsers } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const debounceFunction = setTimeout(() => {
       if (search) {
-        const matches = dummyCandidates.filter((candidate) =>
+        const matches = activeUsers.filter((candidate) =>
           candidate.email.toLowerCase().includes(search.toLowerCase())
         );
         setFiltered(matches);
@@ -69,8 +71,12 @@ const SearchCandidateForm = () => {
   };
 
   const handleDeleteCandidate = (candidateId) => {
-    dispatch(removeCandidate({ id: candidateId }));
+    dispatch(removeCandidate({ _id: candidateId }));
   };
+
+  const displayData = electionData?.candidateIds
+    .map((id) => candidates.find((c) => c._id === id))
+    .filter(Boolean);
 
   return (
     <>
@@ -97,13 +103,17 @@ const SearchCandidateForm = () => {
               <Card className="p-2">
                 <Row className="align-items-center">
                   <Col xs={9}>
-                    <h5 className="mb-1">{candidate.name}</h5>
+                    <h5 className="mb-1">{candidate.fullName}</h5>
                     <p className="mb-1">{candidate.email}</p>
-                    <small className="text-muted">{candidate.slogan}</small>
+                    <small className="text-muted">
+                      {candidate.bio
+                        ? candidate.bio
+                        : "User hasn't added any slogan yet."}
+                    </small>
                   </Col>
                   <Col xs={3} className="text-end">
                     <Image
-                      src={candidate.profilePic}
+                      src={candidate.profileImage}
                       roundedCircle
                       fluid
                       style={{
@@ -120,7 +130,7 @@ const SearchCandidateForm = () => {
         </Dropdown.Menu>
       )}
 
-      {electionData.candidates.length > 0 ? (
+      {displayData?.length > 0 ? (
         <div className="mt-4">
           <h5>Selected Candidates</h5>
           <Table bordered hover responsive>
@@ -134,11 +144,11 @@ const SearchCandidateForm = () => {
               </tr>
             </thead>
             <tbody>
-              {electionData.candidates.map((candidate) => (
+              {displayData.map((candidate) => (
                 <tr key={candidate.id}>
                   <td>
                     <Image
-                      src={candidate.profilePic}
+                      src={candidate.profileImage}
                       roundedCircle
                       style={{
                         width: '50px',
@@ -147,9 +157,9 @@ const SearchCandidateForm = () => {
                       }}
                     />
                   </td>
-                  <td>{candidate.name}</td>
+                  <td>{candidate.fullName}</td>
                   <td>{candidate.email}</td>
-                  <td>{candidate.slogan}</td>
+                  <td>{candidate.bio ? candidate.bio : 'No bio.'}</td>
                   <td>
                     <Button
                       variant="danger"

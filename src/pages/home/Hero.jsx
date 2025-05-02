@@ -9,7 +9,6 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const getStarted = () => {
-    console.log('get Started');
     navigate('/register');
   };
 

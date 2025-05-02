@@ -15,3 +15,20 @@ export const fetchElections = async () => {
     console.error(error);
   }
 };
+export const createElectionApi = async (data) => {
+  try {
+    const res = await apiProcessor({
+      method: 'POST',
+      url: electionEndPoint,
+      isPrivate: true,
+      showToast: true,
+      payload: data,
+      contentType: 'multipart/form-data',
+    });
+
+    return res;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

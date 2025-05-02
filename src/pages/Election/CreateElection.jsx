@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Nav } from 'react-bootstrap';
 import CreateElectionForm from '../../components/forms/CreateElectionForm';
 import './styles/CreateElection.css';
 import LaunchElectionForm from '../../components/Forms/LaunchElectionForm';
 import SearchCandidateForm from '../../components/Forms/SelectCandidateForm';
+import { fetchAllUserAction } from '../../features/user/userAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 const CreateElection = () => {
   const [step, setStep] = useState(1);
+  const dispatch = useDispatch();
 
   const handleNext = () => {
     setStep((prev) => (prev > 3 ? 1 : prev + 1));
@@ -15,6 +18,10 @@ const CreateElection = () => {
   const handleBack = () => {
     setStep((prev) => (prev < 1 ? 1 : prev - 1));
   };
+
+  useEffect(() => {
+    dispatch(fetchAllUserAction());
+  }, []);
   return (
     <Container className="py-4 d-flex justify-content-center">
       <div className="election-form-wrapper">

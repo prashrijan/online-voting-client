@@ -89,21 +89,29 @@ export const apiProcessor = async ({
       'An unknown error occured. Please try again.';
 
     if (errorMessage == 'jwt expired') {
-      const { data } = await refreshTokenApi();
+      console.log('Token expired refreshing');
+      try {
+        const { data } = await refreshTokenApi();
 
-      data && sessionStorage.setItem('accessToken', data);
+        if (data) {
+          sessionStorage.setItem('accessToken', data.accessToken);
 
-      return await apiProcessor({
-        url,
-        method,
-        payload,
-        showToast,
-        isPrivate,
-        isRefresh,
-      });
-    } else {
-      sessionStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
+          const retryResponse = await apiProcessor({
+            url,
+            method,
+            payload,
+            showToast,
+            isPrivate,
+            isRefresh: false,
+          });
+
+          return retryResponse;
+        }
+      } catch (error) {
+        sessionStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        throw error;
+      }
     }
     showToast &&
       toast.error(errorMessage, {
