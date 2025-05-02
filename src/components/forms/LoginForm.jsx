@@ -1,22 +1,22 @@
-import React, { use, useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import { FcGoogle } from "react-icons/fc";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { BarLoader } from "react-spinners";
-import InputGroup from "react-bootstrap/InputGroup";
-import { loginValidationSchema } from "../../validation/LoginValidation";
+import React, { use, useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { FcGoogle } from 'react-icons/fc';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { BarLoader } from 'react-spinners';
+import InputGroup from 'react-bootstrap/InputGroup';
+import { loginValidationSchema } from '../../validation/LoginValidation';
 // import { loginUserApi } from "../../services/authApi";
-import useForm from "../../hooks/useForm";
-import { loginUserApi } from "../../services/authApi";
-import { useDispatch, useSelector } from "react-redux";
-import { autologin, fetchUserAction } from "../../features/user/userAction";
-import { useNavigate } from "react-router-dom";
+import useForm from '../../hooks/useForm';
+import { loginUserApi } from '../../services/authApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { autologin, fetchUserAction } from '../../features/user/userAction';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const formInitialValues = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   };
 
   const [loading, setLoading] = useState(false);
@@ -28,18 +28,15 @@ const LoginForm = () => {
   //user from reduxstore
   const { user } = useSelector((state) => state.user);
 
-
   useEffect(() => {
     if (user?._id) {
       // if user is already logged in, redirect to user page
-      navigate("/user");
-    }else{
-      dispatch(autologin())
+      navigate('/user');
+    } else {
+      dispatch(autologin());
     }
   }, [user?._id, navigate]);
 
-
-   
   const { form, handleOnChange, handleOnSubmit, errors, resetForm } = useForm(
     formInitialValues,
     loginValidationSchema
@@ -51,20 +48,20 @@ const LoginForm = () => {
       const { data } = await loginUserApi(form);
 
       if (data?.accessToken && data?.refreshToken) {
-        sessionStorage.setItem("accessToken", data.accessToken);
-        localStorage.setItem("refreshToken", data.refreshToken);
+        sessionStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
 
-                await dispatch(fetchUserAction());
-                navigate("/user");
-            }
-            setLoading(false);
-        } catch (error) {
-            setLoading(false);
-            console.log(error);
-        } finally {
-            setLoading(false);
-        }
-    };
+        await dispatch(fetchUserAction());
+        navigate('/user');
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -75,7 +72,7 @@ const LoginForm = () => {
       {loading ? (
         <div
           className="py-4 d-flex flex-column align-items-center justify-content-center"
-          style={{ height: "500px" }}
+          style={{ height: '500px' }}
         >
           <BarLoader color="#0d6efd" />
           <p className="mt-2">Logging you in...</p>
@@ -83,7 +80,7 @@ const LoginForm = () => {
       ) : (
         <Form
           className="p-4 bg-white rounded-3 shadow-sm"
-          style={{ width: "100%", maxWidth: "500px" }}
+          style={{ width: '100%', maxWidth: '500px' }}
           onSubmit={(e) => handleOnSubmit(e, () => handleLogin())}
         >
           <h3 className="text-center mb-4 fw-bold text-primary">
@@ -111,7 +108,7 @@ const LoginForm = () => {
             <Form.Label className="fw-semibold">Password</Form.Label>
             <InputGroup>
               <Form.Control
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 name="password"
                 placeholder="Enter your password"
                 value={form.password}
@@ -121,7 +118,7 @@ const LoginForm = () => {
               <Button
                 onClick={togglePasswordVisibility}
                 className="d-flex align-items-center justify-content-center"
-                style={{ width: "40px" }}
+                style={{ width: '40px' }}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </Button>
@@ -170,7 +167,7 @@ const LoginForm = () => {
           </Button>
 
           <p className="text-center mt-4 mb-0">
-            Don't have an account?{" "}
+            Don't have an account?{' '}
             <a href="/register" className="text-decoration-none fw-semibold">
               Register
             </a>
