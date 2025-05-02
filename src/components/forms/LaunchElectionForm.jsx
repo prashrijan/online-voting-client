@@ -8,7 +8,6 @@ const LaunchElectionForm = () => {
   const { electionData, candidates } = useSelector((state) => state.election);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(electionData);
 
   const handleSubmit = async () => {
     const formData = new FormData();

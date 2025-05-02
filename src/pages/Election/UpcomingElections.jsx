@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux';
 const UpcomingElections = () => {
   const publicElection = useSelector((state) => state.election.publicElections);
 
-  console.log(publicElection);
-
   const upcoming = publicElection?.filter(
     (election) => election.status === 'pending'
   );

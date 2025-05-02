@@ -65,7 +65,6 @@ const SearchCandidateForm = () => {
   }, [search]);
 
   const handleAddCandidate = (candidate) => {
-    console.log(candidate);
     dispatch(addCandidate(candidate));
     setSearch('');
     setFiltered([]);
