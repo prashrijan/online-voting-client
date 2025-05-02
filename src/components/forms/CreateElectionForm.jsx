@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { Form, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import './styles/CreateElectionForm.styles.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateElectionField } from '../../features/election/elecitonSlice';
+import { to12HourFormat, to24HourFormat } from '../../utils/time';
 
 const CreateElectionForm = () => {
   const { electionData } = useSelector((state) => state.election);
@@ -35,6 +36,7 @@ const CreateElectionForm = () => {
         return;
       }
       setCoverImageFile(file);
+      dispatch(updateElectionField({ key: 'coverImageFile', value: file }));
       const reader = new FileReader();
       reader.onloadend = () => {
         dispatch(
@@ -72,8 +74,12 @@ const CreateElectionForm = () => {
         <Form.Label>Start Time</Form.Label>
         <Form.Control
           type="time"
-          value={electionData.startTime}
-          onChange={(e) => handleUpdate('startTime', e.target.value)}
+          value={
+            electionData.startTime ? to24HourFormat(electionData.startTime) : ''
+          }
+          onChange={(e) =>
+            handleUpdate('startTime', to12HourFormat(e.target.value))
+          }
         />
       </Form.Group>
 
@@ -90,8 +96,12 @@ const CreateElectionForm = () => {
         <Form.Label>End Time</Form.Label>
         <Form.Control
           type="time"
-          value={electionData.endTime}
-          onChange={(e) => handleUpdate('endTime', e.target.value)}
+          value={
+            electionData.endTime ? to24HourFormat(electionData.endTime) : ''
+          }
+          onChange={(e) =>
+            handleUpdate('endTime', to12HourFormat(e.target.value))
+          }
         />
       </Form.Group>
 

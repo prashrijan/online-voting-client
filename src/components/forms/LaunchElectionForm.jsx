@@ -6,7 +6,19 @@ const LaunchElectionForm = () => {
   const { electionData } = useSelector((state) => state.election);
 
   const handleSubmit = () => {
-    console.log(electionData);
+    const formData = new FormData();
+
+    formData.append('title', electionData.title);
+    formData.append('startDate', electionData.startDate);
+    formData.append('startTime', electionData.startTime);
+    formData.append('endDate', electionData.endDate);
+    formData.append('endTime', electionData.endTime);
+    formData.append('visibility', electionData.visibility);
+    formData.append('coverImage', electionData.coverImageFile);
+
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
   };
 
   return (
