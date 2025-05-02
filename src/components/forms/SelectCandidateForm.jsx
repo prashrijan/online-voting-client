@@ -75,7 +75,7 @@ const SearchCandidateForm = () => {
     dispatch(removeCandidate({ _id: candidateId }));
   };
 
-  const displayData = electionData.candidateIds
+  const displayData = electionData?.candidateIds
     .map((id) => candidates.find((c) => c._id === id))
     .filter(Boolean);
 

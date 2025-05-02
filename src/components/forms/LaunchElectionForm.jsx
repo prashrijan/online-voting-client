@@ -1,14 +1,16 @@
 import React from 'react';
 import { Button, Card, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchElectionsAction } from '../../features/election/electionAction';
+import { createElectionAction } from '../../features/election/electionAction';
+import { useNavigate } from 'react-router-dom';
 
 const LaunchElectionForm = () => {
   const { electionData, candidates } = useSelector((state) => state.election);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   console.log(electionData);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const formData = new FormData();
 
     formData.append('title', electionData.title);
@@ -18,20 +20,27 @@ const LaunchElectionForm = () => {
     formData.append('endTime', electionData.endTime);
     formData.append('visibility', electionData.visibility);
 
-    formData.append('candidate', JSON.stringify(electionData.candidateIds));
+    electionData.candidateIds.forEach((id) => {
+      formData.append('candidate', id);
+    });
 
     if (electionData.coverImageFile) {
       formData.append('coverImage', electionData.coverImageFile);
     }
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
+
+    try {
+      await dispatch(createElectionAction(formData));
+      navigate('/user');
+    } catch (error) {
+      console.error('Election creation failed: ', error);
     }
   };
 
-  const displayData = electionData.candidateIds
-    .map((id) => candidates.find((c) => c._id === id))
-    .filter(Boolean);
-
+  const displayData = electionData?.candidateIds
+    ? electionData.candidateIds
+        .map((id) => candidates.find((c) => c._id === id))
+        .filter(Boolean)
+    : [];
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto' }}>
       <Card className="mb-4">
@@ -88,7 +97,7 @@ const LaunchElectionForm = () => {
               </thead>
               <tbody>
                 {displayData.map((candidate, index) => (
-                  <tr key={candidate.id}>
+                  <tr key={candidate._id}>
                     <td>{index + 1}</td>
                     <td>
                       <img
