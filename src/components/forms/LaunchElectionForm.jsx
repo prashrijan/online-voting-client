@@ -5,6 +5,10 @@ import { useSelector } from 'react-redux';
 const LaunchElectionForm = () => {
   const { electionData } = useSelector((state) => state.election);
 
+  const handleSubmit = () => {
+    console.log(electionData);
+  };
+
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto' }}>
       <Card className="mb-4">
@@ -41,7 +45,6 @@ const LaunchElectionForm = () => {
             <strong>Visibility:</strong>{' '}
             {electionData.visibility || 'Not specified'}
           </Card.Text>
-          <Button variant="primary">Launch Election</Button>
         </Card.Body>
       </Card>
 
@@ -92,6 +95,9 @@ const LaunchElectionForm = () => {
             </div>
           )}
         </Card.Body>
+        <Button variant="primary" onClick={handleSubmit}>
+          Launch Election
+        </Button>
       </Card>
     </div>
   );
