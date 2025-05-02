@@ -84,7 +84,7 @@ const LaunchElectionForm = () => {
                     <td>
                       <img
                         src={
-                          candidate.profilePic ||
+                          candidate.profileImage ||
                           'https://via.placeholder.com/50'
                         }
                         alt={candidate.name}
@@ -96,9 +96,9 @@ const LaunchElectionForm = () => {
                         }}
                       />
                     </td>
-                    <td>{candidate.name}</td>
+                    <td>{candidate.fullName}</td>
                     <td>{candidate.email}</td>
-                    <td>{candidate.slogan || '-'}</td>
+                    <td>{candidate.bio || 'No bio'}</td>
                   </tr>
                 ))}
               </tbody>
