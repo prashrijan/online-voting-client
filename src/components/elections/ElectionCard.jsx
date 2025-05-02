@@ -55,7 +55,7 @@ function ElectionCard({ cardData }) {
   return (
     <div className="election-card-container">
       {cardData?.map((election) => (
-        <Card key={election.id} className="election-card">
+        <Card key={election._id} className="election-card">
           <div className="card-image-container">
             <Card.Img
               variant="top"

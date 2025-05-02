@@ -1,13 +1,15 @@
 import React from 'react';
 import { Button, Card, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchElectionsAction } from '../../features/election/electionAction';
+import { createElectionAction } from '../../features/election/electionAction';
+import { useNavigate } from 'react-router-dom';
 
 const LaunchElectionForm = () => {
-  const { electionData } = useSelector((state) => state.election);
+  const { electionData, candidates } = useSelector((state) => state.election);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const formData = new FormData();
 
     formData.append('title', electionData.title);
@@ -16,13 +18,28 @@ const LaunchElectionForm = () => {
     formData.append('endDate', electionData.endDate);
     formData.append('endTime', electionData.endTime);
     formData.append('visibility', electionData.visibility);
-    formData.append('coverImage', electionData.coverImageFile);
 
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
+    electionData.candidateIds.forEach((id) => {
+      formData.append('candidate', id);
+    });
+
+    if (electionData.coverImageFile) {
+      formData.append('coverImage', electionData.coverImageFile);
+    }
+
+    try {
+      await dispatch(createElectionAction(formData));
+      navigate('/user');
+    } catch (error) {
+      console.error('Election creation failed: ', error);
     }
   };
 
+  const displayData = electionData?.candidateIds
+    ? electionData.candidateIds
+        .map((id) => candidates.find((c) => c._id === id))
+        .filter(Boolean)
+    : [];
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto' }}>
       <Card className="mb-4">
@@ -66,7 +83,7 @@ const LaunchElectionForm = () => {
       <Card>
         <Card.Header as="h5">Candidates</Card.Header>
         <Card.Body>
-          {electionData.candidates?.length > 0 ? (
+          {displayData?.length > 0 ? (
             <Table striped bordered hover responsive>
               <thead>
                 <tr>
@@ -78,13 +95,13 @@ const LaunchElectionForm = () => {
                 </tr>
               </thead>
               <tbody>
-                {electionData.candidates.map((candidate, index) => (
-                  <tr key={candidate.id}>
+                {displayData.map((candidate, index) => (
+                  <tr key={candidate._id}>
                     <td>{index + 1}</td>
                     <td>
                       <img
                         src={
-                          candidate.profilePic ||
+                          candidate.profileImage ||
                           'https://via.placeholder.com/50'
                         }
                         alt={candidate.name}
@@ -96,9 +113,9 @@ const LaunchElectionForm = () => {
                         }}
                       />
                     </td>
-                    <td>{candidate.name}</td>
+                    <td>{candidate.fullName}</td>
                     <td>{candidate.email}</td>
-                    <td>{candidate.slogan || '-'}</td>
+                    <td>{candidate.bio || 'No bio'}</td>
                   </tr>
                 ))}
               </tbody>

@@ -63,12 +63,19 @@ export const refreshTokenApi = async () => {
       isRefresh: true,
     });
 
+    console.log(res);
+
+    if (!res?.data?.accessToken) {
+      throw new Error('Invalid token response');
+    }
     return res;
   } catch (error) {
-    console.error(error);
+    // Clear tokens if refresh fails
+    sessionStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    throw error;
   }
 };
-
 export const verifyEmail = async (token) => {
   try {
     const res = apiProcessor({

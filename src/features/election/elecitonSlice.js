@@ -1,3 +1,4 @@
+// electionSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -7,11 +8,12 @@ const initialState = {
     startTime: '',
     endDate: '',
     endTime: '',
-    candidates: [],
+    candidateIds: [],
     visibility: 'private',
     coverImageFile: null,
     coverImagePreview: null,
   },
+  candidates: [],
   publicElections: [],
 };
 
@@ -27,22 +29,21 @@ const electionSlice = createSlice({
     },
     updateElectionField: (state, action) => {
       const { key, value } = action.payload;
-
       state.electionData[key] = value;
     },
-
     addCandidate: (state, action) => {
-      const exists = state.electionData.candidates.some(
-        (c) => c.id === action.payload.id
-      );
+      const exists = state.candidates.some((c) => c._id === action.payload._id);
       if (!exists) {
-        state.electionData.candidates.push(action.payload);
+        state.candidates.push(action.payload);
+        state.electionData.candidateIds.push(action.payload._id);
       }
     },
-
     removeCandidate: (state, action) => {
-      state.electionData.candidates = state.electionData.candidates.filter(
-        (c) => c.id !== action.payload.id
+      state.candidates = state.candidates.filter(
+        (c) => c.id !== action.payload._id
+      );
+      state.electionData.candidateIds = state.electionData.candidateIds.filter(
+        (id) => id !== action.payload._id
       );
     },
     resetElection: () => initialState,

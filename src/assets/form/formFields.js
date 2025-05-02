@@ -13,6 +13,13 @@ export const registerFormFields = [
     placeholder: 'Enter Email',
     required: true,
   },
+  {
+    label: 'Bio',
+    name: 'bio',
+    type: 'text',
+    placeholder: 'Enter your bio',
+    required: true,
+  },
 
   {
     label: 'Password',

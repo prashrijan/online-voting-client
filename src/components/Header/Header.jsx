@@ -53,50 +53,62 @@ const GuestNavbar = () => (
   </Navbar>
 );
 
-const UserNavbar = () => (
-  <Navbar collapseOnSelect expand="lg" className="light-navbar fs-6">
-    <Container>
-      <Navbar.Brand href="/user" className="d-flex align-items-center">
-        <Logo darkMode={false} />
-      </Navbar.Brand>
+const UserNavbar = () => {
+  const { user } = useSelector((state) => state.user);
 
-      <Navbar.Toggle
-        aria-controls="responsive-navbar-nav"
-        className="nav-toggle"
-      />
+  return (
+    <Navbar collapseOnSelect expand="lg" className="light-navbar fs-6">
+      <Container>
+        <Navbar.Brand href="/user" className="d-flex align-items-center">
+          <Logo darkMode={false} />
+        </Navbar.Brand>
 
-      <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="justify-content-center flex-grow-1 main-nav">
-          <Nav.Link as={Link} to="#" className="nav-link">
-            Live Elections
-          </Nav.Link>
-          <Nav.Link as={Link} to="#" className="nav-link">
-            My Elections
-          </Nav.Link>
-          <Nav.Link as={Link} to="#" className="nav-link">
-            Results
-          </Nav.Link>
-          <Nav.Link as={Link} to="#" className="nav-link">
-            Help Center
-          </Nav.Link>
-        </Nav>
+        <Navbar.Toggle
+          aria-controls="responsive-navbar-nav"
+          className="nav-toggle"
+        />
 
-        <Nav className="auth-buttons">
-          <Nav.Link as={Link} to="/user/create-election" className="ps-2">
-            <Button variant="danger" className="nav-button">
-              Create Election
-            </Button>
-          </Nav.Link>
-          <Nav.Link as={Link} to="#" className="ps-2">
-            <Button variant="success" className="nav-button">
-              Profile
-            </Button>
-          </Nav.Link>
-        </Nav>
-      </Navbar.Collapse>
-    </Container>
-  </Navbar>
-);
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="justify-content-center flex-grow-1 main-nav">
+            <Nav.Link as={Link} to="#" className="nav-link">
+              Live Elections
+            </Nav.Link>
+            <Nav.Link as={Link} to="#" className="nav-link">
+              My Elections
+            </Nav.Link>
+            <Nav.Link as={Link} to="#" className="nav-link">
+              Results
+            </Nav.Link>
+            <Nav.Link as={Link} to="#" className="nav-link">
+              Help Center
+            </Nav.Link>
+          </Nav>
+
+          <Nav className="auth-buttons">
+            <Nav.Link as={Link} to="/user/create-election" className="ps-2">
+              <Button variant="danger" className="nav-button">
+                Create Election
+              </Button>
+            </Nav.Link>
+            <Nav.Link as={Link} to="/user/profile" className="ps-2">
+              <div className="profile-pic-container">
+                <img
+                  src={user?.profileImage || '/default-profile.png'}
+                  alt="Profile"
+                  className="profile-pic"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/default-profile.png';
+                  }}
+                />
+              </div>
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+};
 
 const Header = () => {
   const { user } = useSelector((state) => state.user);
