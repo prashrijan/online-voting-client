@@ -1,3 +1,4 @@
+import { apiProcessor } from "../../services/apiProcessor";
 import { fetchUserApi } from "./userApi";
 import { setUser } from "./userSlice";
 
@@ -40,8 +41,16 @@ export const autologin = async (dispatch) => {
       if (result?.accessToken) {
         sessionStorage.setItem("accessToken", result.acccessToken);
         dispatch(fetchUserAction());
+      }else{
+        //if no accesstoken is returned, clear token to aovoid loops.
+        localStorage.removeItem("refreshToken");
+        sessionStorage.removeItem("accessToken");
+       
       }
     } catch (error) {
+      //if refresh token is invalid, clear all tokens
+      localStorage.removeItem("refreshToken");
+      sessionStorage.removeItem("accessToken");
       console.error("Autologin failed with refresh token", error.message);
     }
   }

@@ -16,40 +16,40 @@ const authApiEndPoint = conf.baseUrl + "/api/v1/auth";
 
 // signining user
 export const signUpUserApi = async (payload) => {
-    try {
-        const result = await apiProcessor({
-            url: authApiEndPoint + "/register",
-            method: "POST",
-            payload,
-            showToast: true,
-        });
+  try {
+    const result = await apiProcessor({
+      url: authApiEndPoint + "/register",
+      method: "POST",
+      payload,
+      showToast: true,
+    });
 
-        return result;
-    } catch (error) {
-        console.error(error);
-    }
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // logging in user
 export const loginUserApi = async (payload) => {
-    try {
-        const result = await apiProcessor({
-            url: authApiEndPoint + "/login",
-            method: "POST",
-            payload,
-            showToast: true,
-        });
+  try {
+    const result = await apiProcessor({
+      url: authApiEndPoint + "/login",
+      method: "POST",
+      payload,
+      showToast: true,
+    });
 
-        return result;
-    } catch (error) {
-        console.error(error);
-    }
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const googleAuth = async () => {
-    try {
-        window.location.href = `${authApiEndPoint}/google`;
-    } catch (error) {
-        console.error(error);
-    }
+  try {
+    window.location.href = `${authApiEndPoint}/google`;
+  } catch (error) {
+    console.error(error);
+  }
 };
