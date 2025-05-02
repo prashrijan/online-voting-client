@@ -6,15 +6,17 @@ import { useSelector } from 'react-redux';
 const UpcomingElections = () => {
   const publicElection = useSelector((state) => state.election.publicElections);
 
-  console.log(publicElection);
-
   const upcoming = publicElection?.filter(
     (election) => election.status === 'pending'
   );
   return (
     <>
       <h2 className="m-3 fs-2">Upcoming Events</h2>
-      <ElectionCard cardData={upcoming} />
+      {upcoming.length > 0 ? (
+        <ElectionCard cardData={upcoming} />
+      ) : (
+        <p className="m-3">No upcoming elections.</p>
+      )}
     </>
   );
 };
