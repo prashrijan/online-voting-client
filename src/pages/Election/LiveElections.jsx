@@ -12,7 +12,12 @@ const LiveElections = () => {
   return (
     <>
       <h2 className="m-3 fs-2">Live Events</h2>
-      <ElectionCard cardData={live} />
+
+      {live.length > 0 ? (
+        <ElectionCard cardData={live} />
+      ) : (
+        <p className="m-3">No live elections at the moment.</p>
+      )}
     </>
   );
 };
