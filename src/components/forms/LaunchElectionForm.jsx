@@ -26,6 +26,7 @@ const LaunchElectionForm = () => {
     if (electionData.coverImageFile) {
       formData.append('coverImage', electionData.coverImageFile);
     }
+    console.log(electionData.coverImageFile);
 
     try {
       await dispatch(createElectionAction(formData));
