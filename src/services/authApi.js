@@ -91,3 +91,20 @@ export const verifyEmail = async (token) => {
     return error;
   }
 };
+
+//logout user
+export const logoutUserApi = async (userId) => {
+  try {
+    const res = await apiProcessor({
+      method: 'GET',
+      url: authApiEndPoint + '/logout',
+      isPrivate: true,
+      showToast: true,
+    });
+
+    return res;
+  } catch (error) {
+    console.error('Logout failed', error);
+    throw error;
+  }
+};
