@@ -66,6 +66,7 @@ const UserNavbar = () => {
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
           className="nav-toggle"
+          j
         />
 
         <Navbar.Collapse id="responsive-navbar-nav">
