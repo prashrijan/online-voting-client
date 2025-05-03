@@ -80,7 +80,7 @@ const LoginForm = () => {
         className="py-4 d-flex flex-column align-items-center justify-content-center"
         style={{ height: '500px' }}
       >
-        <BarLoader color="#0d6efd" />
+        <BarLoader color="##212529" />
         <p className="mt-2">Checking your session...</p>
       </div>
     );
@@ -93,7 +93,7 @@ const LoginForm = () => {
           className="py-4 d-flex flex-column align-items-center justify-content-center"
           style={{ height: '500px' }}
         >
-          <BarLoader color="#0d6efd" />
+          <BarLoader color="##212529" />
           <p className="mt-2">Logging you in...</p>
         </div>
       ) : (
@@ -102,7 +102,7 @@ const LoginForm = () => {
           style={{ width: '100%', maxWidth: '500px' }}
           onSubmit={(e) => handleOnSubmit(e, () => handleLogin())}
         >
-          <h3 className="text-center mb-4 fw-bold text-primary">
+          <h3 className="text-center mb-4 fw-bold text-dark">
             Welcome back to Chunaab!
           </h3>
 
@@ -138,6 +138,7 @@ const LoginForm = () => {
                 onClick={togglePasswordVisibility}
                 className="d-flex align-items-center justify-content-center"
                 style={{ width: '40px' }}
+                variant="dark"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </Button>
@@ -157,14 +158,14 @@ const LoginForm = () => {
             />
             <a
               href="/forgot-password"
-              className="text-decoration-none text-primary"
+              className="text-decoration-none text-dark"
             >
               Forgot password?
             </a>
           </div>
 
           <Button
-            variant="primary"
+            variant="dark"
             type="submit"
             className="w-100 py-2 mt-3 fw-bold"
           >
@@ -178,7 +179,7 @@ const LoginForm = () => {
           </div>
 
           <Button
-            variant="outline-primary"
+            variant="outline-dark"
             className="w-100 py-2 d-flex justify-content-center align-items-center gap-2"
             onClick={async () => await googleAuth()}
           >
@@ -186,9 +187,12 @@ const LoginForm = () => {
             Continue with Google
           </Button>
 
-          <p className="text-center mt-4 mb-0">
+          <p className="text-center mt-4 mb-0 ">
             Don't have an account?{' '}
-            <a href="/register" className="text-decoration-none fw-semibold">
+            <a
+              href="/register"
+              className="text-decoration-none fw-semibold text-dark"
+            >
               Register
             </a>
           </p>

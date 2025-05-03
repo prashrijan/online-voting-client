@@ -64,7 +64,7 @@ const RegisterForm = () => {
           className="py-4 d-flex flex-column align-items-center justify-content-center"
           style={{ height: '500px' }}
         >
-          <BarLoader color="#0d6efd" />
+          <BarLoader color="#212529" />
           <p className="mt-2">Processing your candidacy...</p>
         </div>
       ) : (
@@ -73,7 +73,7 @@ const RegisterForm = () => {
           style={{ width: '100%', maxWidth: '500px' }}
           onSubmit={(e) => handleOnSubmit(e, () => handleRegister(form))}
         >
-          <h3 className="text-center mb-4 fw-bold text-primary">
+          <h3 className="text-center mb-4 fw-bold text-dark">
             Register to become a voter and make your voice heard!
           </h3>
 
@@ -106,6 +106,7 @@ const RegisterForm = () => {
                     }
                     className="d-flex align-items-center justify-content-center"
                     style={{ width: '40px' }}
+                    variant="dark"
                   >
                     {input.name === 'password' ? (
                       showPassword ? (
@@ -139,7 +140,7 @@ const RegisterForm = () => {
           ))}
 
           <Button
-            variant="primary"
+            variant="dark"
             type="submit"
             className="w-100 py-2 mt-3 fw-bold"
           >
@@ -153,7 +154,7 @@ const RegisterForm = () => {
           </div>
 
           <Button
-            variant="outline-primary"
+            variant="outline-dark"
             className="w-100 py-2 d-flex justify-content-center align-items-center gap-2"
             onClick={handleGoogleRegister}
           >
@@ -163,7 +164,10 @@ const RegisterForm = () => {
 
           <p className="text-center mt-4 mb-0">
             Already have an account?{' '}
-            <a href="/login" className="text-decoration-none fw-semibold">
+            <a
+              href="/login"
+              className="text-decoration-none fw-semibold text-dark"
+            >
               Sign in
             </a>
           </p>

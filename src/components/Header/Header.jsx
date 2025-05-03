@@ -38,12 +38,12 @@ const GuestNavbar = () => (
 
         <Nav className="auth-buttons">
           <Nav.Link as={Link} to="/login" className="px-2">
-            <Button variant="outline-primary" className="nav-button ">
+            <Button variant="outline-dark" className="nav-button ">
               Log In
             </Button>
           </Nav.Link>
           <Nav.Link as={Link} to="/register" className="ps-2 ">
-            <Button variant="primary" className="nav-button ">
+            <Button variant="dark" className="nav-button ">
               Register
             </Button>
           </Nav.Link>
@@ -55,6 +55,8 @@ const GuestNavbar = () => (
 
 const UserNavbar = () => {
   const { user } = useSelector((state) => state.user);
+
+  console.log(user.profileImage);
 
   return (
     <Navbar collapseOnSelect expand="lg" className="light-navbar fs-6">
@@ -94,7 +96,7 @@ const UserNavbar = () => {
             <Nav.Link as={Link} to="/user/profile" className="ps-2">
               <div className="profile-pic-container">
                 <img
-                  src={user?.profileImage || '/default-profile.png'}
+                  src={user.profileImage}
                   alt="Profile"
                   className="profile-pic"
                   onError={(e) => {

@@ -27,7 +27,7 @@ const Hero = () => {
               <div className="input-highlight"></div>
             </div>
 
-            <Button className="join-button">
+            <Button className="join-button" variant="dark">
               Join Now
               <span className="button-icon">→</span>
             </Button>
