@@ -82,7 +82,7 @@ function ElectionCard({ cardData }) {
 
             <div className="organizer-info">
               <FiUser className="icon" />
-              <span>Organized by: {election.createdBy}</span>
+              <span>Organized by: {election.createdBy?.fullName}</span>
             </div>
 
             <div className="date-time-info">

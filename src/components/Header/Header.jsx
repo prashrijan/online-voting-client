@@ -7,11 +7,12 @@ import Logo from '../Logo';
 import './HeaderStyles.css';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import defaultProfile from '../../assets/images/donut.png';
 
 const GuestNavbar = () => (
   <Navbar collapseOnSelect expand="lg" className="light-navbar fs-6">
     <Container>
-      <Navbar.Brand href="/" className="d-flex align-items-center">
+      <Navbar.Brand to="/" as={Link} className="d-flex align-items-center">
         <Logo darkMode={false} />
       </Navbar.Brand>
 
@@ -61,14 +62,16 @@ const UserNavbar = () => {
   return (
     <Navbar collapseOnSelect expand="lg" className="light-navbar fs-6">
       <Container>
-        <Navbar.Brand href="/user" className="d-flex align-items-center">
+        <Navbar.Brand
+          to="/usas={Link} er"
+          className="d-flex align-items-center"
+        >
           <Logo darkMode={false} />
         </Navbar.Brand>
 
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
           className="nav-toggle"
-          j
         />
 
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -101,7 +104,7 @@ const UserNavbar = () => {
                   className="profile-pic"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = '/default-profile.png';
+                    e.target.src = defaultProfile;
                   }}
                 />
               </div>
