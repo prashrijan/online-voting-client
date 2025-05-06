@@ -13,7 +13,7 @@ const Hero = () => {
   };
 
   return (
-    <div className=" hero w-100  d-flex flex-column justify-content-between align-items-center">
+    <div className=" hero w-100  d-flex flex-column justify-content-between align-items-center py-5">
       <h1 className="p-4 fw-bold fs-1 text-center">
         All-in-one Digital Voting Platform
       </h1>
@@ -32,21 +32,6 @@ const Hero = () => {
           <CgArrowRight />
         </span>
       </Button>
-
-      {/* <div className="joinSection m-4 p-3 d-flex justify-content-center align-items-center rounded-pill w-75 flex-wrap  ">
-        <span className=" fs-5 text-center">
-          Enter code to join Live Chunaab
-        </span>
-
-        <input
-          type="text"
-          className="eventCodeInput m-2 rounded-3 text-center fs-5"
-          placeholder="123 456"
-        />
-        <Button variant="primary" className="px-4 m-2 rounded-3 fs-5 ">
-          Join
-        </Button>
-      </div> */}
     </div>
   );
 };
