@@ -33,7 +33,7 @@ const Hero = () => {
         </span>
       </Button>
 
-      <div className="joinSection m-4 p-3 d-flex justify-content-center align-items-center rounded-pill w-75 flex-wrap  ">
+      {/* <div className="joinSection m-4 p-3 d-flex justify-content-center align-items-center rounded-pill w-75 flex-wrap  ">
         <span className=" fs-5 text-center">
           Enter code to join Live Chunaab
         </span>
@@ -46,7 +46,7 @@ const Hero = () => {
         <Button variant="primary" className="px-4 m-2 rounded-3 fs-5 ">
           Join
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };
