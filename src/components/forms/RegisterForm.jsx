@@ -46,8 +46,7 @@ const RegisterForm = () => {
   };
 
   const handleGoogleRegister = async () => {
-    const res = await googleAuth();
-    console.log(res);
+    await googleAuth();
   };
 
   const togglePasswordVisibility = () => {

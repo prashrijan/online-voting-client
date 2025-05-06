@@ -7,7 +7,7 @@ import { BarLoader } from 'react-spinners';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { loginValidationSchema } from '../../validation/LoginValidation';
 import useForm from '../../hooks/useForm';
-import { loginUserApi } from '../../services/authApi';
+import { googleAuth, loginUserApi } from '../../services/authApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { autologin, fetchUserAction } from '../../features/user/userAction';
 import { useNavigate } from 'react-router-dom';
@@ -76,11 +76,12 @@ const LoginForm = () => {
   // Render loading spinner during auto-login check
   if (autologinLoading) {
     return (
-      <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-        <div className="text-center">
-          <BarLoader color="#0d6efd" />
-          <p className="mt-2">Checking your session...</p>
-        </div>
+      <div
+        className="py-4 d-flex flex-column align-items-center justify-content-center"
+        style={{ height: '500px' }}
+      >
+        <BarLoader color="#0d6efd" />
+        <p className="mt-2">Checking your session...</p>
       </div>
     );
   }
@@ -179,6 +180,7 @@ const LoginForm = () => {
           <Button
             variant="outline-primary"
             className="w-100 py-2 d-flex justify-content-center align-items-center gap-2"
+            onClick={async () => await googleAuth()}
           >
             <FcGoogle size={20} />
             Continue with Google
