@@ -2,6 +2,7 @@ import React from 'react';
 import Hero from './Hero';
 import './homepage.css';
 import FeatureSection from '../../components/featureSection';
+import TestimonialSection from '../../components/testimonial';
 
 // homepage
 
@@ -10,6 +11,7 @@ const Homepage = () => {
     <>
       <Hero />
       <FeatureSection />
+      <TestimonialSection />
     </>
   );
 };
