@@ -77,9 +77,8 @@ const Chatbot = () => {
     }
   };
 
-  console.log(messages);
   return (
-    <div className="position-fixed bottom-0 end-0 m-4 z-index-1050">
+    <div className="position-fixed bottom-0 end-0 m-4 z-3">
       {!isOpen && (
         <button
           onClick={toggleChat}
