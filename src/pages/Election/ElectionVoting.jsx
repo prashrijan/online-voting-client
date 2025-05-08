@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import coverImg from '../../assets/images/kent.jpg';
 import profileimg from '../../assets/images/donut.png';
-import './styles/ElectionVoting.css';
 import { Button } from 'react-bootstrap';
 
 const Candidates = () => {
