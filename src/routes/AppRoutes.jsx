@@ -12,6 +12,7 @@ import CreateElection from '../pages/Election/CreateElection';
 import About from '../pages/About';
 import Contact from '../pages/Contact';
 import VerifyAccount from '../pages/auth/VerifyAccount';
+import ElectionVoting from '../pages/Election/ElectionVoting';
 
 const AppRoutes = () => {
   return (
@@ -31,6 +32,7 @@ const AppRoutes = () => {
       <Route path="/user" element={<ProtectedLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="create-election" element={<CreateElection />} />
+        <Route path="election-voting/:id" element={<ElectionVoting />} />
       </Route>
     </Routes>
   );
