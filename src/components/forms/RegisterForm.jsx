@@ -8,8 +8,8 @@ import { registerFormFields } from '../../assets/form/formFields';
 import useForm from '../../hooks/useForm';
 import { registerValidationSchema } from '../../validation/RegisterValidation';
 import { googleAuth, signUpUserApi } from '../../services/authApi';
-import { BarLoader } from 'react-spinners';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Loader from '../loader/Loader';
 
 const RegisterForm = () => {
   const formInitialValues = {
@@ -60,13 +60,7 @@ const RegisterForm = () => {
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light p-4">
       {loading ? (
-        <div
-          className="py-4 d-flex flex-column align-items-center justify-content-center"
-          style={{ height: '500px' }}
-        >
-          <BarLoader color="#212529" />
-          <p className="mt-2">Processing your candidacy...</p>
-        </div>
+        <Loader text="Processing your candidacy..." />
       ) : (
         <Form
           className="p-4 bg-white rounded-3 shadow-sm"

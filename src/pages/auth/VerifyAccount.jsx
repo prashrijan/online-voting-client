@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { BarLoader } from 'react-spinners';
 import { verifyEmail } from '../../services/authApi';
+import Loader from '../../components/loader/Loader';
 
 const VerifyAccount = () => {
   const [status, setStatus] = useState(
@@ -47,7 +47,7 @@ const VerifyAccount = () => {
 
   return (
     <div className="d-flex flex-column align-items-center justify-content-center min-vh-100">
-      {loading && <BarLoader color="#0d6efd" />}
+      {loading && <Loader />}
       <h2>{status}</h2>
     </div>
   );
