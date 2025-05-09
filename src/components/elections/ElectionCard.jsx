@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { use } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import defaultImg from '../../assets/images/Chunaab.png';
+import { Navigate, useNavigate } from 'react-router-dom';
+
 import {
   FiClock,
   FiUser,
@@ -14,6 +16,8 @@ import './ElectionCard.css';
 import { formatDate } from '../../utils/date';
 
 function ElectionCard({ cardData }) {
+  const navigate = useNavigate();
+
   // Function to calculate time remaining
   const getTimeRemaining = (endDate) => {
     const end = new Date(endDate.split('/').reverse().join('-'));
@@ -50,6 +54,11 @@ function ElectionCard({ cardData }) {
       default:
         return 'secondary';
     }
+  };
+
+  const handleOnVoteButtonClick = (_id) => {
+    console.log('Vote Button Clicked', _id);
+    navigate(`/user/election-voting/${_id}`);
   };
 
   return (
@@ -117,6 +126,7 @@ function ElectionCard({ cardData }) {
             <Button
               variant={getButtonVariant(election.status)}
               className="vote-button"
+              onClick={() => handleOnVoteButtonClick(election._id)}
             >
               {getButtonText(election.status)}
             </Button>
