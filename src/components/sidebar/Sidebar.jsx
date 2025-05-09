@@ -66,28 +66,32 @@ const Sidebar = () => {
   return (
     <>
       <div
-        className="sidebar p-3 bg-dark text-white h-screen fixed"
-        style={{ width: '250px' }}
+        className="sidebar p-3 bg-secondary-subtle text-dark h-screen fixed"
+        style={{ width: '300px' }}
       >
         {/* User Profile Section */}
-        <div className="mb-5">
-          <h2 className="fs-4 mb-1">Hello, 👋</h2>
-          <p className="fs-5 fw-bold">{userName}</p>
+        <div className="mb-5 fs-4 fw-bold ">
+          <p className="mb-1">Hello, 👋</p>
+          <p className="mb-1">{userName} </p>
         </div>
 
         {/* Navigation Links */}
-        <nav className="d-flex flex-column gap-2">
+        <nav className="d-flex flex-column gap-3">
           {links.map((link, index) => (
             <Link
               key={index}
               to={link.to}
-              className="text-white text-decoration-none py-2 px-3 rounded d-flex align-items-center gap-3"
+              className="py-2 px-3 d-flex align-items-center gap-3 text-dark text-decoration-none fs-6 fw-medium "
               style={{
                 transition: 'background-color 0.2s',
-                ':hover': {
-                  backgroundColor: 'rgba(255,255,255,0.1)',
-                },
+                borderRadius: '5px',
               }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.backgroundColor = '#fafafa')
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.backgroundColor = 'transparent')
+              }
             >
               <span style={{ width: '20px', textAlign: 'center' }}>
                 {link.icon}
@@ -99,8 +103,15 @@ const Sidebar = () => {
           {/* Logout that triggers dialgoue */}
 
           <button
-            className="text-white text-start py-2 px-3 rounded d-flex align-items-center gap-3 bg-transparent border-0"
+            className="text-start py-2 px-3 d-flex align-items-center gap-3 border-0 fs-6 fw-medium"
             onClick={() => setShowLogoutDialog(true)}
+            style={{ transition: 'background-color 0.2s', borderRadius: '5px' }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = '#fafafa')
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = 'transparent')
+            }
           >
             <span style={{ width: '20px', textAlign: 'center' }}>
               <FaSignOutAlt />
@@ -118,12 +129,12 @@ const Sidebar = () => {
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1050 }}
         >
           <div
-            className="bg-white p-4 rounded shadow"
+            className="bg-white p-4 rounded shadow-lg"
             style={{ minWidth: '300px' }}
           >
-            <h5 className="mb-3">Confirm Logout</h5>
-            <p>Are you sure you want to logout?</p>
-            <div className="d-flex justify-content-end gap-2">
+            <p className="mb-3 fs-3 fw-medium">Confirm Logout</p>
+            <p className="mb-4">Are you sure you want to logout?</p>
+            <div className="d-flex justify-content-end gap-3">
               <button
                 className="btn btn-secondary"
                 onClick={() => setShowLogoutDialog(false)}
