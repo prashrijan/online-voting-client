@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Container, Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import Loader from '../../components/loader/Loader';
+
+import { forgetPasswordApi } from '../../services/authApi';
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState('');
@@ -14,8 +16,7 @@ const ForgetPassword = () => {
     setLoading(true);
     setError('');
     try {
-      // Simulate API call (replace with your API)
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const res = await forgetPasswordApi(email);
 
       setSubmitted(true);
     } catch (err) {

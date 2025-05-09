@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { FcGoogle } from 'react-icons/fc';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import * as Yup from 'yup';
+
 import { registerFormFields } from '../../assets/form/formFields';
 import useForm from '../../hooks/useForm';
 import { registerValidationSchema } from '../../validation/RegisterValidation';

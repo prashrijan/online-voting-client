@@ -76,6 +76,7 @@ export const refreshTokenApi = async () => {
     throw error;
   }
 };
+
 export const verifyEmail = async (token) => {
   try {
     const res = apiProcessor({
@@ -108,3 +109,19 @@ export const logoutUserApi = async (userId) => {
     throw error;
   }
 };
+
+// forget-password
+export const forgetPasswordApi = async (email) => {
+  try {
+    const res = await apiProcessor({
+      method: 'POST',
+      url: authApiEndPoint + '/forget-password',
+      payload: { email },
+    });
+    return res;
+  } catch (error) {
+    console.error('Error sending password reset link: ', error);
+  }
+};
+
+export const resetPasswordApi = async (token, password) => {};
