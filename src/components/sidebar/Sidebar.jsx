@@ -67,7 +67,7 @@ const Sidebar = () => {
     <>
       <div
         className="sidebar p-3 bg-secondary-subtle text-dark h-screen fixed"
-        style={{ width: '300px' }}
+        style={{ width: '250px' }}
       >
         {/* User Profile Section */}
         <div className="mb-5 fs-4 fw-bold ">
