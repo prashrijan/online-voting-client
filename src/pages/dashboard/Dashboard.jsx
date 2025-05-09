@@ -15,13 +15,13 @@ const Dashboard = () => {
   }, [publicElections]);
 
   return (
-    <Container className="p-5">
+    <div className="bg-light">
       <div className="w-100">
         <Hero />
         <LiveElections />
         <UpcomingElections />
       </div>
-    </Container>
+    </div>
   );
 };
 
