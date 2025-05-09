@@ -15,7 +15,7 @@ const Dashboard = () => {
   }, [publicElections]);
 
   return (
-    <div className="bg-light">
+    <div className="h-100 bg-light">
       <div className="w-100">
         <Hero />
         <LiveElections />

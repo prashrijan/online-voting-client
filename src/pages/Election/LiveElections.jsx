@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ElectionCard from '../../components/elections/ElectionCard';
-import { live } from '../../assets/form/dummyCardData';
 import { useSelector } from 'react-redux';
+import { Container, Accordion } from 'react-bootstrap';
 
 const LiveElections = () => {
   const publicElection = useSelector((state) => state.election.publicElections);
@@ -10,15 +10,22 @@ const LiveElections = () => {
     (election) => election.status === 'active'
   );
   return (
-    <>
-      <h2 className="m-3 fs-2">Live Events</h2>
-
-      {live.length > 0 ? (
-        <ElectionCard cardData={live} />
-      ) : (
-        <p className="m-3">No live elections at the moment.</p>
-      )}
-    </>
+    <Container className="mt-3 p-2 rounded-4 bg-white">
+      <Accordion defaultActiveKey="0">
+        <Accordion.Item eventKey="0" className="border-0">
+          <Accordion.Header className="">
+            <h2>Live Elections</h2>
+          </Accordion.Header>
+          <Accordion.Body>
+            {live.length > 0 ? (
+              <ElectionCard cardData={live} />
+            ) : (
+              <p className="m-3">No live elections at the moment.</p>
+            )}
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+    </Container>
   );
 };
 
