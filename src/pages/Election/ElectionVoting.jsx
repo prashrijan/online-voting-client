@@ -3,36 +3,58 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import profileimg from '../../assets/images/donut.png';
-import { fetchElectionAction } from '../../features/election/electionAction';
+import {
+  fetchCandidatesAction,
+  fetchElectionAction,
+} from '../../features/election/electionAction';
 import { getTimeRemaining } from '../../utils/getRemainingtime';
 import { formatDate } from '../../utils/date';
+import Loader from '../../components/loader/Loader';
+import CandidateCard from '../../components/elections/CandidateCard';
+import { castVoteApi, checkVoteStatusApi } from '../../services/voteApi';
+import LiveVoteChart from '../../components/chart/LiveVoteChart';
 
 const ElectionVoting = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const [loading, setLoading] = useState(true); // ✅ loading state
+  const [loading, setLoading] = useState(true);
   const election = useSelector((state) => state?.election?.electionToShow);
+  const candidates = useSelector((state) => state?.election?.candidatesToShow);
+  const [hasVoted, setHasVoted] = useState(false);
+  console.log(election);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       await dispatch(fetchElectionAction(id));
+      await dispatch(fetchCandidatesAction(id));
+
+      const res = await checkVoteStatusApi(id);
+
+      setHasVoted(res.data);
       setLoading(false);
     };
 
     fetchData();
   }, [dispatch, id]);
 
-  // ✅ Show full-page loading
   if (loading || !election || !election.title) {
     return <Loader text="Getting Election Data...." />;
   }
 
+  const handleVote = async (electionId, candidateId) => {
+    setHasVoted(true);
+    const res = await castVoteApi(electionId, candidateId);
+    if (res && res.sucess) {
+      setHasVoted(true);
+    } else {
+      setHasVoted(false);
+    }
+  };
   return (
     <>
       <div className="h-100 bg-light ">
-        {/* Your existing JSX goes here */}
         {/* Cover Image */}
         <div className="container d-flex justify-content-center align-items-center flex-column">
           <img
@@ -86,40 +108,29 @@ const ElectionVoting = () => {
           </div>
         </div>
 
-        <div className="mt-5 d-flex justify-content-center align-items-start gap-5">
-          {/* Candidate Details */}
-          <div
-            className="p-4 bg-white shadow-sm rounded-4"
-            style={{ height: '600px', width: '500px' }}
-          >
-            <span className="fs-2 fw-bold my-3">Candidates</span>
-
-            <div className="my-5" style={{ height: '80px', width: 'auto' }}>
-              <div className="d-flex align-items-center">
-                <img
-                  src={profileimg}
-                  alt="img"
-                  className="rounded-circle"
-                  style={{
-                    height: '65px',
-                    width: 'auto',
-                    border: '5px solid blue',
-                  }}
-                />
-                <div className="h-100 w-100 mx-3 p-2 px-4 d-inline rounded-4 bg-body-tertiary">
-                  Mr. Joe <br />
-                  48% Votes in Favor
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <div className="container mt-5 d-flex gap-4 flex-column">
           {/* Live Updates */}
-          <div
-            className="p-2 bg-white shadow-sm rounded-4"
-            style={{ height: '550px', width: '500px' }}
-          >
-            <span className="fs-2 fw-semibold">Live Updates</span>
+          <div className="bg-white p-4 shadow-sm rounded-4">
+            <h2 className="fs-4 fw-semibold mb-3">Live Updates</h2>
+            <LiveVoteChart electionId={id} />
+          </div>
+          {/* Candidate Details */}
+          <div className="flex-grow-1 bg-white p-4 shadow-sm rounded-4">
+            <h2 className="mb-4 fw-semibold">Candidates</h2>
+
+            <div className="row g-4">
+              {candidates?.map((candidate) => (
+                <div className="col-12 col-md-6 col-lg-4" key={candidate._id}>
+                  <CandidateCard
+                    name={candidate.fullName}
+                    slogan={candidate.bio}
+                    imageUrl={candidate.profileImage || profileimg}
+                    onVote={() => handleVote(id, candidate._id)}
+                    hasVoted={hasVoted}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

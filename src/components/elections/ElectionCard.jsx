@@ -11,7 +11,7 @@ import {
   FiCalendar,
   FiAlertCircle,
 } from 'react-icons/fi';
-import './ElectionCard.css';
+import './styles/ElectionCard.styles.css';
 
 import { formatDate } from '../../utils/date';
 import { getTimeRemaining } from '../../utils/getRemainingtime';
