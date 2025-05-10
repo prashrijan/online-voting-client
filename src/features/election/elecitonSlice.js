@@ -15,6 +15,7 @@ const initialState = {
   },
   candidates: [],
   publicElections: [],
+  electionToShow: {},
 };
 
 const electionSlice = createSlice({
@@ -47,6 +48,10 @@ const electionSlice = createSlice({
       );
     },
     resetElection: () => initialState,
+
+    setShowElection: (state, action) => {
+      state.electionToShow = action.payload;
+    },
   },
 });
 
@@ -57,6 +62,7 @@ export const {
   addCandidate,
   removeCandidate,
   resetElection,
+  setShowElection,
 } = electionSlice.actions;
 
 export default electionSlice.reducer;

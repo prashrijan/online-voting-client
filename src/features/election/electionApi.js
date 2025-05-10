@@ -32,3 +32,17 @@ export const createElectionApi = async (data) => {
     throw error;
   }
 };
+
+export const fetchElectionApi = async (id) => {
+  try {
+    const res = await apiProcessor({
+      method: 'GET',
+      url: `${electionEndPoint}/id/${id} `,
+    });
+
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
