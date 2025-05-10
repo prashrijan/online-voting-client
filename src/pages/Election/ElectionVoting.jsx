@@ -6,12 +6,13 @@ import profileimg from '../../assets/images/donut.png';
 import { fetchElectionAction } from '../../features/election/electionAction';
 import { getTimeRemaining } from '../../utils/getRemainingtime';
 import { formatDate } from '../../utils/date';
+import Loader from '../../components/loader/Loader';
 
 const ElectionVoting = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const [loading, setLoading] = useState(true); // ✅ loading state
+  const [loading, setLoading] = useState(true);
   const election = useSelector((state) => state?.election?.electionToShow);
 
   useEffect(() => {
@@ -24,7 +25,6 @@ const ElectionVoting = () => {
     fetchData();
   }, [dispatch, id]);
 
-  // ✅ Show full-page loading
   if (loading || !election || !election.title) {
     return <Loader text="Getting Election Data...." />;
   }
@@ -32,8 +32,7 @@ const ElectionVoting = () => {
   return (
     <>
       <div className="h-100 bg-light ">
-        {/* Your existing JSX goes here */}
-        {/* Cover Image */}
+         {/* Cover Image */}
         <div className="container d-flex justify-content-center align-items-center flex-column">
           <img
             src={election.coverImage}
