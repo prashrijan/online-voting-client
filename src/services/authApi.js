@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { conf } from '../conf/conf';
 import { apiProcessor } from './apiProcessor';
 
@@ -124,4 +125,21 @@ export const forgetPasswordApi = async (email) => {
   }
 };
 
-export const resetPasswordApi = async (token, password) => {};
+export const resetPasswordApi = async (token, password) => {
+  try {
+    const res = await apiProcessor({
+      method: 'PUT',
+      url: `${authApiEndPoint}/reset-password/${token}`,
+      payload: { password },
+    });
+
+    if (res.success) {
+      return res;
+    } else {
+      toast.error(res.message);
+      return res;
+    }
+  } catch (error) {
+    console.error('Error reseting the password.');
+  }
+};
