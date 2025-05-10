@@ -11,6 +11,8 @@ import { getTimeRemaining } from '../../utils/getRemainingtime';
 import { formatDate } from '../../utils/date';
 import Loader from '../../components/loader/Loader';
 import CandidateCard from '../../components/elections/CandidateCard';
+import { castVoteApi, checkVoteStatusApi } from '../../services/voteApi';
+import LiveVoteChart from '../../components/chart/LiveVoteChart';
 
 const ElectionVoting = () => {
   const { id } = useParams();
@@ -19,6 +21,7 @@ const ElectionVoting = () => {
   const [loading, setLoading] = useState(true);
   const election = useSelector((state) => state?.election?.electionToShow);
   const candidates = useSelector((state) => state?.election?.candidatesToShow);
+  const [hasVoted, setHasVoted] = useState(false);
   console.log(election);
 
   useEffect(() => {
@@ -26,6 +29,10 @@ const ElectionVoting = () => {
       setLoading(true);
       await dispatch(fetchElectionAction(id));
       await dispatch(fetchCandidatesAction(id));
+
+      const res = await checkVoteStatusApi(id);
+
+      setHasVoted(res.data);
       setLoading(false);
     };
 
@@ -36,6 +43,15 @@ const ElectionVoting = () => {
     return <Loader text="Getting Election Data...." />;
   }
 
+  const handleVote = async (electionId, candidateId) => {
+    setHasVoted(true);
+    const res = await castVoteApi(electionId, candidateId);
+    if (res && res.sucess) {
+      setHasVoted(true);
+    } else {
+      setHasVoted(false);
+    }
+  };
   return (
     <>
       <div className="h-100 bg-light ">
@@ -96,7 +112,7 @@ const ElectionVoting = () => {
           {/* Live Updates */}
           <div className="bg-white p-4 shadow-sm rounded-4">
             <h2 className="fs-4 fw-semibold mb-3">Live Updates</h2>
-            {/* Live update content can go here */}
+            <LiveVoteChart electionId={id} />
           </div>
           {/* Candidate Details */}
           <div className="flex-grow-1 bg-white p-4 shadow-sm rounded-4">
@@ -109,7 +125,8 @@ const ElectionVoting = () => {
                     name={candidate.fullName}
                     slogan={candidate.bio}
                     imageUrl={candidate.profileImage || profileimg}
-                    onVote={() => console.log(candidate._id)}
+                    onVote={() => handleVote(id, candidate._id)}
+                    hasVoted={hasVoted}
                   />
                 </div>
               ))}
