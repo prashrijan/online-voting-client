@@ -13,6 +13,7 @@ import About from '../pages/About';
 import Contact from '../pages/Contact';
 import VerifyAccount from '../pages/auth/VerifyAccount';
 import ElectionVoting from '../pages/Election/ElectionVoting';
+import ResetPassword from '../pages/auth/ResetPassword';
 
 const AppRoutes = () => {
   return (
@@ -27,6 +28,7 @@ const AppRoutes = () => {
         <Route path="/google-auth-success" element={<GoogleAuthSuccess />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Route>
       {/* private routes */}
       <Route path="/user" element={<ProtectedLayout />}>

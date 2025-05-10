@@ -29,7 +29,7 @@ const LaunchElectionForm = () => {
     console.log(electionData.coverImageFile);
 
     try {
-      await dispatch(createElectionAction(formData));
+       dispatch(createElectionAction(formData));
       navigate('/user');
     } catch (error) {
       console.error('Election creation failed: ', error);

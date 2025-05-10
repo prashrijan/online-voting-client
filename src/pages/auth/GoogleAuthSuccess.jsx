@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { BarLoader } from 'react-spinners';
 import { fetchUserAction } from '../../features/user/userAction';
+import Loader from '../../components/loader/Loader';
 
 const GoogleAuthSuccess = () => {
   const navigate = useNavigate();
@@ -28,8 +28,7 @@ const GoogleAuthSuccess = () => {
   }, [navigate]);
   return (
     <div className="d-flex flex-column justify-content-center align-items-center min-vh-100">
-      <BarLoader color="#0d6efd" />
-      <p className="mt-2 text-muted">Logging you in...</p>
+      <Loader text="Logging you in..." />
     </div>
   );
 };
