@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Bar } from 'react-chartjs-2';
+import React, { useEffect, useState } from 'react';
+import { Bar, Pie } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   BarElement,
+  ArcElement,
   CategoryScale,
   LinearScale,
   Title,
@@ -13,6 +14,7 @@ import { fetchLiveVoteDataApi } from '../../services/voteApi';
 
 ChartJS.register(
   BarElement,
+  ArcElement,
   CategoryScale,
   LinearScale,
   Title,
@@ -20,108 +22,136 @@ ChartJS.register(
   Legend
 );
 
+// Define a fixed palette of visually distinct colors
+const fixedColors = [
+  '#FF6384',
+  '#36A2EB',
+  '#FFCE56',
+  '#4BC0C0',
+  '#9966FF',
+  '#FF9F40',
+  '#5AD3D1',
+  '#C9CBCF',
+  '#B47CC7',
+  '#FFA07A',
+  '#8FBC8F',
+  '#87CEEB',
+];
+
 const LiveVoteChart = ({ electionId }) => {
   const [voteData, setVoteData] = useState([]);
   const [lastUpdated, setLastUpdated] = useState(null);
-
-  // Use useRef to persist colors across renders
-  const colorsRef = useRef({});
+  const [chartType, setChartType] = useState('bar');
 
   useEffect(() => {
     const fetchVotes = async () => {
       const res = await fetchLiveVoteDataApi(electionId);
+      console.log(res);
       if (res?.success) {
-        const data = res.data;
-
-        // Ensure candidate order is preserved
-        const sortedData = data.sort((a, b) =>
+        const data = res.data.sort((a, b) =>
           a.fullName.localeCompare(b.fullName)
         );
-
-        setVoteData(sortedData);
-
-        // Generate colors for candidates only once (based on their ID)
-        const newColors = {};
-        sortedData.forEach((candidate) => {
-          if (!colorsRef.current[candidate._id]) {
-            colorsRef.current[candidate._id] = generateRandomColor();
-          }
-          newColors[candidate._id] = colorsRef.current[candidate._id];
-        });
-
+        setVoteData(data);
         setLastUpdated(new Date().toLocaleTimeString());
       }
     };
 
-    fetchVotes(); // initial fetch
-    const interval = setInterval(fetchVotes, 10000); // update every 10 seconds
-
-    return () => clearInterval(interval); // cleanup
+    fetchVotes();
+    const interval = setInterval(fetchVotes, 10000);
+    return () => clearInterval(interval);
   }, [electionId]);
 
-  // Generate a random color for each candidate
-  const generateRandomColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  };
-
-  const chartData = {
-    labels: voteData.map((candidate) => candidate.fullName),
+  const commonChartData = {
+    labels: voteData.map((c) => c.fullName),
     datasets: [
       {
         label: 'Live Votes',
-        data: voteData.map((candidate) => candidate.voteCount),
+        data: voteData.map((c) => c.voteCount),
         backgroundColor: voteData.map(
-          (candidate) => colorsRef.current[candidate._id] || '#000000'
-        ), // Use color based on candidate ID
+          (_, i) => fixedColors[i % fixedColors.length]
+        ),
       },
     ],
   };
 
-  const options = {
+  const barOptions = {
     responsive: true,
+    indexAxis: 'y',
     plugins: {
       legend: {
-        position: 'top', // Legend at the top
+        position: 'top',
         labels: {
-          font: {
-            size: 14, // Font size for legend labels
-            weight: 'bold', // Bold font for legend labels
-          },
+          font: { size: 14, weight: 'bold' },
         },
       },
       tooltip: {
         callbacks: {
-          label: function (tooltipItem) {
-            // Display vote count as a whole number, for example, 5 votes
-            return `${Math.floor(tooltipItem.raw)} votes`;
-          },
+          label: (tooltipItem) => `${Math.floor(tooltipItem.raw)} votes`,
         },
       },
     },
     scales: {
-      x: {
-        beginAtZero: true, // Start the X-axis at zero
-        grid: {
-          display: true, // Show gridlines on X-axis
+      x: { beginAtZero: true, grid: { display: true } },
+      y: { grid: { display: true } },
+    },
+  };
+
+  const pieOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          font: { size: 14, weight: 'bold' },
         },
       },
-      y: {
-        grid: {
-          display: true, // Show gridlines on Y-axis
+      tooltip: {
+        callbacks: {
+          label: (tooltipItem) =>
+            `${tooltipItem.label}: ${Math.floor(tooltipItem.raw)} votes`,
         },
       },
     },
-    indexAxis: 'y', // Set to 'y' for horizontal bar chart
   };
 
   return (
     <div>
-      <Bar data={chartData} options={options} />
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <select
+          className="form-select w-auto"
+          value={chartType}
+          onChange={(e) => setChartType(e.target.value)}
+        >
+          <option value="bar">Bar Chart</option>
+          <option value="pie">Pie Chart</option>
+        </select>
+      </div>
+
+      {chartType === 'bar' ? (
+        <div
+          style={{
+            maxWidth: '100%',
+            height: '400px',
+            margin: '0 auto',
+            position: 'relative',
+          }}
+        >
+          <Bar data={commonChartData} options={barOptions} />
+        </div>
+      ) : (
+        <div
+          style={{
+            maxWidth: '400px',
+            height: '400px',
+            margin: '0 auto',
+            position: 'relative',
+          }}
+        >
+          <Pie data={commonChartData} options={pieOptions} />
+        </div>
+      )}
+
       <p className="text-muted mt-2">Last updated: {lastUpdated}</p>
     </div>
   );

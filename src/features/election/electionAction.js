@@ -29,6 +29,8 @@ export const createElectionAction = (payload) => async (dispatch) => {
     if (data) {
       dispatch(setElection(data));
       dispatch(resetElection());
+
+      dispatch(fetchElectionsAction());
     }
   } catch (error) {
     console.error(error);
