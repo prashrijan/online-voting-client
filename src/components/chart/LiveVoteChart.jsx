@@ -81,6 +81,14 @@ const LiveVoteChart = ({ electionId }) => {
       legend: {
         position: 'top',
         labels: {
+          generateLabels: (chart) => {
+            return chart.data.labels.map((label, index) => ({
+              text: label, // Label will be the candidate's name
+              fillStyle: chart.data.datasets[0].backgroundColor[index], // Color of the bar
+              strokeStyle: chart.data.datasets[0].backgroundColor[index], // Border color (optional)
+              lineWidth: 1, // Border width (optional)
+            }));
+          },
           font: { size: 14, weight: 'bold' },
         },
       },
@@ -116,7 +124,7 @@ const LiveVoteChart = ({ electionId }) => {
   };
 
   return (
-    <div>
+    <div className="w-100">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <select
           className="form-select w-auto"
@@ -131,13 +139,20 @@ const LiveVoteChart = ({ electionId }) => {
       {chartType === 'bar' ? (
         <div
           style={{
-            maxWidth: '100%',
+            width: '100%',
             height: '400px',
             margin: '0 auto',
             position: 'relative',
           }}
         >
-          <Bar data={commonChartData} options={barOptions} />
+          <Bar
+            data={commonChartData}
+            options={{
+              ...barOptions,
+              responsive: true,
+              maintainAspectRatio: false,
+            }}
+          />
         </div>
       ) : (
         <div
