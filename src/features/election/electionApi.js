@@ -46,3 +46,17 @@ export const fetchElectionApi = async (id) => {
     throw error;
   }
 };
+
+export const fetchCandidatesApi = async (id) => {
+  try {
+    const res = await apiProcessor({
+      method: 'GET',
+      url: `${electionEndPoint}/get-election-candidates/${id}`,
+    });
+
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
