@@ -31,8 +31,8 @@ const Hero = () => {
             type="text"
             className="p-2 bg-light border-primary border rounded-pill text-center"
             placeholder="123 456"
-            maxLength="6"
-            pattern="\d{6}"
+            maxLength="8"
+            pattern="\d{8}"
             style={{ maxWidth: '100px' }}
             onChange={handleInputChange}
           />
