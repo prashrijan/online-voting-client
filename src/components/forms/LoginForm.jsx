@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { FcGoogle } from 'react-icons/fc';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { BarLoader } from 'react-spinners';
+
 import InputGroup from 'react-bootstrap/InputGroup';
 import { loginValidationSchema } from '../../validation/LoginValidation';
 import useForm from '../../hooks/useForm';
@@ -11,6 +11,7 @@ import { googleAuth, loginUserApi } from '../../services/authApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { autologin, fetchUserAction } from '../../features/user/userAction';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../loader/Loader';
 
 const LoginForm = () => {
   const formInitialValues = {
@@ -75,27 +76,13 @@ const LoginForm = () => {
 
   // Render loading spinner during auto-login check
   if (autologinLoading) {
-    return (
-      <div
-        className="py-4 d-flex flex-column align-items-center justify-content-center"
-        style={{ height: '500px' }}
-      >
-        <BarLoader color="#212529" />
-        <p className="mt-2">Checking your session...</p>
-      </div>
-    );
+    return <Loader text="Checking your session..." />;
   }
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light p-4">
       {loading ? (
-        <div
-          className="py-4 d-flex flex-column align-items-center justify-content-center"
-          style={{ height: '500px' }}
-        >
-          <BarLoader color="#212529" />
-          <p className="mt-2">Logging you in...</p>
-        </div>
+        <Loader text="Logging you in.." />
       ) : (
         <Form
           className="p-4 bg-white rounded-3 shadow-sm"

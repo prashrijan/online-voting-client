@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { conf } from '../conf/conf';
 import { apiProcessor } from './apiProcessor';
 
@@ -76,6 +77,7 @@ export const refreshTokenApi = async () => {
     throw error;
   }
 };
+
 export const verifyEmail = async (token) => {
   try {
     const res = apiProcessor({
@@ -106,5 +108,38 @@ export const logoutUserApi = async (userId) => {
   } catch (error) {
     console.error('Logout failed', error);
     throw error;
+  }
+};
+
+// forget-password
+export const forgetPasswordApi = async (email) => {
+  try {
+    const res = await apiProcessor({
+      method: 'POST',
+      url: authApiEndPoint + '/forget-password',
+      payload: { email },
+    });
+    return res;
+  } catch (error) {
+    console.error('Error sending password reset link: ', error);
+  }
+};
+
+export const resetPasswordApi = async (token, password) => {
+  try {
+    const res = await apiProcessor({
+      method: 'PUT',
+      url: `${authApiEndPoint}/reset-password/${token}`,
+      payload: { password },
+    });
+
+    if (res.success) {
+      return res;
+    } else {
+      toast.error(res.message);
+      return res;
+    }
+  } catch (error) {
+    console.error('Error reseting the password.');
   }
 };

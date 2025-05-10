@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Container, Form, Button, Alert } from 'react-bootstrap';
-import { BarLoader } from 'react-spinners';
+import { Form, Button, Alert } from 'react-bootstrap';
+import Loader from '../../components/loader/Loader';
+
+import { forgetPasswordApi } from '../../services/authApi';
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState('');
@@ -14,8 +16,7 @@ const ForgetPassword = () => {
     setLoading(true);
     setError('');
     try {
-      // Simulate API call (replace with your API)
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const res = await forgetPasswordApi(email);
 
       setSubmitted(true);
     } catch (err) {
@@ -28,13 +29,7 @@ const ForgetPassword = () => {
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light p-4">
       {loading ? (
-        <div
-          className="py-4 d-flex flex-column align-items-center justify-content-center"
-          style={{ height: '500px' }}
-        >
-          <BarLoader color="#212529" />
-          <p className="mt-2">Processing request...</p>
-        </div>
+        <Loader text="Processing request..." />
       ) : (
         <Form
           className="p-4 bg-white rounded-3 shadow-sm"
