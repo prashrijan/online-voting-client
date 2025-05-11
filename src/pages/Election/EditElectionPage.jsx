@@ -17,7 +17,7 @@ import {
   updateElectionAction,
 } from '../../features/election/electionAction';
 import useForm from '../../hooks/useForm'; // adjust path as needed
-import { to24HourFormat } from '../../utils/time';
+import { to12HourFormat, to24HourFormat } from '../../utils/time';
 const EditElection = () => {
   const { electionId } = useParams();
   const navigate = useNavigate();
@@ -69,8 +69,9 @@ const EditElection = () => {
 
   const handleTimeChange = (e) => {
     const { name, value } = e.target;
+    const time12h = to12HourFormat(value);
 
-    handleOnChange({ target: { name, value } });
+    handleOnChange({ target: { name, value: time12h } });
   };
 
   const handleVisibilityChange = (val) => {
@@ -96,9 +97,16 @@ const EditElection = () => {
 
   const onSubmit = async () => {
     try {
+      const finalStartTime = to12HourFormat(form.startTime);
+      const finalEndTime = to12HourFormat(form.endTime);
       setLoading(true);
       console.log(form);
-      await dispatch(updateElectionAction(electionId, form));
+      const payload = {
+        ...form,
+        startTime: finalStartTime,
+        endTime: finalEndTime,
+      };
+      await dispatch(updateElectionAction(electionId, payload));
       navigate('/user/manage-elections');
     } catch (err) {
       setError('Failed to update election');
@@ -162,7 +170,7 @@ const EditElection = () => {
                   <Form.Control
                     type="time"
                     name="startTime"
-                    value={form.startTime}
+                    value={to24HourFormat(form.startTime)}
                     onChange={handleTimeChange}
                     required
                   />
@@ -189,7 +197,7 @@ const EditElection = () => {
                   <Form.Control
                     type="time"
                     name="endTime"
-                    value={form.endTime}
+                    value={to24HourFormat(form.endTime)}
                     onChange={handleTimeChange}
                     required
                   />
