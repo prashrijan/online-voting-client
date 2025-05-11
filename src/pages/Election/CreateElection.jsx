@@ -23,8 +23,8 @@ const CreateElection = () => {
   }, []);
   return (
     <div className="bg-light h-100">
-      <Container className=" mb-5 d-flex justify-content-center flex-column align-items-center">
-        <h2 className=" m-5 mb-4 fw-bold text-center ">
+      <Container className="p-5 d-flex justify-content-center flex-column align-items-center">
+        <h2 className="mb-4 fw-bold text-center ">
           Create and Launch your Election
         </h2>
         <div className="w-75  p-5 bg-white border rounded-5 shadow">
