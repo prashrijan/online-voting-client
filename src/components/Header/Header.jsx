@@ -74,16 +74,13 @@ const UserNavbar = () => {
 
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center flex-grow-1 main-nav">
-            <Nav.Link as={Link} to="#" className="nav-link">
-              Live Elections
-            </Nav.Link>
-            <Nav.Link as={Link} to="#" className="nav-link">
+            <Nav.Link as={Link} to="/user/my-elections" className="nav-link">
               My Elections
             </Nav.Link>
             <Nav.Link as={Link} to="#" className="nav-link">
               Results
             </Nav.Link>
-            <Nav.Link as={Link} to="#" className="nav-link">
+            <Nav.Link as={Link} to="/user/help-center" className="nav-link">
               Help Center
             </Nav.Link>
           </Nav>

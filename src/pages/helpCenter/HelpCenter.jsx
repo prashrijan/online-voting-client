@@ -1,0 +1,106 @@
+import { useState } from 'react';
+import { Container, Form, Button, Alert } from 'react-bootstrap';
+
+import useForm from '../../hooks/useForm';
+import { sendHelpMessageApi } from '../../services/userApi';
+import Loader from '../../components/loader/Loader';
+
+const HelpCenter = () => {
+  const formInitialValue = {
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  };
+  const { form, handleOnSubmit, handleOnChange, resetForm } =
+    useForm(formInitialValue);
+
+  const [loading, setLoading] = useState(false);
+
+  const [status, setStatus] = useState({ success: null, message: '' });
+
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      await sendHelpMessageApi(form);
+      setLoading(false);
+      setStatus({ success: true, message: 'Message sent successfully!' });
+      resetForm();
+    } catch (error) {
+      setStatus({
+        success: false,
+        message:
+          error.response?.data?.message || 'Failed to send. Try again later.',
+      });
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Container className="my-5" style={{ maxWidth: '600px' }}>
+      <h2 className="mb-4">Help Center</h2>
+      {status.message && (
+        <Alert variant={status.success ? 'success' : 'danger'}>
+          {status.message}
+        </Alert>
+      )}
+
+      {loading ? (
+        <Loader text="Sending your message..." />
+      ) : (
+        <Form onSubmit={(e) => handleOnSubmit(e, handleSubmit)}>
+          <Form.Group className="mb-3">
+            <Form.Label>Your Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="name"
+              required
+              value={form.name}
+              onChange={handleOnChange}
+              placeholder="Enter your name"
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Your Email</Form.Label>
+            <Form.Control
+              type="email"
+              name="email"
+              required
+              value={form.email}
+              onChange={handleOnChange}
+              placeholder="Enter your email"
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Subject</Form.Label>
+            <Form.Control
+              type="text"
+              name="subject"
+              required
+              value={form.subject}
+              onChange={handleOnChange}
+              placeholder="Subject"
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Message</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={4}
+              name="message"
+              required
+              value={form.message}
+              onChange={handleOnChange}
+              placeholder="Describe your issue or question"
+            />
+          </Form.Group>
+          <Button type="submit" variant="primary">
+            Send Message
+          </Button>
+        </Form>
+      )}
+    </Container>
+  );
+};
+
+export default HelpCenter;

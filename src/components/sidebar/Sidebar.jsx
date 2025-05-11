@@ -7,11 +7,11 @@ import {
   FaCog,
   FaVoteYea,
   FaChartBar,
-  FaHistory,
   FaUserCog,
   FaQuestionCircle,
   FaSignOutAlt,
 } from 'react-icons/fa';
+import { Modal, Button } from 'react-bootstrap';
 import { resetUser } from '../../features/user/userSlice';
 import { logoutUserApi } from '../../services/authApi.js';
 
@@ -22,20 +22,20 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const handleOnLogOut = async () => {
     try {
       await logoutUserApi();
 
-      //reset user state in redux
+      // Reset user state in redux
       dispatch(resetUser());
 
-      //clearing tokens
+      // Clear tokens
       sessionStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
 
-      //redirect to login page
+      // Redirect to login page
       navigate('/login');
     } catch (error) {
       console.error('Logout failed', error);
@@ -50,17 +50,14 @@ const Sidebar = () => {
       icon: <FaCog />,
       label: 'Manage Elections',
     },
-    {
-      to: '/user/live-elections',
-      icon: <FaVoteYea />,
-      label: 'Live Elections',
-    },
     { to: '/user/my-votes', icon: <FaChartBar />, label: 'My Votes' },
     { to: '/user/results', icon: <FaVoteYea />, label: 'Results' },
-    { to: '/user/history', icon: <FaHistory />, label: 'History' },
     { to: '/user/profile', icon: <FaUserCog />, label: 'Profile Settings' },
-    { to: '/user/help', icon: <FaQuestionCircle />, label: 'Help Center' },
-    // { to: '/logout', icon: <FaSignOutAlt />, label: 'Logout' },
+    {
+      to: '/user/help-center',
+      icon: <FaQuestionCircle />,
+      label: 'Help Center',
+    },
   ];
 
   return (
@@ -70,9 +67,9 @@ const Sidebar = () => {
         style={{ width: '250px' }}
       >
         {/* User Profile Section */}
-        <div className="mb-5 fs-4 fw-bold ">
+        <div className="mb-5 fs-4 fw-bold">
           <p className="mb-1">Hello, 👋</p>
-          <p className="mb-1">{userName} </p>
+          <p className="mb-1">{userName}</p>
         </div>
 
         {/* Navigation Links */}
@@ -81,7 +78,7 @@ const Sidebar = () => {
             <Link
               key={index}
               to={link.to}
-              className="py-2 px-3 d-flex align-items-center gap-3 text-dark text-decoration-none fs-6 fw-medium "
+              className="py-2 px-3 d-flex align-items-center gap-3 text-dark text-decoration-none fs-6 fw-medium"
               style={{
                 transition: 'background-color 0.2s',
                 borderRadius: '5px',
@@ -100,11 +97,10 @@ const Sidebar = () => {
             </Link>
           ))}
 
-          {/* Logout that triggers dialgoue */}
-
+          {/* Logout Button */}
           <button
-            className="text-start py-2 px-3 d-flex align-items-center gap-3 border-0 fs-6 fw-medium"
-            onClick={() => setShowLogoutDialog(true)}
+            className="text-start py-2 px-3 d-flex align-items-center gap-3 border-0 fs-6 fw-medium bg-transparent"
+            onClick={() => setShowLogoutModal(true)}
             style={{ transition: 'background-color 0.2s', borderRadius: '5px' }}
             onMouseEnter={(e) =>
               (e.currentTarget.style.backgroundColor = '#fafafa')
@@ -121,37 +117,28 @@ const Sidebar = () => {
         </nav>
       </div>
 
-      {/* // logout confirmation dialog */}
-
-      {showLogoutDialog && (
-        <div
-          className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1050 }}
-        >
-          <div
-            className="bg-white p-4 rounded shadow-lg"
-            style={{ minWidth: '300px' }}
-          >
-            <p className="mb-3 fs-3 fw-medium">Confirm Logout</p>
-            <p className="mb-4">Are you sure you want to logout?</p>
-            <div className="d-flex justify-content-end gap-3">
-              <button
-                className="btn btn-secondary"
-                onClick={() => setShowLogoutDialog(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="btn btn-danger"
-                onClick={handleOnLogOut}
-                aria-label="Confirm Logout"
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Logout Confirmation Modal */}
+      <Modal
+        show={showLogoutModal}
+        onHide={() => setShowLogoutModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Logout</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to logout? You'll need to log in again to access
+          your account.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowLogoutModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleOnLogOut}>
+            Logout
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
