@@ -52,7 +52,7 @@ const CreateElectionForm = () => {
   return (
     <Form>
       <Form.Group controlId="formTitle" className="mb-3">
-        <Form.Label>Title</Form.Label>
+        <Form.Label className="fw-semibold">Title</Form.Label>
         <Form.Control
           type="text"
           placeholder="Enter title"
@@ -62,7 +62,7 @@ const CreateElectionForm = () => {
       </Form.Group>
 
       <Form.Group controlId="formStartDate" className="mb-3">
-        <Form.Label>Start Date</Form.Label>
+        <Form.Label className="fw-semibold">Start Date</Form.Label>
         <Form.Control
           type="date"
           value={electionData.startDate}
@@ -71,7 +71,7 @@ const CreateElectionForm = () => {
       </Form.Group>
 
       <Form.Group controlId="formStartTime" className="mb-3">
-        <Form.Label>Start Time</Form.Label>
+        <Form.Label className="fw-semibold">Start Time</Form.Label>
         <Form.Control
           type="time"
           value={
@@ -84,7 +84,7 @@ const CreateElectionForm = () => {
       </Form.Group>
 
       <Form.Group controlId="formEndDate" className="mb-3">
-        <Form.Label>End Date</Form.Label>
+        <Form.Label className="fw-semibold">End Date</Form.Label>
         <Form.Control
           type="date"
           value={electionData.endDate}
@@ -93,7 +93,7 @@ const CreateElectionForm = () => {
       </Form.Group>
 
       <Form.Group controlId="formEndTime" className="mb-3">
-        <Form.Label>End Time</Form.Label>
+        <Form.Label className="fw-semibold">End Time</Form.Label>
         <Form.Control
           type="time"
           value={
@@ -105,8 +105,29 @@ const CreateElectionForm = () => {
         />
       </Form.Group>
 
+      <Form.Group controlId="formVisibility" className="mb-3">
+        <Form.Label className="d-block fw-semibold">Visibility</Form.Label>
+        <ToggleButtonGroup
+          type="radio"
+          name="visibility"
+          value={electionData.visibility}
+          onChange={(val) => handleUpdate('visibility', val)}
+        >
+          <ToggleButton id="public" value="public" variant="outline-primary">
+            Public
+          </ToggleButton>
+          <ToggleButton
+            id="private"
+            value="private"
+            variant="outline-secondary"
+          >
+            Private
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Form.Group>
+
       <Form.Group controlId="formCoverImage" className="mb-3">
-        <Form.Label>Cover Image</Form.Label>
+        <Form.Label className="fw-semibold">Cover Image</Form.Label>
         <div className="upload-box">
           <Form.Control
             type="file"
@@ -138,27 +159,6 @@ const CreateElectionForm = () => {
             </>
           )}
         </div>
-      </Form.Group>
-
-      <Form.Group controlId="formVisibility" className="mb-3">
-        <Form.Label className="d-block">Visibility</Form.Label>
-        <ToggleButtonGroup
-          type="radio"
-          name="visibility"
-          value={electionData.visibility}
-          onChange={(val) => handleUpdate('visibility', val)}
-        >
-          <ToggleButton id="public" value="public" variant="outline-primary">
-            Public
-          </ToggleButton>
-          <ToggleButton
-            id="private"
-            value="private"
-            variant="outline-secondary"
-          >
-            Private
-          </ToggleButton>
-        </ToggleButtonGroup>
       </Form.Group>
     </Form>
   );

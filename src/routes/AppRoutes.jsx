@@ -17,6 +17,8 @@ import ResetPassword from '../pages/auth/ResetPassword';
 import ManageElections from '../pages/Election/ManageElections';
 import EditElectionPage from '../pages/Election/EditElectionPage';
 import ManageCandidates from '../pages/Election/ManageCandidates';
+import HelpCenter from '../pages/helpCenter/HelpCenter';
+import MyElection from '../pages/Election/MyElection';
 
 const AppRoutes = () => {
   return (
@@ -47,6 +49,8 @@ const AppRoutes = () => {
           path="manage-candidates/:electionId"
           element={<ManageCandidates />}
         />
+        <Route path="help-center" element={<HelpCenter />} />
+        <Route path="my-elections" element={<MyElection />} />
       </Route>
     </Routes>
   );

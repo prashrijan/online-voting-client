@@ -17,7 +17,7 @@ import {
   updateElectionAction,
 } from '../../features/election/electionAction';
 import useForm from '../../hooks/useForm'; // adjust path as needed
-import { to24HourFormat } from '../../utils/time';
+import { to12HourFormat, to24HourFormat } from '../../utils/time';
 const EditElection = () => {
   const { electionId } = useParams();
   const navigate = useNavigate();
@@ -69,8 +69,9 @@ const EditElection = () => {
 
   const handleTimeChange = (e) => {
     const { name, value } = e.target;
+    const time12h = to12HourFormat(value);
 
-    handleOnChange({ target: { name, value } });
+    handleOnChange({ target: { name, value: time12h } });
   };
 
   const handleVisibilityChange = (val) => {
@@ -96,9 +97,16 @@ const EditElection = () => {
 
   const onSubmit = async () => {
     try {
+      const finalStartTime = to12HourFormat(form.startTime);
+      const finalEndTime = to12HourFormat(form.endTime);
       setLoading(true);
       console.log(form);
-      await dispatch(updateElectionAction(electionId, form));
+      const payload = {
+        ...form,
+        startTime: finalStartTime,
+        endTime: finalEndTime,
+      };
+      await dispatch(updateElectionAction(electionId, payload));
       navigate('/user/manage-elections');
     } catch (err) {
       setError('Failed to update election');
@@ -124,151 +132,152 @@ const EditElection = () => {
   }
 
   return (
-    <Container className="my-4">
-      <Card className="shadow-sm">
-        <Card.Body>
-          <h2 className="mb-4">Edit Election</h2>
+    <div className=" w-100 h-100 bg-light p-5 ">
+      <Container className="w-100 d-flex align-items-center justify-content-center flex-column">
+        <h2 className="mb-4 fw-bold text-center">Edit Election</h2>
 
-          {error && <Alert variant="danger">{error}</Alert>}
+        <Card className=" w-75 p-4 rounded-5 border shadow">
+          <Card.Body>
+            {error && <Alert variant="danger">{error}</Alert>}
 
-          <Form onSubmit={(e) => handleOnSubmit(e, onSubmit)}>
-            <Form.Group className="mb-3">
-              <Form.Label>Election Title</Form.Label>
-              <Form.Control
-                type="text"
-                name="title"
-                value={form.title}
-                onChange={handleOnChange}
-                required
-              />
-            </Form.Group>
+            <Form onSubmit={(e) => handleOnSubmit(e, onSubmit)}>
+              <Form.Group className="mb-3">
+                <Form.Label className="fw-semibold">Election Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="title"
+                  value={form.title}
+                  onChange={handleOnChange}
+                  required
+                />
+              </Form.Group>
 
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Start Date</Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="startDate"
-                    value={form.startDate}
-                    onChange={handleOnChange}
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Start Time</Form.Label>
-                  <Form.Control
-                    type="time"
-                    name="startTime"
-                    value={form.startTime}
-                    onChange={handleTimeChange}
-                    required
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
+              <Row>
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label className="fw-semibold">Start Date</Form.Label>
+                    <Form.Control
+                      type="date"
+                      name="startDate"
+                      value={form.startDate}
+                      onChange={handleOnChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label className="fw-semibold">Start Time</Form.Label>
+                    <Form.Control
+                      type="time"
+                      name="startTime"
+                      value={to24HourFormat(form.startTime)}
+                      onChange={handleTimeChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
 
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>End Date</Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="endDate"
-                    value={form.endDate}
-                    onChange={handleOnChange}
-                    required
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>End Time</Form.Label>
-                  <Form.Control
-                    type="time"
-                    name="endTime"
-                    value={form.endTime}
-                    onChange={handleTimeChange}
-                    required
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
+              <Row>
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label className="fw-semibold">End Date</Form.Label>
+                    <Form.Control
+                      type="date"
+                      name="endDate"
+                      value={form.endDate}
+                      onChange={handleOnChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label className="fw-semibold">End Time</Form.Label>
+                    <Form.Control
+                      type="time"
+                      name="endTime"
+                      value={to24HourFormat(form.endTime)}
+                      onChange={handleTimeChange}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Cover Image</Form.Label>
-              {form.coverImage && (
-                <div className="mb-3">
-                  <img
-                    src={form.coverImage}
-                    alt="Current cover"
-                    className="img-fluid rounded"
-                    style={{ maxHeight: '200px' }}
-                  />
+              <Form.Group className="mb-4">
+                <Form.Label className="fw-semibold">Visibility</Form.Label>
+                <div>
+                  <ToggleButtonGroup
+                    type="radio"
+                    name="visibility"
+                    value={form.visibility}
+                    onChange={handleVisibilityChange}
+                  >
+                    <ToggleButton
+                      id="public"
+                      value="public"
+                      variant={
+                        form.visibility === 'public'
+                          ? 'primary'
+                          : 'outline-primary'
+                      }
+                    >
+                      Public
+                    </ToggleButton>
+                    <ToggleButton
+                      id="private"
+                      value="private"
+                      variant={
+                        form.visibility === 'private'
+                          ? 'secondary'
+                          : 'outline-secondary'
+                      }
+                    >
+                      Private
+                    </ToggleButton>
+                  </ToggleButtonGroup>
                 </div>
-              )}
-              <Form.Control
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-              />
-              <Form.Text className="text-muted">
-                Maximum file size: 2MB
-              </Form.Text>
-            </Form.Group>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label className="fw-semibold">Cover Image</Form.Label>
+                {form.coverImage && (
+                  <div className="mb-3">
+                    <img
+                      src={form.coverImage}
+                      alt="Current cover"
+                      className="img-fluid rounded"
+                      style={{ maxHeight: '200px' }}
+                    />
+                  </div>
+                )}
+                <Form.Control
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+                <Form.Text className="text-muted">
+                  Maximum file size: 2MB
+                </Form.Text>
+              </Form.Group>
 
-            <Form.Group className="mb-4">
-              <Form.Label>Visibility</Form.Label>
-              <div>
-                <ToggleButtonGroup
-                  type="radio"
-                  name="visibility"
-                  value={form.visibility}
-                  onChange={handleVisibilityChange}
+              <div className="d-flex justify-content-between">
+                <Button
+                  variant="secondary"
+                  onClick={() => navigate('/user/manage-elections')}
                 >
-                  <ToggleButton
-                    id="public"
-                    value="public"
-                    variant={
-                      form.visibility === 'public'
-                        ? 'primary'
-                        : 'outline-primary'
-                    }
-                  >
-                    Public
-                  </ToggleButton>
-                  <ToggleButton
-                    id="private"
-                    value="private"
-                    variant={
-                      form.visibility === 'private'
-                        ? 'secondary'
-                        : 'outline-secondary'
-                    }
-                  >
-                    Private
-                  </ToggleButton>
-                </ToggleButtonGroup>
+                  Cancel
+                </Button>
+                <Button variant="primary" type="submit" disabled={loading}>
+                  {loading ? 'Saving...' : 'Save Changes'}
+                </Button>
               </div>
-            </Form.Group>
-
-            <div className="d-flex justify-content-between">
-              <Button
-                variant="secondary"
-                onClick={() => navigate('/user/manage-elections')}
-              >
-                Cancel
-              </Button>
-              <Button variant="primary" type="submit" disabled={loading}>
-                {loading ? 'Saving...' : 'Save Changes'}
-              </Button>
-            </div>
-          </Form>
-        </Card.Body>
-      </Card>
-    </Container>
+            </Form>
+          </Card.Body>
+        </Card>
+      </Container>
+    </div>
   );
 };
 

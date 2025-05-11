@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Nav } from 'react-bootstrap';
 import CreateElectionForm from '../../components/forms/CreateElectionForm';
-import './styles/CreateElection.css';
 import LaunchElectionForm from '../../components/Forms/LaunchElectionForm';
 import SearchCandidateForm from '../../components/Forms/SelectCandidateForm';
 import { fetchAllUserAction } from '../../features/user/userAction';
@@ -23,64 +22,67 @@ const CreateElection = () => {
     dispatch(fetchAllUserAction());
   }, []);
   return (
-    <Container className="py-4 d-flex justify-content-center">
-      <div className="election-form-wrapper">
-        <Nav
-          variant="tabs"
-          activeKey={
-            step == 1 ? 'election' : step == 2 ? 'candidates' : 'launch'
-          }
-          className="mb-3 justify-content-center"
-        >
-          <Nav.Item>
-            <Nav.Link eventKey="election" className="custom-tab">
-              Election
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="candidates" className="custom-tab" disabled>
-              {' '}
-              Candidates{' '}
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link
-              eventKey="launch"
-              className="custom-tab"
-              disabled={step !== 'launch'}
+    <div className="bg-light h-100">
+      <Container className="p-5 d-flex justify-content-center flex-column align-items-center">
+        <h2 className="mb-4 fw-bold text-center ">
+          Create and Launch your Election
+        </h2>
+        <div className="w-75  p-5 bg-white border rounded-5 shadow">
+          <Nav
+            variant="tabs"
+            activeKey={
+              step == 1 ? 'election' : step == 2 ? 'candidates' : 'launch'
+            }
+            className="mb-3  justify-content-center"
+          >
+            <Nav.Item>
+              <Nav.Link eventKey="election" className="">
+                Election
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="candidates" className="" disabled>
+                Candidates
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                eventKey="launch"
+                className=""
+                disabled={step !== 'launch'}
+              >
+                Launch
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+
+          {step === 1 ? (
+            <CreateElectionForm />
+          ) : step == 2 ? (
+            <SearchCandidateForm />
+          ) : (
+            <LaunchElectionForm />
+          )}
+
+          <div className="mt-4 mx-2 d-flex justify-content-between">
+            <button
+              className="btn btn-outline-dark px-4 py-2"
+              disabled={step === 1}
+              onClick={handleBack}
             >
-              {' '}
-              Launch{' '}
-            </Nav.Link>
-          </Nav.Item>
-        </Nav>
-
-        {step === 1 ? (
-          <CreateElectionForm />
-        ) : step == 2 ? (
-          <SearchCandidateForm />
-        ) : (
-          <LaunchElectionForm />
-        )}
-
-        <div className="d-flex justify-content-between mt-4">
-          <button
-            className="btn btn-link"
-            disabled={step == 1}
-            onClick={handleBack}
-          >
-            &lt; Back
-          </button>
-          <button
-            className="btn btn-primary"
-            onClick={handleNext}
-            disabled={step == 3}
-          >
-            Next &gt;
-          </button>
+              &lt; Back
+            </button>
+            <button
+              className="btn btn-primary text-light px-4 py-2"
+              onClick={handleNext}
+              disabled={step === 3}
+            >
+              Next &gt;
+            </button>
+          </div>
         </div>
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
 };
 
