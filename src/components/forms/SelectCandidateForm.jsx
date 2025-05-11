@@ -17,31 +17,6 @@ import {
 } from '../../features/election/elecitonSlice';
 import { fetchAllUserAction } from '../../features/user/userAction';
 
-const dummyCandidates = [
-  {
-    id: 1,
-    name: 'John Doe',
-    email: 'john@example.com',
-    slogan: 'For a better tomorrow',
-    profilePic: 'https://via.placeholder.com/100',
-  },
-  {
-    id: 2,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
-    slogan: 'Your voice, your choice',
-    profilePic: 'https://via.placeholder.com/100',
-  },
-  {
-    id: 3,
-    name: 'Ali Khan',
-    email: 'ali@example.com',
-    slogan: 'Leading with integrity',
-    profilePic:
-      'https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg',
-  },
-];
-
 const SearchCandidateForm = () => {
   const [search, setSearch] = useState('');
   const [filtered, setFiltered] = useState([]);
@@ -81,7 +56,9 @@ const SearchCandidateForm = () => {
   return (
     <>
       <Form.Group controlId="candidateSearch" className="mb-4">
-        <Form.Label>Search Candidate by Email</Form.Label>
+        <Form.Label className="fw-semibold">
+          Search Candidate by Email
+        </Form.Label>
         <InputGroup>
           <Form.Control
             type="text"
@@ -132,7 +109,7 @@ const SearchCandidateForm = () => {
 
       {displayData?.length > 0 ? (
         <div className="mt-4">
-          <h5>Selected Candidates</h5>
+          <h5 className='mb-4'>Selected Candidates</h5>
           <Table bordered hover responsive>
             <thead>
               <tr>
