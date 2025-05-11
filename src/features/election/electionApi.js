@@ -32,3 +32,77 @@ export const createElectionApi = async (data) => {
     throw error;
   }
 };
+
+export const fetchElectionApi = async (id) => {
+  try {
+    const res = await apiProcessor({
+      method: 'GET',
+      url: `${electionEndPoint}/id/${id} `,
+    });
+
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const fetchCandidatesApi = async (id) => {
+  try {
+    const res = await apiProcessor({
+      method: 'GET',
+      url: `${electionEndPoint}/get-election-candidates/${id}`,
+    });
+
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getMyElectionsApi = async () => {
+  try {
+    const res = await apiProcessor({
+      method: 'GET',
+      url: electionEndPoint + '/my-elections',
+      isPrivate: true,
+    });
+
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const updateElectionApi = async (electionId, updates) => {
+  try {
+    const res = await apiProcessor({
+      method: 'PUT',
+      payload: updates,
+      url: `${electionEndPoint}/${electionId}`,
+      isPrivate: true,
+      showToast: true,
+    });
+
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const deleteElectionApi = async (electionId) => {
+  try {
+    const res = await apiProcessor({
+      method: 'DELETE',
+      url: `${electionEndPoint}/delete/${electionId}`,
+      isPrivate: true,
+      showToast: true,
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};

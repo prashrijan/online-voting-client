@@ -57,8 +57,6 @@ const GuestNavbar = () => (
 const UserNavbar = () => {
   const { user } = useSelector((state) => state.user);
 
-  console.log(user.profileImage);
-
   return (
     <Navbar collapseOnSelect expand="lg" className="light-navbar fs-6">
       <Container>
