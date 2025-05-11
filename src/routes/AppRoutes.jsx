@@ -14,6 +14,9 @@ import Contact from '../pages/Contact';
 import VerifyAccount from '../pages/auth/VerifyAccount';
 import ElectionVoting from '../pages/Election/ElectionVoting';
 import ResetPassword from '../pages/auth/ResetPassword';
+import ManageElections from '../pages/Election/ManageElections';
+import EditElectionPage from '../pages/Election/EditElectionPage';
+import ManageCandidates from '../pages/Election/ManageCandidates';
 
 const AppRoutes = () => {
   return (
@@ -35,6 +38,15 @@ const AppRoutes = () => {
         <Route index element={<Dashboard />} />
         <Route path="create-election" element={<CreateElection />} />
         <Route path="election-voting/:id" element={<ElectionVoting />} />
+        <Route path="manage-elections" element={<ManageElections />} />
+        <Route
+          path="edit-election/:electionId"
+          element={<EditElectionPage />}
+        />
+        <Route
+          path="manage-candidates/:electionId"
+          element={<ManageCandidates />}
+        />
       </Route>
     </Routes>
   );
