@@ -1,5 +1,4 @@
 export const to12HourFormat = (time) => {
-  console.log(time);
   if (!time) return;
 
   const [hour, minute] = time.split(':');

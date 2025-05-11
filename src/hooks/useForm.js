@@ -13,15 +13,24 @@ const useForm = (initialValue, validationSchema) => {
       [name]: value,
     });
   };
+  const setFormValues = (values) => {
+    setForm((prev) => ({
+      ...prev,
+      ...values,
+    }));
+  };
 
   const handleOnSubmit = async (e, cb) => {
-    console.log(e, cb);
     e.preventDefault();
 
     try {
-      await validationSchema.validate(form, { abortEarly: false });
-      setErrors({});
-      cb();
+      if (validationSchema) {
+        await validationSchema.validate(form, { abortEarly: false });
+        setErrors({});
+        cb();
+      } else {
+        cb();
+      }
     } catch (error) {
       const validationErrors = {};
       error.inner.forEach((err) => {
@@ -35,7 +44,14 @@ const useForm = (initialValue, validationSchema) => {
     setForm({ ...initialValue });
   };
 
-  return { form, handleOnChange, handleOnSubmit, errors, resetForm };
+  return {
+    form,
+    handleOnChange,
+    handleOnSubmit,
+    errors,
+    resetForm,
+    setFormValues,
+  };
 };
 
 export default useForm;
