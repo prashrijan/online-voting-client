@@ -19,6 +19,7 @@ const CandidateCard = ({ name, slogan, imageUrl, onVote, hasVoted }) => {
           onClick={onVote}
           disabled={hasVoted}
           className={`button ${hasVoted ? 'disabled' : 'active'}`}
+          variant={hasVoted ? 'success' : 'primary'}
         >
           {hasVoted ? 'Already Voted' : 'Vote'}
         </Button>
