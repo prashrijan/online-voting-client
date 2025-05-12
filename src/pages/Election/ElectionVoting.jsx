@@ -78,8 +78,10 @@ const ElectionVoting = () => {
       {/* Election Details */}
       <div className="container p-4 rounded-5 shadow-sm bg-white">
         <div>
-          <span className="p-1 m-1 px-3 bg-success text-light rounded-pill">
-            {election.status}
+          <span
+            className={`p-1 m-1 px-3 ${election.status == 'active' ? 'bg-success' : election.status == 'pending' ? 'bg-warning' : 'bg-danger'} text-light rounded-pill`}
+          >
+            {election.status.toUpperCase()}
           </span>
 
           {election?.endDate && (
@@ -111,7 +113,11 @@ const ElectionVoting = () => {
         {/* Live Updates */}
         <div className="bg-white p-4 shadow-sm rounded-4">
           <h2 className="fs-4 fw-semibold mb-3">Live Updates</h2>
-          <LiveVoteChart electionId={id} />
+          {election.status == 'active' ? (
+            <LiveVoteChart electionId={id} />
+          ) : (
+            'Live Updates will show when the election starts.'
+          )}
         </div>
 
         {/* Candidate List */}
@@ -124,7 +130,11 @@ const ElectionVoting = () => {
                   name={candidate.fullName}
                   slogan={candidate.bio}
                   imageUrl={candidate.profileImage || profileimg}
-                  onVote={() => handleVote(id, candidate._id)}
+                  onVote={
+                    election.status == 'active'
+                      ? () => handleVote(id, candidate._id)
+                      : null
+                  }
                   hasVoted={hasVoted}
                 />
               </div>

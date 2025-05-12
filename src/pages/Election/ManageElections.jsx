@@ -176,7 +176,7 @@ const ManageElections = () => {
                           </div>
                           <div className="mb-1">
                             <strong className="fw-semibold text-dark">
-                              Status
+                              Status:
                             </strong>{' '}
                             {election.status.charAt(0).toUpperCase() +
                               election.status.slice(1)}

@@ -15,14 +15,20 @@ const CandidateCard = ({ name, slogan, imageUrl, onVote, hasVoted }) => {
       <Card.Body className="text-center">
         <Card.Title className="fw-bold fs-4">{name}</Card.Title>
         <Card.Text className="text-muted fst-italic">"{slogan}"</Card.Text>
-        <Button
-          onClick={onVote}
-          disabled={hasVoted}
-          className={`button ${hasVoted ? 'disabled' : 'active'}`}
-          variant={hasVoted ? 'success' : 'primary'}
-        >
-          {hasVoted ? 'Already Voted' : 'Vote'}
-        </Button>
+        {onVote ? (
+          <Button
+            onClick={onVote}
+            disabled={hasVoted}
+            className={`button ${hasVoted ? 'disabled' : 'active'}`}
+            variant={hasVoted ? 'success' : 'primary'}
+          >
+            {hasVoted ? 'Already Voted' : 'Vote'}
+          </Button>
+        ) : (
+          <div className="text-secondary small mt-2">
+            Voting is not available at the moment.
+          </div>
+        )}
       </Card.Body>
     </Card>
   );

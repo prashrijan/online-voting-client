@@ -1,38 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Card, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { createElectionAction } from '../../features/election/electionAction';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { electionValidationSchema } from '../../validation/LaunchElectionValidation';
 
 const LaunchElectionForm = () => {
   const { electionData, candidates } = useSelector((state) => state.election);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
-    const formData = new FormData();
-
-    formData.append('title', electionData.title);
-    formData.append('startDate', electionData.startDate);
-    formData.append('startTime', electionData.startTime);
-    formData.append('endDate', electionData.endDate);
-    formData.append('endTime', electionData.endTime);
-    formData.append('visibility', electionData.visibility);
-
-    electionData.candidateIds.forEach((id) => {
-      formData.append('candidate', id);
-    });
-
-    if (electionData.coverImageFile) {
-      formData.append('coverImage', electionData.coverImageFile);
-    }
-    console.log(electionData.coverImageFile);
-
+    setIsLoading(true);
     try {
-      dispatch(createElectionAction(formData));
+      // ✅ Validate election data before submit
+      await electionValidationSchema.validate(electionData, {
+        abortEarly: false,
+      });
+
+      const formData = new FormData();
+      formData.append('title', electionData.title);
+      formData.append('startDate', electionData.startDate);
+      formData.append('startTime', electionData.startTime);
+      formData.append('endDate', electionData.endDate);
+      formData.append('endTime', electionData.endTime);
+      formData.append('visibility', electionData.visibility);
+
+      electionData.candidateIds.forEach((id) => {
+        formData.append('candidate', id);
+      });
+
+      if (electionData.coverImageFile) {
+        formData.append('coverImage', electionData.coverImageFile);
+      }
+
+      await dispatch(createElectionAction(formData));
+      toast.success('Election launched successfully!');
       navigate('/user');
     } catch (error) {
-      console.error('Election creation failed: ', error);
+      if (error.name === 'ValidationError') {
+        error.inner.forEach((err) =>
+          toast.error(err.message, {
+            autoClose: 3000,
+            closeOnClick: true,
+            pauseOnHover: false,
+            progress: undefined,
+          })
+        );
+      } else {
+        console.error('Election creation failed:', error);
+        toast.error('Election creation failed. Please try again.', {
+          autoClose: 3000,
+          closeOnClick: true,
+          pauseOnHover: false,
+          progress: undefined,
+        });
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -41,9 +68,10 @@ const LaunchElectionForm = () => {
         .map((id) => candidates.find((c) => c._id === id))
         .filter(Boolean)
     : [];
+
   return (
     <div
-      className=" d-flex flex-column align-items-center justify-content-center"
+      className="d-flex flex-column align-items-center justify-content-center"
       style={{ maxWidth: '800px', margin: '0 auto' }}
     >
       <Card className="mb-4 overflow-hidden w-100">
@@ -80,7 +108,7 @@ const LaunchElectionForm = () => {
             {electionData.endTime || '--:--'}
             <br />
             <span className="fw-semibold">Visibility:</span>{' '}
-            {electionData.visibility || 'Not specified'}
+            {electionData.visibility?.toUpperCase() || 'NOT SPECIFIED'}
           </Card.Text>
         </Card.Body>
       </Card>
@@ -89,7 +117,7 @@ const LaunchElectionForm = () => {
       <Card className="w-100">
         <Card.Header as="h5">Candidates</Card.Header>
         <Card.Body>
-          {displayData?.length > 0 ? (
+          {displayData.length > 0 ? (
             <Table striped bordered hover responsive>
               <thead>
                 <tr>
@@ -110,7 +138,7 @@ const LaunchElectionForm = () => {
                           candidate.profileImage ||
                           'https://via.placeholder.com/50'
                         }
-                        alt={candidate.name}
+                        alt={candidate.fullName}
                         style={{
                           width: '50px',
                           height: '50px',
@@ -121,7 +149,7 @@ const LaunchElectionForm = () => {
                     </td>
                     <td>{candidate.fullName}</td>
                     <td>{candidate.email}</td>
-                    <td>{candidate.bio || 'No bio'}</td>
+                    <td>{candidate.slogan || 'No slogan'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -133,12 +161,14 @@ const LaunchElectionForm = () => {
           )}
         </Card.Body>
       </Card>
+
       <Button
         variant="primary"
         onClick={handleSubmit}
-        className=" py-3 w-50 my-4 rounded-pill fs-5"
+        className="py-3 w-50 my-4 rounded-pill fs-5"
+        disabled={isLoading}
       >
-        Launch Election
+        {isLoading ? 'Launching...' : 'Launch Election'}
       </Button>
     </div>
   );
