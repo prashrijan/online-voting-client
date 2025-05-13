@@ -126,3 +126,16 @@ export const deleteCandidateFromElectionApi = async (
     throw error;
   }
 };
+export const getElectionByCodeApi = async (code) => {
+  try {
+    const res = await apiProcessor({
+      method: 'GET',
+      url: `${electionEndPoint}/code/${code}`,
+    });
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
