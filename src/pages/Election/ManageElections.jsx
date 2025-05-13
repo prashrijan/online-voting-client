@@ -7,6 +7,8 @@ import {
   Col,
   Modal,
   Badge,
+  Alert,
+  Image,
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,16 +18,14 @@ import {
 } from '../../features/election/electionAction';
 import { to12HourFormat } from '../../utils/time';
 import Loader from '../../components/loader/Loader';
-import { FiCalendar } from 'react-icons/fi';
-import { TbListDetails } from 'react-icons/tb';
 
 const ManageElections = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedElectionId, setSelectedElectionId] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const dispatch = useDispatch();
 
   const elections = useSelector((state) => state.election.yourElections);
 
@@ -35,217 +35,161 @@ const ManageElections = () => {
       await dispatch(getMyElectionAction());
       setLoading(false);
     };
-
     fetchData();
   }, [dispatch]);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString();
-  };
+  const formatDate = (dateStr) =>
+    new Date(dateStr).toLocaleDateString(undefined, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
 
-  const getStatusBadge = (status) => {
+  const getStatusColor = (status) => {
     switch (status) {
-      case 'pending':
-        return <Badge bg="warning">Pending</Badge>;
       case 'active':
-        return <Badge bg="success">Active</Badge>;
-      case 'finished':
-        return <Badge bg="secondary">Finished</Badge>;
+        return '#28a745'; // green
+      case 'pending':
+        return '#ffc107'; // yellow
+      case 'completed':
+        return '#6c757d'; // grey
+      case 'closed':
+        return '#343a40'; // dark
       default:
-        return (
-          <Badge bg="light" text="dark">
-            {status}
-          </Badge>
-        );
+        return '#007bff'; // blue
     }
   };
 
-  const handleEditElection = (electionId) => {
-    navigate(`/user/edit-election/${electionId}`);
-  };
+  const handleEdit = (id) => navigate(`/user/edit-election/${id}`);
+  const handleCandidates = (id) => navigate(`/user/manage-candidates/${id}`);
 
-  const handleManageCandidates = (electionId) => {
-    navigate(`/user/manage-candidates/${electionId}`);
-  };
-
-  const handleDeleteConfirmation = (election) => {
-    setShowDeleteModal(true);
-    setSelectedElectionId(election._id);
-  };
-
-  const handleDeleteElection = async () => {
-    if (!selectedElectionId) return;
-
-    try {
+  const handleDelete = async () => {
+    if (selectedElectionId) {
       await dispatch(deleteElectionAction(selectedElectionId));
       setShowDeleteModal(false);
-    } catch (error) {
-      console.error('Failed to delete election:', err);
     }
   };
 
   return (
-    <div className=" h-100 w-100 p-5 bg-light ">
-      <Container className="">
-        <h2 className="mb-4 fw-bold text-center">Manage Your Elections</h2>
-        {loading ? (
-          <Loader text={'Fetching your data...'} />
-        ) : elections.length == 0 ? (
-          <div className="text-center my-5 text-muted">
-            <h5>You haven’t created any elections yet.</h5>
-          </div>
-        ) : (
-          <Row
-            xs={1}
-            md={2}
-            lg={3}
-            className=" border bg-white rounded-4 shadow p-4"
-          >
-            {elections.map((election) => (
-              <Col key={election._id}>
-                <Card className="border-1 shadow-sm rounded-2 overflow-hidden h-100">
-                  <div className="position-relative">
-                    <Card.Img
-                      variant="top"
-                      src={election.coverImage}
-                      style={{ height: '150px', objectFit: 'cover' }}
-                    />
-                    <div
-                      className={`position-absolute top-0 end-0 m-2 px-3 py-1 rounded-pill text-white fw-semibold small ${
-                        election.status === 'active'
-                          ? 'bg-success'
-                          : election.status === 'pending'
-                            ? 'bg-warning text-dark'
-                            : election.status === 'completed'
-                              ? 'bg-secondary'
-                              : 'bg-primary'
-                      }`}
-                    >
-                      {election.status.charAt(0).toUpperCase() +
-                        election.status.slice(1)}
+    <Container className="py-5">
+      <h2 className="fw-bold mb-4 text-center">🛠️ Manage Elections</h2>
+
+      {loading ? (
+        <Loader text="Loading your elections..." />
+      ) : elections.length === 0 ? (
+        <Alert variant="info" className="text-center">
+          You haven’t created any elections yet.
+        </Alert>
+      ) : (
+        <Row xs={1} md={2} lg={3} className="g-4">
+          {elections.map((election) => (
+            <Col key={election._id}>
+              <Card className="shadow-sm border-0 rounded-4 h-100 position-relative overflow-hidden">
+                <div
+                  style={{
+                    height: '6px',
+                    backgroundColor: getStatusColor(election.status),
+                    width: '100%',
+                  }}
+                ></div>
+
+                {election.coverImage && (
+                  <Card.Img
+                    src={election.coverImage}
+                    style={{ height: '140px', objectFit: 'cover' }}
+                  />
+                )}
+
+                <Card.Body className="d-flex flex-column justify-content-between">
+                  <div>
+                    <h5 className="fw-bold mb-2 text-dark">{election.title}</h5>
+
+                    <div className="mb-2 text-muted small">
+                      <div>
+                        📅 {formatDate(election.startDate)} —{' '}
+                        {formatDate(election.endDate)}
+                      </div>
+                      <div>
+                        ⏰ {to12HourFormat(election.startTime)} -{' '}
+                        {to12HourFormat(election.endTime)}
+                      </div>
+                      <div>👥 Candidates: {election.candidates.length}</div>
+                      <div>
+                        🔒 Visibility:{' '}
+                        {election.visibility.charAt(0).toUpperCase() +
+                          election.visibility.slice(1)}
+                      </div>
                     </div>
+
+                    <Badge
+                      bg="light"
+                      text="dark"
+                      className="border mt-1 px-3 py-1"
+                    >
+                      Status:{' '}
+                      <span
+                        style={{
+                          color: getStatusColor(election.status),
+                          fontWeight: '600',
+                          textTransform: 'capitalize',
+                        }}
+                      >
+                        {election.status}
+                      </span>
+                    </Badge>
                   </div>
 
-                  <Card.Body>
-                    <Card.Title className="fw-bold text-dark">
-                      {election.title}
-                    </Card.Title>
-                    <Card.Text>
-                      <div className="bg-light rounded-3 p-3 mb-3 small text-secondary d-flex align-items-center">
-                        <FiCalendar className="icon" />
-                        <div>
-                          <div className="mb-2">
-                            <strong className="fw-semibold text-dark">
-                              Created Date:
-                            </strong>{' '}
-                            {formatDate(election.createdAt)}
-                          </div>
-                          <div>
-                            <strong className="fw-semibold text-dark">
-                              Created Time:
-                            </strong>{' '}
-                            {to12HourFormat(election.startTime)}
-                          </div>
-                        </div>
-                      </div>
+                  <div className="d-flex justify-content-evenly gap-2 mt-4">
+                    <Button
+                      variant="outline-primary"
+                      size="sm"
+                      onClick={() => handleEdit(election._id)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outline-success"
+                      size="sm"
+                      onClick={() => handleCandidates(election._id)}
+                    >
+                      Candidates
+                    </Button>
+                    <Button
+                      variant="outline-danger"
+                      size="sm"
+                      onClick={() => {
+                        setSelectedElectionId(election._id);
+                        setShowDeleteModal(true);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      )}
 
-                      <div className="bg-light rounded-3 p-3 small text-secondary d-flex align-items-center">
-                        <TbListDetails className="icon" />
-                        <div>
-                          <div className="mb-1">
-                            <strong className="fw-semibold text-dark">
-                              Dates:
-                            </strong>{' '}
-                            {formatDate(election.startDate)} to{' '}
-                            {formatDate(election.endDate)}
-                          </div>
-                          <div className="mb-1">
-                            <strong className="fw-semibold text-dark">
-                              Time:
-                            </strong>{' '}
-                            {to12HourFormat(election.startTime)} -{' '}
-                            {to12HourFormat(election.endTime)}
-                          </div>
-                          <div className="mb-1">
-                            <strong className="fw-semibold text-dark">
-                              Visibility:
-                            </strong>{' '}
-                            {election.visibility.charAt(0).toUpperCase() +
-                              election.visibility.slice(1)}
-                          </div>
-                          <div className="mb-1">
-                            <strong className="fw-semibold text-dark">
-                              Status:
-                            </strong>{' '}
-                            {election.status.charAt(0).toUpperCase() +
-                              election.status.slice(1)}
-                          </div>
-                          <div>
-                            <strong className="fw-semibold text-dark">
-                              Candidates:
-                            </strong>{' '}
-                            {election.candidates.length}
-                          </div>
-                        </div>
-                      </div>
-                    </Card.Text>
-                  </Card.Body>
-
-                  <Card.Footer className="bg-white border-0 pt-0">
-                    <div className="d-flex justify-content-around align-items-center flex-wrap gap-2">
-                      <Button
-                        variant="outline-primary"
-                        size="sm"
-                        onClick={() => handleEditElection(election._id)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="outline-success"
-                        size="sm"
-                        onClick={() => handleManageCandidates(election._id)}
-                      >
-                        Candidates
-                      </Button>
-                      <Button
-                        variant="outline-danger"
-                        size="sm"
-                        onClick={() => handleDeleteConfirmation(election)}
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </Card.Footer>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        )}
-
-        {/* Delete Confirmation Modal */}
-        <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Confirm Deletion</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Are you sure you want to delete this election? This action cannot be
-            undone.
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="secondary"
-              onClick={() => setShowDeleteModal(false)}
-            >
-              Cancel
-            </Button>
-            <Button variant="danger" onClick={handleDeleteElection}>
-              Delete Election
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </Container>
-    </div>
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Election</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete this election? This action cannot be
+          undone.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </Container>
   );
 };
 

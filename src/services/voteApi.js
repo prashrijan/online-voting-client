@@ -61,3 +61,18 @@ export const getVoterCounts = async (electionId) => {
     throw error;
   }
 };
+
+export const fetchMyVotesApi = async () => {
+  try {
+    const res = await apiProcessor({
+      method: 'GET',
+      isPrivate: true,
+      url: voteEndPoint + '/my-votes',
+    });
+
+    return res;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
