@@ -37,7 +37,7 @@ const LaunchElectionForm = () => {
       }
 
       await dispatch(createElectionAction(formData));
-      toast.success('Election launched successfully!');
+
       navigate('/user');
     } catch (error) {
       if (error.name === 'ValidationError') {
@@ -163,9 +163,9 @@ const LaunchElectionForm = () => {
       </Card>
 
       <Button
-        variant="primary"
+        variant="dark"
         onClick={handleSubmit}
-        className="py-3 w-50 my-4 rounded-pill fs-5"
+        className="py-2 w-25 my-4 rounded-pill fs-5"
         disabled={isLoading}
       >
         {isLoading ? 'Launching...' : 'Launch Election'}

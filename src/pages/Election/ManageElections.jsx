@@ -187,11 +187,6 @@ const ManageElections = () => {
                             </strong>{' '}
                             {election.candidates.length}
                           </div>
-                          <div>
-                            <strong className="fw-semibold text-dark">
-                              Voters:{' '}
-                            </strong>{' '}
-                          </div>
                         </div>
                       </div>
                     </Card.Text>

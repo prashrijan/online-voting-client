@@ -1,8 +1,8 @@
-import React, { use } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import defaultImg from '../../assets/images/Chunaab.png';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 
 import {
   FiClock,
@@ -15,9 +15,11 @@ import './styles/ElectionCard.styles.css';
 
 import { formatDate } from '../../utils/date';
 import { getTimeRemaining } from '../../utils/getRemainingtime';
+import { getVoterCounts } from '../../services/voteApi';
 
 function ElectionCard({ cardData }) {
   const navigate = useNavigate();
+  const [voterCounts, setVoterCounts] = useState({});
 
   // Function to get button text based on status
   const getButtonText = (status) => {
@@ -48,6 +50,31 @@ function ElectionCard({ cardData }) {
     navigate(`/user/election-voting/${_id}`);
   };
 
+  useEffect(() => {
+    const fetchVoterCounts = async () => {
+      const counts = {};
+
+      await Promise.all(
+        cardData.map(async (election) => {
+          try {
+            const { data } = await getVoterCounts(election._id);
+            console.log(data);
+            counts[election._id] = data;
+          } catch (error) {
+            console.error('Failed to fetch voter count for ', election._id);
+            counts[election._id] = 0;
+          }
+        })
+      );
+      setVoterCounts(counts);
+    };
+
+    if (cardData?.length) {
+      fetchVoterCounts();
+    }
+  }, [cardData]);
+
+  console.log(voterCounts);
   return (
     <div className="election-card-container">
       {cardData?.map((election) => (
@@ -104,7 +131,10 @@ function ElectionCard({ cardData }) {
               </div>
               <div className="stat-item">
                 <FiUsers className="icon" />
-                <span>{election.voters || '99+'} Voters</span>
+                <span>
+                  {voterCounts[election._id] ?? ''}{' '}
+                  {voterCounts[election._id] <= 1 ? 'Voter' : 'Voters'}
+                </span>
               </div>
             </div>
           </Card.Body>

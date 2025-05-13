@@ -46,3 +46,18 @@ export const fetchLiveVoteDataApi = async (electionId) => {
     throw error;
   }
 };
+
+export const getVoterCounts = async (electionId) => {
+  try {
+    const res = await apiProcessor({
+      method: 'GET',
+      url: `${voteEndPoint}/get-voters-count/${electionId}`,
+    });
+
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

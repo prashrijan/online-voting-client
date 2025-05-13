@@ -1,5 +1,6 @@
 // electionSlice.js
 import { createSlice } from '@reduxjs/toolkit';
+import { act } from 'react';
 
 const initialState = {
   electionData: {

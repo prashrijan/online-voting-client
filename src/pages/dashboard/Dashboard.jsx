@@ -8,7 +8,6 @@ import Loader from '../../components/loader/Loader';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const publicElection = useSelector((state) => state.election.publicElections);
 
   const [loading, setLoading] = useState(true);
 

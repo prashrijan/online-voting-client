@@ -10,7 +10,7 @@ import useForm from '../../hooks/useForm';
 import { googleAuth, loginUserApi } from '../../services/authApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { autologin, fetchUserAction } from '../../features/user/userAction';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loader from '../loader/Loader';
 
 const LoginForm = () => {
@@ -137,18 +137,19 @@ const LoginForm = () => {
             )}
           </Form.Group>
 
-          <div className="d-flex justify-content-between mb-3">
-            <Form.Check
-              type="checkbox"
-              label="Remember me"
-              className="text-muted"
-            />
-            <a
-              href="/forgot-password"
+          <div className="d-flex justify-content-end">
+            <Link
+              to="/forgot-password"
               className="text-decoration-none text-dark"
             >
-              Forgot password?
-            </a>
+              <p
+                style={{ transition: 'color 0.2s' }}
+                onMouseOver={(e) => (e.target.style.color = '#0d6efd')}
+                onMouseOut={(e) => (e.target.style.color = '#212529')}
+              >
+                Forgot password?
+              </p>
+            </Link>
           </div>
 
           <Button
