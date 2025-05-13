@@ -1,46 +1,36 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Card, Button, Container, Modal, Form, Table } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  Card,
-  Button,
-  Container,
-  ListGroup,
-  Modal,
-  Form,
-  Row,
-  Col,
-  Badge,
-} from 'react-bootstrap';
+  deleteCandidateFromElectionAction,
+  fetchCandidatesAction,
+} from '../../features/election/electionAction';
+import Loader from '../../components/loader/Loader';
+import SearchCandidateForm from '../../components/Forms/SelectCandidateForm';
 
 const ManageCandidates = () => {
   const { electionId } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // Mock data for candidates
-  const [candidates, setCandidates] = useState([
-    {
-      _id: '1',
-      name: 'John Doe',
-      position: 'President',
-      bio: 'Experienced leader',
-    },
-    {
-      _id: '2',
-      name: 'Jane Smith',
-      position: 'Vice President',
-      bio: 'Student advocate',
-    },
-    {
-      _id: '3',
-      name: 'Alex Johnson',
-      position: 'Treasurer',
-      bio: 'Finance specialist',
-    },
-  ]);
+  const candidates = useSelector((state) => state.election.candidatesToShow);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      await dispatch(fetchCandidatesAction(electionId));
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [dispatch]);
+  console.log(candidates);
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [candidateToDelete, setCandidateToDelete] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const [newCandidate, setNewCandidate] = useState({
     name: '',
@@ -63,9 +53,19 @@ const ManageCandidates = () => {
     setShowDeleteModal(true);
   };
 
-  const handleDeleteCandidate = () => {
-    setCandidates(candidates.filter((c) => c._id !== candidateToDelete._id));
-    setShowDeleteModal(false);
+  const handleDeleteCandidate = async () => {
+    try {
+      setLoading(true);
+      await dispatch(
+        deleteCandidateFromElectionAction(candidateToDelete._id, electionId)
+      );
+      setLoading(false);
+    } catch (error) {
+      console.error('Failed to delete candidate');
+      setLoading(false);
+    } finally {
+      setShowDeleteModal(false);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -82,7 +82,9 @@ const ManageCandidates = () => {
         </Button>
       </div>
 
-      {candidates.length === 0 ? (
+      {loading ? (
+        <Loader text="Fetching your data..." />
+      ) : candidates.length === 0 ? (
         <Card className="text-center p-4">
           <p>No candidates have been added yet.</p>
           <Button variant="primary" onClick={() => setShowAddModal(true)}>
@@ -90,27 +92,33 @@ const ManageCandidates = () => {
           </Button>
         </Card>
       ) : (
-        <Row xs={1} md={2} lg={3} className="g-4">
-          {candidates.map((candidate) => (
-            <Col key={candidate._id}>
-              <Card className="h-100 shadow-sm">
-                <Card.Body>
-                  <Card.Title>{candidate.name}</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
-                    {candidate.position}
-                  </Card.Subtitle>
-                  <Card.Text>{candidate.bio}</Card.Text>
-                </Card.Body>
-                <Card.Footer className="bg-white d-flex justify-content-between">
-                  <Button
-                    variant="outline-primary"
-                    size="sm"
-                    onClick={() =>
-                      navigate(`/edit-candidate/${electionId}/${candidate._id}`)
-                    }
-                  >
-                    Edit
-                  </Button>
+        <Table striped bordered hover responsive className="mt-3">
+          <thead>
+            <tr>
+              <th>Profile</th>
+              <th>Full Name</th>
+              <th>Bio</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {candidates.map((candidate) => (
+              <tr key={candidate._id}>
+                <td>
+                  <img
+                    src={candidate.profileImage}
+                    alt={candidate.fullName}
+                    style={{
+                      width: '50px',
+                      height: '50px',
+                      objectFit: 'cover',
+                      borderRadius: '50%',
+                    }}
+                  />
+                </td>
+                <td>{candidate.fullName}</td>
+                <td>{candidate.bio || '—'}</td>
+                <td>
                   <Button
                     variant="outline-danger"
                     size="sm"
@@ -118,11 +126,11 @@ const ManageCandidates = () => {
                   >
                     Delete
                   </Button>
-                </Card.Footer>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       )}
 
       <div className="mt-4">
@@ -140,39 +148,7 @@ const ManageCandidates = () => {
           <Modal.Title>Add New Candidate</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={newCandidate.name}
-                onChange={handleInputChange}
-                placeholder="Enter candidate name"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Position</Form.Label>
-              <Form.Control
-                type="text"
-                name="position"
-                value={newCandidate.position}
-                onChange={handleInputChange}
-                placeholder="Enter position"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Bio</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="bio"
-                value={newCandidate.bio}
-                onChange={handleInputChange}
-                placeholder="Enter candidate bio"
-                rows={3}
-              />
-            </Form.Group>
-          </Form>
+          <SearchCandidateForm />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowAddModal(false)}>
@@ -190,7 +166,8 @@ const ManageCandidates = () => {
           <Modal.Title>Confirm Deletion</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure you want to delete candidate "{candidateToDelete?.name}"?
+          Are you sure you want to remove "{candidateToDelete?.fullName}" from
+          this election?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>

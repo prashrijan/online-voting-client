@@ -106,3 +106,23 @@ export const deleteElectionApi = async (electionId) => {
     console.log(error);
   }
 };
+
+export const deleteCandidateFromElectionApi = async (
+  candidateId,
+  electionId
+) => {
+  try {
+    const res = await apiProcessor({
+      method: 'DELETE',
+      url: `${electionEndPoint}/${electionId}/delete-candidate`,
+      isPrivate: true,
+      payload: { candidateId },
+      showToast: true,
+    });
+
+    return res;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

@@ -50,6 +50,9 @@ const electionSlice = createSlice({
         (id) => id !== action.payload._id
       );
     },
+    setCandidates: (state, action) => {
+      state.candidates = action.payload;
+    },
     resetElection: () => initialState,
 
     setShowElection: (state, action) => {
@@ -70,6 +73,7 @@ export const {
   updateElectionField,
   addCandidate,
   removeCandidate,
+  setCandidates,
   resetElection,
   setShowElection,
   setCandidatesToShow,

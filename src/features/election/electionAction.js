@@ -8,6 +8,7 @@ import {
 } from './elecitonSlice';
 import {
   createElectionApi,
+  deleteCandidateFromElectionApi,
   deleteElectionApi,
   fetchCandidatesApi,
   fetchElectionApi,
@@ -98,3 +99,18 @@ export const deleteElectionAction = (electionId) => async (dispatch) => {
     throw err;
   }
 };
+
+export const deleteCandidateFromElectionAction =
+  (candidateId, electionId) => async (dispatch) => {
+    try {
+      const { data } = await deleteCandidateFromElectionApi(
+        candidateId,
+        electionId
+      );
+
+      data && dispatch(fetchCandidatesAction(electionId));
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
