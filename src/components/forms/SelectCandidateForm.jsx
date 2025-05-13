@@ -15,7 +15,6 @@ import {
   addCandidate,
   removeCandidate,
 } from '../../features/election/elecitonSlice';
-import { fetchAllUserAction } from '../../features/user/userAction';
 
 const SearchCandidateForm = () => {
   const [search, setSearch] = useState('');
@@ -109,7 +108,7 @@ const SearchCandidateForm = () => {
 
       {displayData?.length > 0 ? (
         <div className="mt-4">
-          <h5 className='mb-4'>Selected Candidates</h5>
+          <h5 className="mb-4">Selected Candidates</h5>
           <Table bordered hover responsive>
             <thead>
               <tr>

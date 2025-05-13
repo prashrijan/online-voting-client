@@ -124,21 +124,25 @@ const ElectionVoting = () => {
         <div className="flex-grow-1 bg-white p-4 shadow-sm rounded-4">
           <h2 className="mb-4 fw-semibold">Candidates</h2>
           <div className="row g-4">
-            {candidates?.map((candidate) => (
-              <div className="col-12 col-md-6 col-lg-4" key={candidate._id}>
-                <CandidateCard
-                  name={candidate.fullName}
-                  slogan={candidate.bio}
-                  imageUrl={candidate.profileImage || profileimg}
-                  onVote={
-                    election.status == 'active'
-                      ? () => handleVote(id, candidate._id)
-                      : null
-                  }
-                  hasVoted={hasVoted}
-                />
-              </div>
-            ))}
+            {candidates.length == 0 ? (
+              <p>No candidates has been added for this election.</p>
+            ) : (
+              candidates?.map((candidate) => (
+                <div className="col-12 col-md-6 col-lg-4" key={candidate._id}>
+                  <CandidateCard
+                    name={candidate.fullName}
+                    slogan={candidate.bio}
+                    imageUrl={candidate.profileImage || profileimg}
+                    onVote={
+                      election.status == 'active'
+                        ? () => handleVote(id, candidate._id)
+                        : null
+                    }
+                    hasVoted={hasVoted}
+                  />
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
