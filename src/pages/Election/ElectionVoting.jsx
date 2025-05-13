@@ -52,7 +52,7 @@ const ElectionVoting = () => {
   };
 
   return (
-    <div className="h-100 bg-light">
+    <div className="h-100 bg-light mb-3">
       {/* Cover Image */}
       <div className="container d-flex justify-content-center align-items-center flex-column">
         <img
@@ -89,23 +89,22 @@ const ElectionVoting = () => {
               {getTimeRemaining(election.endDate)}
             </span>
           )}
-
-          <div>
-            <span className="fw-semibold">Organized by:</span>{' '}
-            {election.createdBy?.fullName}
-          </div>
-          <div>
-            <span className="fw-semibold">
-              Starts in: {formatDate(election.startDate)} at{' '}
-              {election.startTime}
-            </span>
-          </div>
-          <div>
-            <span className="fw-semibold">
-              Ends in: {formatDate(election.endDate)} at {election.endTime}
-            </span>
-          </div>
         </div>
+
+        <section className="mt-3">
+          <div>
+            <strong>Organized by:</strong>{' '}
+            {election.createdBy?.fullName || 'Unknown'}
+          </div>
+          <div>
+            <strong>Starts:</strong> {formatDate(election.startDate)} at{' '}
+            {election.startTime}
+          </div>
+          <div>
+            <strong>Ends:</strong> {formatDate(election.endDate)} at{' '}
+            {election.endTime}
+          </div>
+        </section>
       </div>
 
       {/* Live Chart + Candidates */}
@@ -123,12 +122,12 @@ const ElectionVoting = () => {
         {/* Candidate List */}
         <div className="flex-grow-1 bg-white p-4 shadow-sm rounded-4">
           <h2 className="mb-4 fw-semibold">Candidates</h2>
-          <div className="row g-4">
+          <div className="d-flex align-items-center flex-wrap g-4">
             {candidates.length == 0 ? (
               <p>No candidates has been added for this election.</p>
             ) : (
               candidates?.map((candidate) => (
-                <div className="col-12 col-md-6 col-lg-4" key={candidate._id}>
+                <div className="m-2 " key={candidate._id}>
                   <CandidateCard
                     name={candidate.fullName}
                     slogan={candidate.bio}
