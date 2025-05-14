@@ -52,7 +52,7 @@ const Sidebar = () => {
     },
     { to: '/user/my-votes', icon: <FaChartBar />, label: 'My Votes' },
     { to: '/user/results', icon: <FaVoteYea />, label: 'Results' },
-    { to: '/user/profile', icon: <FaUserCog />, label: 'Profile Settings' },
+    { to: '/user/profile', icon: <FaUserCog />, label: 'Profile' },
     {
       to: '/user/help-center',
       icon: <FaQuestionCircle />,

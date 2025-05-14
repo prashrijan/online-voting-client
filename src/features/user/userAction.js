@@ -1,4 +1,4 @@
-import { fetchAllUserApi, fetchUserApi } from './userApi';
+import { fetchAllUserApi, fetchUserApi, updateProfileApi } from './userApi';
 import { setActiveUsers, setUser } from './userSlice';
 
 import { refreshTokenApi } from '../../services/authApi';
@@ -53,5 +53,20 @@ export const fetchAllUserAction = () => async (dispatch) => {
     data && dispatch(setActiveUsers(data));
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const updateProfileAction = (payload) => async (dispatch) => {
+  try {
+    const res = await updateProfileApi(payload);
+    if (res && res.success && res.data) {
+      dispatch(setUser(res.data));
+      dispatch(fetchUserAction());
+    } else {
+      return;
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 };
