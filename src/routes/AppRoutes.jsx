@@ -20,6 +20,8 @@ import ManageCandidates from '../pages/Election/ManageCandidates';
 import HelpCenter from '../pages/helpCenter/HelpCenter';
 import MyElection from '../pages/Election/MyElection';
 import MyVotes from '../pages/Election/MyVotes';
+import ProfileSettings from '../pages/user/ProfileSettings';
+import ProfilePage from '../pages/user/ProfilePage';
 
 const AppRoutes = () => {
   return (
@@ -53,6 +55,8 @@ const AppRoutes = () => {
         <Route path="help-center" element={<HelpCenter />} />
         <Route path="my-elections" element={<MyElection />} />
         <Route path="my-votes" element={<MyVotes />} />
+        <Route path="profile" element={<ProfilePage />} />
+        <Route path="profile/edit" element={<ProfileSettings />} />
       </Route>
     </Routes>
   );

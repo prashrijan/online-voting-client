@@ -28,3 +28,22 @@ export const fetchAllUserApi = async () => {
 
   return res;
 };
+
+export const updateProfileApi = async (payload) => {
+  try {
+    const res = await apiProcessor({
+      method: 'PUT',
+      url: userEndPoint + '/update-profile',
+      isPrivate: true,
+      payload,
+      contentType: 'multipart/form-data',
+      showToast: true,
+    });
+    console.log(res);
+
+    return res;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
