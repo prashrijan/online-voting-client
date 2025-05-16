@@ -16,6 +16,15 @@ const Hero = () => {
 
   const handleJoinBtnClick = async () => {
     try {
+      if (!electionCode) {
+        toast.error('Please enter the code and try again.', {
+          autoClose: 3000,
+          closeOnClick: true,
+          pauseOnHover: false,
+          progress: undefined,
+        });
+        return;
+      }
       const electionData = await dispatch(
         getElectionByCodeAction(electionCode)
       );

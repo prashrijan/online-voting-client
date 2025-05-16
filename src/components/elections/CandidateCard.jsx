@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import './styles/CandidateCard.styles.css';
+import { MdOutlineHowToVote } from 'react-icons/md';
+import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 
 const CandidateCard = ({ name, slogan, imageUrl, onVote, hasVoted }) => {
   return (
@@ -20,9 +22,21 @@ const CandidateCard = ({ name, slogan, imageUrl, onVote, hasVoted }) => {
             onClick={onVote}
             disabled={hasVoted}
             className={`button ${hasVoted ? 'disabled' : 'active'}`}
-            variant={hasVoted ? 'success' : 'primary'}
+            variant={hasVoted ? 'success' : 'dark'}
           >
-            {hasVoted ? 'Already Voted' : 'Vote'}
+            {hasVoted ? (
+              <div className="d-flex align-items-center gap-1">
+                Already Voted{' '}
+                <IoCheckmarkDoneCircle
+                  style={{ height: '20px', width: '20px' }}
+                />
+              </div>
+            ) : (
+              <div className="d-flex align-items-center gap-1">
+                Vote{' '}
+                <MdOutlineHowToVote style={{ height: '20px', width: '20px' }} />
+              </div>
+            )}
           </Button>
         ) : (
           <div className="text-secondary small mt-2">

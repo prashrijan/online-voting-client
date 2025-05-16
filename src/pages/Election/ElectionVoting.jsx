@@ -13,6 +13,7 @@ import Loader from '../../components/loader/Loader';
 import CandidateCard from '../../components/elections/CandidateCard';
 import { castVoteApi, checkVoteStatusApi } from '../../services/voteApi';
 import LiveVoteChart from '../../components/chart/LiveVoteChart';
+import { Button, Modal } from 'react-bootstrap';
 
 const ElectionVoting = () => {
   const { id } = useParams();
@@ -20,6 +21,8 @@ const ElectionVoting = () => {
 
   const [loading, setLoading] = useState(true);
   const [hasVoted, setHasVoted] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [candidateToVote, setCandidateToVote] = useState(null);
 
   const election = useSelector((state) => state?.election?.electionToShow);
   const candidates = useSelector((state) => state?.election?.candidatesToShow);
@@ -42,13 +45,19 @@ const ElectionVoting = () => {
     return <Loader text="Getting Election Data..." />;
   }
 
-  const handleVote = async (electionId, candidateId) => {
-    const res = await castVoteApi(electionId, candidateId);
+  const handleVote = async () => {
+    const res = await castVoteApi(id, candidateToVote._id);
     if (res && res.success) {
       setHasVoted(true);
     } else {
       setHasVoted(false);
     }
+    setShowModal(false);
+  };
+
+  const handleVoteConfirmation = (candidate) => {
+    setCandidateToVote(candidate);
+    setShowModal(true);
   };
 
   return (
@@ -135,7 +144,7 @@ const ElectionVoting = () => {
                     imageUrl={candidate.profileImage || profileimg}
                     onVote={
                       election.status == 'active'
-                        ? () => handleVote(id, candidate._id)
+                        ? () => handleVoteConfirmation(candidate)
                         : null
                     }
                     hasVoted={hasVoted}
@@ -145,6 +154,25 @@ const ElectionVoting = () => {
             )}
           </div>
         </div>
+
+        {/* Vote Confirmation Modal */}
+        <Modal show={showModal} onHide={() => setShowModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirm Vote</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Are you sure you want to vote{' '}
+            <strong>{candidateToVote?.fullName}</strong>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              Cancel
+            </Button>
+            <Button variant="success" onClick={handleVote}>
+              Yes, Vote
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );

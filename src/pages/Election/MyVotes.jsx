@@ -83,8 +83,8 @@ const MyVotes = () => {
                     src={candidate.profileImage}
                     alt={candidate.fullName}
                     roundedCircle
-                    width={60}
-                    height={60}
+                    width={150}
+                    height={150}
                     style={{ objectFit: 'cover', border: '2px solid #ddd' }}
                   />
                 )}
