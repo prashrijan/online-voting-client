@@ -1,15 +1,44 @@
 import React, { useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { getElectionByCodeAction } from '../../features/election/electionAction';
+import { toast } from 'react-toastify';
 
 const Hero = () => {
   const [electionCode, setElectionCode] = useState('');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
     setElectionCode(e.target.value);
   };
 
-  const handleJoinBtnClick = () => {
-    console.log(`Election Code ${electionCode}`);
+  const handleJoinBtnClick = async () => {
+    try {
+      const electionData = await dispatch(
+        getElectionByCodeAction(electionCode)
+      );
+
+      if (electionData && electionData._id) {
+        navigate(`/user/election-voting/${electionData?._id}`);
+      } else {
+        toast.error('Invalid Eleciton Code. Please try again.', {
+          autoClose: 3000,
+          closeOnClick: true,
+          pauseOnHover: false,
+          progress: undefined,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error, {
+        autoClose: 3000,
+        closeOnClick: true,
+        pauseOnHover: false,
+        progress: undefined,
+      });
+    }
   };
 
   return (
@@ -20,7 +49,7 @@ const Hero = () => {
       </div>
       <div
         className="mt-3 p-3 border border-2 text-center rounded-5 shadow-sm"
-        style={{ width: '350px' }}
+        style={{ width: '450px' }}
       >
         <h4>Join a Live Election</h4>
         <hr />
@@ -29,11 +58,11 @@ const Hero = () => {
         <div className="d-flex justify-content-center align-items-center">
           <input
             type="text"
-            className="p-2 bg-light border-primary border rounded-pill text-center"
-            placeholder="123 456"
+            className="px-4 py-2 bg-light border-primary border rounded-pill text-center"
+            placeholder="c 8 f 3 e 4 a 5"
             maxLength="8"
             pattern="\d{8}"
-            style={{ maxWidth: '100px' }}
+            style={{ maxWidth: '150px' }}
             onChange={handleInputChange}
           />
 

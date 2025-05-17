@@ -13,6 +13,7 @@ import {
   fetchCandidatesApi,
   fetchElectionApi,
   fetchElections,
+  getElectionByCodeApi,
   getMyElectionsApi,
   updateElectionApi,
 } from './electionApi';
@@ -114,3 +115,20 @@ export const deleteCandidateFromElectionAction =
       throw error;
     }
   };
+
+export const getElectionByCodeAction = (code) => async (dispatch) => {
+  try {
+    const res = await getElectionByCodeApi(code);
+    if (res.success && res.data) {
+      dispatch(setShowElection(res.data));
+      return res.data;
+    } else {
+      dispatch(setShowElection({}));
+      return null;
+    }
+  } catch (error) {
+    console.err('error', error);
+
+    throw error;
+  }
+};

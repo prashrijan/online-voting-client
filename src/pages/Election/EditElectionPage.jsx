@@ -18,17 +18,14 @@ import {
 } from '../../features/election/electionAction';
 import useForm from '../../hooks/useForm'; // adjust path as needed
 import { to12HourFormat, to24HourFormat } from '../../utils/time';
+import { editElectionValidationSchema } from '../../validation/EditElectionValidation';
+import { toast } from 'react-toastify';
 const EditElection = () => {
   const { electionId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  const election = useSelector((state) => state.election?.electionToShow);
-
-  const { form, handleOnChange, handleOnSubmit, setFormValues } = useForm({
+  const formInitialValue = {
     title: '',
     startDate: '',
     endDate: '',
@@ -36,7 +33,14 @@ const EditElection = () => {
     endTime: '',
     coverImage: '',
     visibility: 'public',
-  });
+  };
+
+  const [loading, setLoading] = useState(true);
+
+  const election = useSelector((state) => state.election?.electionToShow);
+
+  const { form, handleOnChange, handleOnSubmit, setFormValues } =
+    useForm(formInitialValue);
 
   useEffect(() => {
     const fetchElection = async () => {
@@ -97,24 +101,58 @@ const EditElection = () => {
 
   const onSubmit = async () => {
     try {
-      const finalStartTime = to12HourFormat(form.startTime);
-      const finalEndTime = to12HourFormat(form.endTime);
-      setLoading(true);
-      console.log(form);
-      const payload = {
-        ...form,
-        startTime: finalStartTime,
-        endTime: finalEndTime,
-      };
-      await dispatch(updateElectionAction(electionId, payload));
-      navigate('/user/manage-elections');
-    } catch (err) {
-      setError('Failed to update election');
+      // Validate the form
+      if (editElectionValidationSchema) {
+        await editElectionValidationSchema.validate(form, {
+          abortEarly: false,
+        });
+        setLoading(true);
+
+        const finalStartTime = to12HourFormat(form.startTime);
+        const finalEndTime = to12HourFormat(form.endTime);
+
+        const payload = {
+          ...form,
+          startTime: finalStartTime,
+          endTime: finalEndTime,
+        };
+
+        await dispatch(updateElectionAction(electionId, payload));
+        navigate('/user/manage-elections');
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.inner) {
+        // Handle errors if validation fails
+        const validationErrors = {};
+        let errorMessage = 'Please fix the following errors:\n';
+
+        error.inner.forEach((err) => {
+          validationErrors[err.path] = err.message;
+          errorMessage += `${err.path}: ${err.message}\n`;
+        });
+
+        // Show toast notification with all errors
+        toast.error(errorMessage, {
+          autoClose: 3000,
+          closeOnClick: true,
+          pauseOnHover: false,
+          progress: undefined,
+        });
+      } else {
+        // General error handling
+
+        toast.error('Failed to update election', {
+          autoClose: 3000,
+          closeOnClick: true,
+          pauseOnHover: false,
+          progress: undefined,
+        });
+      }
     } finally {
       setLoading(false);
     }
   };
-
   if (loading) {
     return (
       <Container className="my-4">
@@ -138,8 +176,6 @@ const EditElection = () => {
 
         <Card className=" w-75 p-4 rounded-5 border shadow">
           <Card.Body>
-            {error && <Alert variant="danger">{error}</Alert>}
-
             <Form onSubmit={(e) => handleOnSubmit(e, onSubmit)}>
               <Form.Group className="mb-3">
                 <Form.Label className="fw-semibold">Election Title</Form.Label>
