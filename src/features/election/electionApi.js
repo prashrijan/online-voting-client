@@ -140,3 +140,16 @@ export const getElectionByCodeApi = async (code) => {
     throw error;
   }
 };
+
+export const getFinishedElectionApi = async () => {
+  try {
+    const res = await apiProcessor({
+      url: electionEndPoint + '/finished',
+      method: 'GET',
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

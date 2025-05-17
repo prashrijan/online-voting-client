@@ -33,3 +33,7 @@ export { default as ProfilePage } from './user/ProfilePage';
 // Subscription
 export { default as Subscriptions } from './subscription/Subscriptions';
 export { default as PaymentSuccess } from './subscription/PaymentSucess';
+
+// Results
+export { default as ElectionResultList } from './results/ElectionResultsList';
+export { default as ElectionResultDetail } from './results/ElectionResultDetail';

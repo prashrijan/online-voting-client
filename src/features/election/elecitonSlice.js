@@ -1,6 +1,5 @@
 // electionSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-import { act } from 'react';
 
 const initialState = {
   electionData: {
@@ -19,6 +18,8 @@ const initialState = {
   electionToShow: {},
   candidatesToShow: [],
   yourElections: [],
+  finishedElections: [],
+  result: {},
 };
 
 const electionSlice = createSlice({
@@ -64,6 +65,12 @@ const electionSlice = createSlice({
     setYourElections: (state, action) => {
       state.yourElections = action.payload;
     },
+    setFinishedElection: (state, action) => {
+      state.finishedElections = action.payload;
+    },
+    setElectionResult: (state, action) => {
+      state.result = action.payload;
+    },
   },
 });
 
@@ -78,6 +85,8 @@ export const {
   setShowElection,
   setCandidatesToShow,
   setYourElections,
+  setFinishedElection,
+  setElectionResult,
 } = electionSlice.actions;
 
 export default electionSlice.reducer;

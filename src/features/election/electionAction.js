@@ -2,6 +2,7 @@ import {
   resetElection,
   setCandidatesToShow,
   setElection,
+  setFinishedElection,
   setPublicElection,
   setShowElection,
   setYourElections,
@@ -14,6 +15,7 @@ import {
   fetchElectionApi,
   fetchElections,
   getElectionByCodeApi,
+  getFinishedElectionApi,
   getMyElectionsApi,
   updateElectionApi,
 } from './electionApi';
@@ -129,6 +131,17 @@ export const getElectionByCodeAction = (code) => async (dispatch) => {
   } catch (error) {
     console.err('error', error);
 
+    throw error;
+  }
+};
+
+export const getFinishedElectionAction = () => async (dispatch) => {
+  try {
+    const res = await getFinishedElectionApi();
+
+    res && res.success && dispatch(setFinishedElection(res.data));
+  } catch (error) {
+    console.log(error);
     throw error;
   }
 };

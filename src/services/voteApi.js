@@ -1,4 +1,5 @@
 import { conf } from '../conf/conf';
+import { setElectionResult } from '../features/election/elecitonSlice';
 import { apiProcessor } from './apiProcessor';
 
 const voteEndPoint = conf.baseUrlDev + '/api/v1/vote';
@@ -72,6 +73,26 @@ export const fetchMyVotesApi = async () => {
     });
 
     return res;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const fetchElectionResultsAction = (id) => async (dispatch) => {
+  try {
+    const res = await apiProcessor({
+      method: 'GET',
+      url: `${voteEndPoint}/results/${id}`,
+      isPrivate: true,
+    });
+
+    console.log(res);
+
+    if (res && res.success) {
+      dispatch(setElectionResult(res.data));
+      return res.data;
+    }
   } catch (error) {
     console.error(error);
     throw error;

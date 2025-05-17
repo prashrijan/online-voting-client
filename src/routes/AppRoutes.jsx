@@ -23,11 +23,13 @@ import {
   HelpCenter,
   Subscriptions,
   PaymentSuccess,
+  ElectionResultDetail,
+  ElectionResultList,
 } from '@pages';
 
 const AppRoutes = () => {
   return (
-    <Routes>
+    <Routes ElectionResultListes>
       {/* public routes */}
       <Route path="/" element={<DefaultLayout />}>
         <Route index element={<Homepage />} />
@@ -60,6 +62,8 @@ const AppRoutes = () => {
         <Route path="profile/edit" element={<ProfileSettings />} />
         <Route path="subscriptions" element={<Subscriptions />} />
         <Route path="payment-success" element={<PaymentSuccess />} />
+        <Route path="results" element={<ElectionResultList />} />
+        <Route path="results/:id" element={<ElectionResultDetail />} />
       </Route>
     </Routes>
   );

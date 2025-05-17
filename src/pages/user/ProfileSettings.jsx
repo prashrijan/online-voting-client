@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfileAction } from '@features/user/userAction';
-import useForm from '../../hooks/useForm';
+import useForm from '@hooks/useForm';
 import Loader from '@components/loader/Loader';
 import { useNavigate } from 'react-router-dom';
+import GoBackButton from '@components/others/GoBackButton';
 
 const ProfileSettings = () => {
   const dispatch = useDispatch();
@@ -77,13 +78,7 @@ const ProfileSettings = () => {
     </Container>
   ) : (
     <Container className="m-5">
-      <Button
-        variant="outline-dark"
-        className="mb-3 d-flex align-items-center gap-2"
-        onClick={() => navigate(-1)}
-      >
-        ← Go Back
-      </Button>
+      <GoBackButton />
       <Card className="p-4 shadow-sm rounded-4">
         <h3 className="mb-4">Profile Settings</h3>
         <Form onSubmit={(e) => handleOnSubmit(e, onSubmit)}>
