@@ -14,7 +14,7 @@ import {
 import './styles/ElectionCard.styles.css';
 
 import { formatDate } from '@utils/date';
-import { getTimeRemaining } from '@utils/getRemainingtime';
+import { getTimeRemaining } from '@utils/getRemainingTime';
 import { getVoterCounts } from '@services/voteApi';
 
 function ElectionCard({ cardData }) {
