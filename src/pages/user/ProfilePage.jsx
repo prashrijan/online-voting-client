@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, Button, Container, Badge } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -22,7 +21,7 @@ const ProfilePage = () => {
           boxShadow: '0 12px 28px rgba(0, 0, 0, 0.08)',
         }}
       >
-        <div className="d-flex justify-content-center mb-4">
+        <div className="d-flex justify-content-center mb-4 position-relative">
           <img
             src={user.profileImage || '/default-avatar.png'}
             alt="Profile"
@@ -31,7 +30,7 @@ const ProfilePage = () => {
               height: '140px',
               width: '140px',
               objectFit: 'cover',
-              border: '4px solid #0d6efd',
+              border: user.isPaid ? '4px solid #ffc107' : 'none',
               boxShadow: '0 6px 18px rgba(0, 0, 0, 0.15)',
             }}
           />
@@ -52,13 +51,13 @@ const ProfilePage = () => {
         )}
 
         <div className="mb-4">
-          {user.isVerified ? (
+          {user.isPaid ? (
             <Badge bg="success" className="px-3 py-2 rounded-pill">
-              ✅ Verified Account
+              ✅ Subscribed
             </Badge>
           ) : (
             <Badge bg="secondary" className="px-3 py-2 rounded-pill">
-              ⏳ Not Verified
+              ⏳ Not Subscribed
             </Badge>
           )}
         </div>
