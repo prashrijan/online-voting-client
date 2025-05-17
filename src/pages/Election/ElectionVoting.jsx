@@ -7,7 +7,7 @@ import {
   fetchCandidatesAction,
   fetchElectionAction,
 } from '../../features/election/electionAction';
-import { getTimeRemaining } from '@utils/getRemainingtime';
+import { getTimeRemaining } from '@utils/getRemainingTime';
 import { formatDate } from '@utils/date';
 import Loader from '@components/loader/Loader';
 import CandidateCard from '@components/elections/CandidateCard';
