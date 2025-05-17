@@ -35,6 +35,9 @@ const GuestNavbar = () => (
           <Nav.Link as={Link} to="/contact" className="nav-link">
             Contact
           </Nav.Link>
+          <Nav.Link as={Link} to="/subscriptions" className="nav-link">
+            Subscriptions
+          </Nav.Link>
         </Nav>
 
         <Nav className="auth-buttons">
@@ -82,6 +85,9 @@ const UserNavbar = () => {
             </Nav.Link>
             <Nav.Link as={Link} to="/user/help-center" className="nav-link">
               Help Center
+            </Nav.Link>
+            <Nav.Link as={Link} to="/user/subscriptions" className="nav-link">
+              Subscriptions
             </Nav.Link>
           </Nav>
 

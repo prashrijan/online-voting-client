@@ -10,7 +10,7 @@ import useForm from '../../hooks/useForm';
 import { googleAuth, loginUserApi } from '../../services/authApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { autologin, fetchUserAction } from '../../features/user/userAction';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../loader/Loader';
 
 const LoginForm = () => {
@@ -24,6 +24,9 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const redirect = searchParams.get('redirect') || '/';
 
   const { user } = useSelector((state) => state.user);
 
@@ -61,7 +64,11 @@ const LoginForm = () => {
         localStorage.setItem('refreshToken', data.refreshToken);
 
         await dispatch(fetchUserAction());
-        navigate('/user');
+        if (redirect) {
+          navigate('/user/subscrptions');
+        } else {
+          navigate('/user');
+        }
       }
     } catch (error) {
       console.log(error);
