@@ -58,7 +58,7 @@ function ElectionCard({ cardData }) {
         cardData.map(async (election) => {
           try {
             const { data } = await getVoterCounts(election._id);
-            console.log(data);
+
             counts[election._id] = data;
           } catch (error) {
             console.error('Failed to fetch voter count for ', election._id);
@@ -74,7 +74,6 @@ function ElectionCard({ cardData }) {
     }
   }, [cardData]);
 
-  console.log(voterCounts);
   return (
     <div className="election-card-container">
       {cardData?.map((election) => (
@@ -150,7 +149,14 @@ function ElectionCard({ cardData }) {
             {election.status === 'active' && (
               <div className="time-remaining">
                 <FiClock className="icon" />
-                <span>{getTimeRemaining(election.endDate)}</span>
+                <span>
+                  {getTimeRemaining(
+                    election.startDate,
+                    election.startTime,
+                    election.endDate,
+                    election.endTime
+                  )}
+                </span>
               </div>
             )}
           </Card.Footer>

@@ -95,7 +95,12 @@ const ElectionVoting = () => {
 
           {election?.endDate && (
             <span className="p-1 m-1 px-3 bg-secondary-subtle rounded-pill">
-              {getTimeRemaining(election.endDate)}
+              {getTimeRemaining(
+                election.startDate,
+                election.startTime,
+                election.endDate,
+                election.endTime
+              )}
             </span>
           )}
         </div>
