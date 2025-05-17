@@ -4,10 +4,10 @@ import Form from 'react-bootstrap/Form';
 import { FcGoogle } from 'react-icons/fc';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-import { registerFormFields } from '../../assets/form/formFields';
+import { registerFormFields } from '@assets/form/formFields';
 import useForm from '../../hooks/useForm';
-import { registerValidationSchema } from '../../validation/RegisterValidation';
-import { googleAuth, signUpUserApi } from '../../services/authApi';
+import { registerValidationSchema } from '@validation/RegisterValidation';
+import { googleAuth, signUpUserApi } from '@services/authApi';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Loader from '../loader/Loader';
 

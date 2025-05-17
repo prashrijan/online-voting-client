@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchUserAction } from '../../features/user/userAction';
+import { fetchUserAction } from '@features/user/userAction';
 import Loader from '@components/loader/Loader';
 
 const GoogleAuthSuccess = () => {

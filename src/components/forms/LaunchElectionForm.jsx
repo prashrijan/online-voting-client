@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Card, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { createElectionAction } from '../../features/election/electionAction';
+import { createElectionAction } from '@features/election/electionAction';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { electionValidationSchema } from '../../validation/LaunchElectionValidation';
+import { electionValidationSchema } from '@validation/LaunchElectionValidation';
 
 const LaunchElectionForm = () => {
   const { electionData, candidates } = useSelector((state) => state.election);

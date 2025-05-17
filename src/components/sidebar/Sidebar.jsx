@@ -12,8 +12,8 @@ import {
   FaSignOutAlt,
 } from 'react-icons/fa';
 import { Modal, Button } from 'react-bootstrap';
-import { resetUser } from '../../features/user/userSlice';
-import { logoutUserApi } from '../../services/authApi.js';
+import { resetUser } from '@features/user/userSlice';
+import { logoutUserApi } from '@services/authApi.js';
 
 const Sidebar = () => {
   const { user } = useSelector((state) => state.user);

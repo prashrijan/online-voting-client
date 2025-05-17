@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   addCandidate,
   removeCandidate,
-} from '../../features/election/elecitonSlice';
+} from '@features/election/elecitonSlice';
 
 const SearchCandidateForm = () => {
   const [search, setSearch] = useState('');

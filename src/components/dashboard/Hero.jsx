@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getElectionByCodeAction } from '../../features/election/electionAction';
+import { getElectionByCodeAction } from '@features/election/electionAction';
 import { toast } from 'react-toastify';
 
 const Hero = () => {

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteCandidateFromElectionAction,
   fetchCandidatesAction,
-} from '../../features/election/electionAction';
+} from '@features/election/electionAction';
 import Loader from '@components/loader/Loader';
 import SearchCandidateForm from '@components/Forms/SelectCandidateForm';
 

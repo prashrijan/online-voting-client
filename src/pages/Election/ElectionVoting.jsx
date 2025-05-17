@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import profileimg from '../../assets/images/donut.png';
+import profileimg from '@assets/images/donut.png';
 import {
   fetchCandidatesAction,
   fetchElectionAction,
-} from '../../features/election/electionAction';
+} from '@features/election/electionAction';
 import { getTimeRemaining } from '@utils/getRemainingTime';
 import { formatDate } from '@utils/date';
 import Loader from '@components/loader/Loader';
 import CandidateCard from '@components/elections/CandidateCard';
-import { castVoteApi, checkVoteStatusApi } from '../../services/voteApi';
+import { castVoteApi, checkVoteStatusApi } from '@services/voteApi';
 import LiveVoteChart from '@components/chart/LiveVoteChart';
 import { Button, Modal } from 'react-bootstrap';
 

@@ -1,5 +1,5 @@
 import { conf } from '../../conf/conf';
-import { apiProcessor } from '../../services/apiProcessor';
+import { apiProcessor } from '@services/apiProcessor';
 
 const chatbotEndPoint = conf.baseUrl + '/api/v1/chat/message';
 

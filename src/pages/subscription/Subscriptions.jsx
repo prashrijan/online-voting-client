@@ -2,7 +2,7 @@ import { Container, Row, Col, Card, Button, ListGroup } from 'react-bootstrap';
 import './styles/Subscriptions.styles.css';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { checkoutSessionApi } from '../../services/paymentApi';
+import { checkoutSessionApi } from '@services/paymentApi';
 
 const subscriptionPlans = [
   {

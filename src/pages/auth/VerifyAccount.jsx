@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { verifyEmail } from '../../services/authApi';
+import { verifyEmail } from '@services/authApi';
 import Loader from '@components/loader/Loader';
 
 const VerifyAccount = () => {

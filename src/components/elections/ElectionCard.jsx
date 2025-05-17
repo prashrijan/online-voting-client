@@ -1,7 +1,7 @@
 import React, { use, useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import defaultImg from '../../assets/images/Chunaab.png';
+import defaultImg from '@assets/images/Chunaab.png';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 
 import {
@@ -15,7 +15,7 @@ import './styles/ElectionCard.styles.css';
 
 import { formatDate } from '@utils/date';
 import { getTimeRemaining } from '@utils/getRemainingtime';
-import { getVoterCounts } from '../../services/voteApi';
+import { getVoterCounts } from '@services/voteApi';
 
 function ElectionCard({ cardData }) {
   const navigate = useNavigate();

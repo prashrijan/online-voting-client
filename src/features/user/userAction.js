@@ -1,7 +1,7 @@
 import { fetchAllUserApi, fetchUserApi, updateProfileApi } from './userApi';
 import { setActiveUsers, setUser } from './userSlice';
 
-import { refreshTokenApi } from '../../services/authApi';
+import { refreshTokenApi } from '@services/authApi';
 
 export const fetchUserAction = () => async (dispatch) => {
   try {

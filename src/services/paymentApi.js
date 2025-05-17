@@ -7,7 +7,6 @@ export const checkoutSessionApi = async () => {
       method: 'POST',
       url: payment_end_point + '/create-checkout-session',
       isPrivate: true,
-      showToast: true,
     });
     console.log(res);
     return res;

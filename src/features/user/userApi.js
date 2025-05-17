@@ -1,4 +1,4 @@
-import { apiProcessor } from '../../services/apiProcessor';
+import { apiProcessor } from '@services/apiProcessor';
 
 import { conf } from '../../conf/conf';
 

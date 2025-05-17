@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 
 import useForm from '../../hooks/useForm';
-import { sendHelpMessageApi } from '../../services/userApi';
+import { sendHelpMessageApi } from '@services/userApi';
 import Loader from '@components/loader/Loader';
 
 const HelpCenter = () => {

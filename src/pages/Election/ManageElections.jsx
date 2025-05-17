@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteElectionAction,
   getMyElectionAction,
-} from '../../features/election/electionAction';
+} from '@features/election/electionAction';
 import { to12HourFormat } from '@utils/time';
 import Loader from '@components/loader/Loader';
 

@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { fetchLiveVoteDataApi } from '../../services/voteApi';
+import { fetchLiveVoteDataApi } from '@services/voteApi';
 
 ChartJS.register(
   BarElement,

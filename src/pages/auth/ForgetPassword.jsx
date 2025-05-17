@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import Loader from '@components/loader/Loader';
 
-import { forgetPasswordApi } from '../../services/authApi';
+import { forgetPasswordApi } from '@services/authApi';
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState('');

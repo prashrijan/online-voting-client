@@ -5,11 +5,11 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 import InputGroup from 'react-bootstrap/InputGroup';
-import { loginValidationSchema } from '../../validation/LoginValidation';
+import { loginValidationSchema } from '@validation/LoginValidation';
 import useForm from '../../hooks/useForm';
-import { googleAuth, loginUserApi } from '../../services/authApi';
+import { googleAuth, loginUserApi } from '@services/authApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { autologin, fetchUserAction } from '../../features/user/userAction';
+import { autologin, fetchUserAction } from '@features/user/userAction';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../loader/Loader';
 

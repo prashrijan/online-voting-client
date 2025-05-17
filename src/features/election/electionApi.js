@@ -1,4 +1,4 @@
-import { apiProcessor } from '../../services/apiProcessor.js';
+import { apiProcessor } from '@services/apiProcessor.js';
 import { conf } from '../../conf/conf.js';
 
 const electionEndPoint = conf.baseUrl + '/api/v1/election';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Button, Container, Row, Col, Badge } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMyElectionAction } from '../../features/election/electionAction';
+import { getMyElectionAction } from '@features/election/electionAction';
 import { to12HourFormat } from '@utils/time';
 import Loader from '@components/loader/Loader';
 import { toast } from 'react-toastify';

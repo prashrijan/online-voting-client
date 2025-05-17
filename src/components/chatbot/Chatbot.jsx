@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaRobot, FaTimes } from 'react-icons/fa';
 import { IoSend } from 'react-icons/io5';
-import { sendMessageToChatBot } from '../../features/chatbot/chatbotApi';
+import { sendMessageToChatBot } from '@features/chatbot/chatbotApi';
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);

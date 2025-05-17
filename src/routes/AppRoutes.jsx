@@ -1,29 +1,29 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import DefaultLayout from '@components/layout/DefaultLayout';
-import Homepage from '../pages/home/Homepage';
-import Register from '../pages/auth/Register';
-import Login from '../pages/auth/Login';
-import ForgetPassword from '../pages/auth/ForgetPassword';
 import ProtectedLayout from '@components/layout/ProtectedLayout';
-import Dashboard from '../pages/dashboard/Dashboard';
-import GoogleAuthSuccess from '../pages/auth/GoogleAuthSuccess';
-import CreateElection from '../pages/Election/CreateElection';
-import About from '../pages/About';
-import Contact from '../pages/Contact';
-import VerifyAccount from '../pages/auth/VerifyAccount';
-import ElectionVoting from '../pages/Election/ElectionVoting';
-import ResetPassword from '../pages/auth/ResetPassword';
-import ManageElections from '../pages/Election/ManageElections';
-import EditElectionPage from '../pages/Election/EditElectionPage';
-import ManageCandidates from '../pages/Election/ManageCandidates';
-import HelpCenter from '../pages/helpCenter/HelpCenter';
-import MyElection from '../pages/Election/MyElection';
-import MyVotes from '../pages/Election/MyVotes';
-import ProfileSettings from '../pages/user/ProfileSettings';
-import ProfilePage from '../pages/user/ProfilePage';
-import Subscriptions from '../pages/subscription/Subscriptions';
-import PaymentSuccess from '../pages/subscription/PaymentSucess';
+import {
+  Homepage,
+  Register,
+  Login,
+  ForgetPassword,
+  GoogleAuthSuccess,
+  VerifyAccount,
+  ResetPassword,
+  Dashboard,
+  CreateElection,
+  ElectionVoting,
+  ManageElections,
+  EditElectionPage,
+  ManageCandidates,
+  MyElection,
+  MyVotes,
+  ProfilePage,
+  ProfileSettings,
+  HelpCenter,
+  Subscriptions,
+  PaymentSuccess,
+} from '@pages';
 
 const AppRoutes = () => {
   return (
@@ -36,8 +36,7 @@ const AppRoutes = () => {
         <Route path="/verify-email" element={<VerifyAccount />} />
         <Route path="/forgot-password" element={<ForgetPassword />} />
         <Route path="/google-auth-success" element={<GoogleAuthSuccess />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
+
         <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Route>
       {/* private routes */}

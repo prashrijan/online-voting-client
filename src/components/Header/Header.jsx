@@ -7,7 +7,7 @@ import Logo from '../Logo';
 import './HeaderStyles.css';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import defaultProfile from '../../assets/images/donut.png';
+import defaultProfile from '@assets/images/donut.png';
 
 const GuestNavbar = () => (
   <Navbar collapseOnSelect expand="lg" className="light-navbar fs-6">
