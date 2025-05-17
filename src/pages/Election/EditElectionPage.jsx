@@ -17,7 +17,7 @@ import {
   updateElectionAction,
 } from '../../features/election/electionAction';
 import useForm from '../../hooks/useForm'; // adjust path as needed
-import { to12HourFormat, to24HourFormat } from '../../utils/time';
+import { to12HourFormat, to24HourFormat } from '@utils/time';
 import { editElectionValidationSchema } from '../../validation/EditElectionValidation';
 import { toast } from 'react-toastify';
 const EditElection = () => {

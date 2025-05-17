@@ -16,7 +16,7 @@ import {
   deleteElectionAction,
   getMyElectionAction,
 } from '../../features/election/electionAction';
-import { to12HourFormat } from '../../utils/time';
+import { to12HourFormat } from '@utils/time';
 import Loader from '@components/loader/Loader';
 
 const ManageElections = () => {

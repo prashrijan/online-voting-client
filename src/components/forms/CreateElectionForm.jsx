@@ -3,7 +3,7 @@ import { Form, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import './styles/CreateElectionForm.styles.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateElectionField } from '../../features/election/elecitonSlice';
-import { to12HourFormat, to24HourFormat } from '../../utils/time';
+import { to12HourFormat, to24HourFormat } from '@utils/time';
 
 const CreateElectionForm = () => {
   const { electionData } = useSelector((state) => state.election);

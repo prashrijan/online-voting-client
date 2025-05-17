@@ -13,8 +13,8 @@ import {
 } from 'react-icons/fi';
 import './styles/ElectionCard.styles.css';
 
-import { formatDate } from '../../utils/date';
-import { getTimeRemaining } from '../../utils/getRemainingtime';
+import { formatDate } from '@utils/date';
+import { getTimeRemaining } from '@utils/getRemainingtime';
 import { getVoterCounts } from '../../services/voteApi';
 
 function ElectionCard({ cardData }) {
