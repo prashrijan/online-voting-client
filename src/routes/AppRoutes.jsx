@@ -19,6 +19,7 @@ import EditElectionPage from '../pages/Election/EditElectionPage';
 import ManageCandidates from '../pages/Election/ManageCandidates';
 import HelpCenter from '../pages/helpCenter/HelpCenter';
 import MyElection from '../pages/Election/MyElection';
+import Subscriptions from '../pages/Subscriptions';
 
 const AppRoutes = () => {
   return (
@@ -51,6 +52,7 @@ const AppRoutes = () => {
         />
         <Route path="help-center" element={<HelpCenter />} />
         <Route path="my-elections" element={<MyElection />} />
+        <Route path="subscriptions" element={<Subscriptions />} />
       </Route>
     </Routes>
   );
