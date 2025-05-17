@@ -7,7 +7,7 @@ import {
   fetchCandidatesAction,
 } from '@features/election/electionAction';
 import Loader from '@components/loader/Loader';
-import SearchCandidateForm from '@components/Forms/SelectCandidateForm';
+import SearchCandidateForm from '@components/forms/SelectCandidateForm';
 
 const ManageCandidates = () => {
   const { electionId } = useParams();
