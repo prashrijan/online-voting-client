@@ -1,3 +1,4 @@
 export const conf = {
-  baseUrl: import.meta.env.VITE_BASE_URL,
+  baseUrlProduction: import.meta.env.VITE_BASE_URL_PRODUCTION,
+  baseUrlDev: import.meta.env.VITE_BASE_URL_DEV,
 };

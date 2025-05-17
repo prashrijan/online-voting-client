@@ -13,7 +13,8 @@ import { apiProcessor } from './apiProcessor';
  * @throws Will log an error to the console if the API request fails.
  */
 
-const authApiEndPoint = conf.baseUrl + '/api/v1/auth';
+const authApiEndPoint = conf.baseUrlDev + '/api/v1/auth';
+// const authApiEndPoint = conf.baseUrlProduction + '/api/v1/auth';
 
 // signining user
 export const signUpUserApi = async (payload) => {
