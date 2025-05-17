@@ -3,7 +3,7 @@ import { Form, Button, Container, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfileAction } from '../../features/user/userAction';
 import useForm from '../../hooks/useForm';
-import Loader from '../../components/loader/Loader';
+import Loader from '@components/loader/Loader';
 import { useNavigate } from 'react-router-dom';
 
 const ProfileSettings = () => {

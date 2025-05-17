@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { Form, Button, Alert, InputGroup } from 'react-bootstrap';
-import Loader from '../../components/loader/Loader';
+import Loader from '@components/loader/Loader';
 import { resetPasswordApi } from '../../services/authApi';
 import { resetPasswordValidationSchema } from '../../validation/ResetPasswordValidation';
 import useForm from '../../hooks/useForm';

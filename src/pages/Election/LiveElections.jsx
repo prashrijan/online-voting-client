@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ElectionCard from '../../components/elections/ElectionCard';
+import ElectionCard from '@/elections/ElectionCard';
 import { useSelector } from 'react-redux';
 import { Container, Accordion } from 'react-bootstrap';
 

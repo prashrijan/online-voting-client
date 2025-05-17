@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Card, Alert, Image, Badge } from 'react-bootstrap';
 import { fetchMyVotesApi } from '../../services/voteApi';
-import Loader from '../../components/loader/Loader';
+import Loader from '@components/loader/Loader';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);

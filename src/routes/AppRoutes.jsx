@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import DefaultLayout from '../components/layout/DefaultLayout';
+import DefaultLayout from '@components/layout/DefaultLayout';
 import Homepage from '../pages/home/Homepage';
 import Register from '../pages/auth/Register';
 import Login from '../pages/auth/Login';
 import ForgetPassword from '../pages/auth/ForgetPassword';
-import ProtectedLayout from '../components/layout/ProtectedLayout';
+import ProtectedLayout from '@components/layout/ProtectedLayout';
 import Dashboard from '../pages/dashboard/Dashboard';
 import GoogleAuthSuccess from '../pages/auth/GoogleAuthSuccess';
 import CreateElection from '../pages/Election/CreateElection';

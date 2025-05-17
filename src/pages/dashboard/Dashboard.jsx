@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import LiveElections from '../Election/LiveElections';
 import UpcomingElections from '../Election/UpcomingElections';
-import Hero from '../../components/dashboard/Hero';
+import Hero from '@components/dashboard/Hero';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchElectionsAction } from '../../features/election/electionAction';
-import Loader from '../../components/loader/Loader';
+import Loader from '@components/loader/Loader';
 
 const Dashboard = () => {
   const dispatch = useDispatch();

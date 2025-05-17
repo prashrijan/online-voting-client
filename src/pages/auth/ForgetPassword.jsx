@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-import Loader from '../../components/loader/Loader';
+import Loader from '@components/loader/Loader';
 
 import { forgetPasswordApi } from '../../services/authApi';
 

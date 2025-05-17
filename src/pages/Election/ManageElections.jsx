@@ -17,7 +17,7 @@ import {
   getMyElectionAction,
 } from '../../features/election/electionAction';
 import { to12HourFormat } from '../../utils/time';
-import Loader from '../../components/loader/Loader';
+import Loader from '@components/loader/Loader';
 
 const ManageElections = () => {
   const navigate = useNavigate();

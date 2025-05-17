@@ -1,7 +1,7 @@
 import { Card, Button, Container, Badge } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Loader from '../../components/loader/Loader';
+import Loader from '@components/loader/Loader';
 
 const ProfilePage = () => {
   const navigate = useNavigate();

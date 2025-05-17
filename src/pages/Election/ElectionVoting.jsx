@@ -9,10 +9,10 @@ import {
 } from '../../features/election/electionAction';
 import { getTimeRemaining } from '../../utils/getRemainingtime';
 import { formatDate } from '../../utils/date';
-import Loader from '../../components/loader/Loader';
-import CandidateCard from '../../components/elections/CandidateCard';
+import Loader from '@components/loader/Loader';
+import CandidateCard from '@components/elections/CandidateCard';
 import { castVoteApi, checkVoteStatusApi } from '../../services/voteApi';
-import LiveVoteChart from '../../components/chart/LiveVoteChart';
+import LiveVoteChart from '@components/chart/LiveVoteChart';
 import { Button, Modal } from 'react-bootstrap';
 
 const ElectionVoting = () => {

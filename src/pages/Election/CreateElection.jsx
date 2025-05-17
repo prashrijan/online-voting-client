@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Nav } from 'react-bootstrap';
-import CreateElectionForm from '../../components/forms/CreateElectionForm';
-import LaunchElectionForm from '../../components/Forms/LaunchElectionForm';
-import SearchCandidateForm from '../../components/Forms/SelectCandidateForm';
+import CreateElectionForm from '@components/forms/CreateElectionForm';
+import LaunchElectionForm from '@components/Forms/LaunchElectionForm';
+import SearchCandidateForm from '@components/Forms/SelectCandidateForm';
 import { fetchAllUserAction } from '../../features/user/userAction';
 import { useDispatch, useSelector } from 'react-redux';
 

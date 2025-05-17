@@ -1,6 +1,6 @@
 import React from 'react';
 import { upcoming } from '../../assets/form/dummyCardData';
-import ElectionCard from '../../components/elections/ElectionCard';
+import ElectionCard from '@components/elections/ElectionCard';
 import { useSelector } from 'react-redux';
 import { Container, Accordion } from 'react-bootstrap';
 
