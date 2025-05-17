@@ -29,20 +29,18 @@ const MyElection = () => {
     return date.toLocaleDateString();
   };
 
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case 'pending':
-        return <Badge bg="warning">Pending</Badge>;
+  const getStatusVariant = (status) => {
+    switch (status?.toLowerCase()) {
       case 'active':
-        return <Badge bg="success">Active</Badge>;
+        return 'success';
+      case 'pending':
+        return 'warning';
       case 'finished':
-        return <Badge bg="secondary">Finished</Badge>;
+        return 'info';
+      case 'closed':
+        return 'secondary';
       default:
-        return (
-          <Badge bg="light" text="dark">
-            {status}
-          </Badge>
-        );
+        return 'dark';
     }
   };
 
@@ -60,7 +58,6 @@ const MyElection = () => {
       progress: undefined,
     });
 
-    // Reset after 2 seconds
     setTimeout(() => {
       setCopiedElectionId(null);
     }, 2000);
@@ -72,7 +69,7 @@ const MyElection = () => {
 
       {loading ? (
         <Loader text={'Fetching your data...'} />
-      ) : elections.length == 0 ? (
+      ) : elections.length === 0 ? (
         <div className="text-center my-5 text-muted">
           <h5>You haven't created any elections yet.</h5>
         </div>
@@ -97,7 +94,13 @@ const MyElection = () => {
                       {to12HourFormat(election.startTime)} -{' '}
                       {to12HourFormat(election.endTime)}
                       <br />
-                      <strong>Status:</strong> {getStatusBadge(election.status)}
+                      <strong>Status:</strong>{' '}
+                      <Badge
+                        bg={getStatusVariant(election.status)}
+                        className="text-capitalize"
+                      >
+                        {election.status}
+                      </Badge>
                       <br />
                       <strong>Visibility:</strong>{' '}
                       {election.visibility.charAt(0).toUpperCase() +
@@ -107,7 +110,7 @@ const MyElection = () => {
                       <br />
                       <div className="d-flex align-items-center">
                         <span>
-                          <strong>Chunaab Code:</strong>
+                          <strong>Chunaab Code:</strong>{' '}
                           <span
                             className={`me-2 ${copiedElectionId === election._id ? 'bg-warning px-2 rounded' : ''}`}
                             style={{

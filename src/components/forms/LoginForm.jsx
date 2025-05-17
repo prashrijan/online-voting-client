@@ -26,7 +26,8 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const redirect = searchParams.get('redirect') || '/';
+  const queryRedirect = searchParams.get('redirect');
+  const redirect = location.state?.from || queryRedirect || '/user';
 
   const { user } = useSelector((state) => state.user);
 
@@ -43,11 +44,13 @@ const LoginForm = () => {
     };
 
     if (user?._id) {
-      navigate('/user');
+      if (location.pathname === '/login') {
+        navigate(redirect);
+      }
     } else {
       tryAutoLogin();
     }
-  }, [user?._id, navigate]);
+  }, [user?._id, redirect, location.pathname]);
 
   const { form, handleOnChange, handleOnSubmit, errors } = useForm(
     formInitialValues,
@@ -64,11 +67,7 @@ const LoginForm = () => {
         localStorage.setItem('refreshToken', data.refreshToken);
 
         await dispatch(fetchUserAction());
-        if (redirect) {
-          navigate('/user/subscrptions');
-        } else {
-          navigate('/user');
-        }
+        navigate(redirect);
       }
     } catch (error) {
       console.log(error);

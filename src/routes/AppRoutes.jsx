@@ -22,7 +22,8 @@ import MyElection from '../pages/Election/MyElection';
 import MyVotes from '../pages/Election/MyVotes';
 import ProfileSettings from '../pages/user/ProfileSettings';
 import ProfilePage from '../pages/user/ProfilePage';
-import Subscriptions from '../pages/Subscriptions';
+import Subscriptions from '../pages/subscription/Subscriptions';
+import PaymentSuccess from '../pages/subscription/PaymentSucess';
 
 const AppRoutes = () => {
   return (
@@ -59,6 +60,7 @@ const AppRoutes = () => {
         <Route path="profile" element={<ProfilePage />} />
         <Route path="profile/edit" element={<ProfileSettings />} />
         <Route path="subscriptions" element={<Subscriptions />} />
+        <Route path="payment-success" element={<PaymentSuccess />} />
       </Route>
     </Routes>
   );
