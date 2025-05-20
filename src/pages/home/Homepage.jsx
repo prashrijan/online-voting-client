@@ -1,18 +1,22 @@
 import React from 'react';
-import Hero from './Hero';
+
 import './homepage.css';
-import FeatureSection from '../../components/featureSection';
-import TestimonialSection from '../../components/testimonial';
+
+import GetStarted from '../../components/homepage/getStarted.jsx';
+import TestimonialSection from '../../components/homepage/testimonial.jsx';
+import FeatureSection from '../../components/homepage/featureSection.jsx';
+import Hero from '../../components/homepage/Hero.jsx';
 
 // homepage
 
 const Homepage = () => {
   return (
-    <>
+    <div className="bg-light">
       <Hero />
       <FeatureSection />
+      <GetStarted />
       <TestimonialSection />
-    </>
+    </div>
   );
 };
 export default Homepage;
