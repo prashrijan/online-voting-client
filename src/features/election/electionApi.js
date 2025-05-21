@@ -115,6 +115,7 @@ export const addCandidateToElectionApi = async (candidateId, electionId) => {
       url: `${electionEndPoint}/${electionId}/add-candidate`,
       isPrivate: true,
       payload: { candidateId },
+      showToast: true,
     });
     return res;
   } catch (error) {

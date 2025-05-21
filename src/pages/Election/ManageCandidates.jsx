@@ -72,7 +72,7 @@ const ManageCandidates = () => {
     <Container className="my-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Manage Candidates</h2>
-        <Button variant="primary" onClick={() => setShowAddModal(true)}>
+        <Button variant="dark" onClick={() => setShowAddModal(true)}>
           Add Candidate
         </Button>
       </div>
@@ -138,12 +138,19 @@ const ManageCandidates = () => {
       </div>
 
       {/* Add Candidate Modal */}
-      <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
+      <Modal
+        show={showAddModal}
+        onHide={() => setShowAddModal(false)}
+        size="lg"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Add New Candidate</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AddCandidateForm />
+          <AddCandidateForm
+            electionId={electionId}
+            setShowAddModal={setShowAddModal}
+          />
         </Modal.Body>
       </Modal>
 

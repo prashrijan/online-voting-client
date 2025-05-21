@@ -11,15 +11,17 @@ import {
   Button,
 } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { addCandidateToElectionAction } from '@features/election/electionAction';
+import { fetchCandidatesAction } from '@features/election/electionAction';
 
-const AddCandidateForm = () => {
+const AddCandidateForm = ({ electionId, setShowAddModal }) => {
   const [search, setSearch] = useState('');
   const [filtered, setFiltered] = useState([]);
-  const { candidates } = useSelector((state) => state.election);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const { activeUsers } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
-  console.log(111, activeUsers);
 
   // Debounced search filter
   useEffect(() => {
@@ -37,17 +39,39 @@ const AddCandidateForm = () => {
     return () => clearTimeout(debounce);
   }, [search, activeUsers]);
 
-  const handleAddCandidate = (candidate) => {
-    if (!candidates.some((c) => c._id === candidate._id)) {
-      dispatch(addCandidate(candidate));
+  const handleSelect = (user) => {
+    if (!selectedIds.includes(user._id)) {
+      setSelectedIds((prev) => [...prev, user._id]);
     }
     setSearch('');
     setFiltered([]);
   };
 
-  const handleRemoveCandidate = (candidateId) => {
-    dispatch(removeCandidate({ _id: candidateId }));
+  const handleRemove = (userId) => {
+    setSelectedIds((prev) => prev.filter((id) => id !== userId));
   };
+
+  const handleFinalize = async () => {
+    if (selectedIds.length) {
+      setLoading(true);
+
+      try {
+        await dispatch(addCandidateToElectionAction(selectedIds, electionId));
+        await dispatch(fetchCandidatesAction(electionId));
+        setSelectedIds([]);
+        setShowAddModal(false);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  // Get full user data from activeUsers for display
+  const selectedUsers = activeUsers.filter((user) =>
+    selectedIds.includes(user._id)
+  );
 
   return (
     <>
@@ -71,8 +95,8 @@ const AddCandidateForm = () => {
             <Dropdown.Item
               key={user._id}
               className="p-2"
-              onClick={() => handleAddCandidate(user)}
-              disabled={candidates.some((c) => c._id === user._id)}
+              onClick={() => handleSelect(user)}
+              disabled={selectedIds.includes(user._id)}
             >
               <Card className="p-2">
                 <Row className="align-items-center">
@@ -102,52 +126,62 @@ const AddCandidateForm = () => {
         </Dropdown.Menu>
       )}
 
-      {candidates.length > 0 ? (
-        <div className="mt-4">
-          <h5 className="mb-4">Selected Candidates</h5>
-          <Table bordered hover responsive>
-            <thead>
-              <tr>
-                <th>Photo</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Slogan</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {candidates.map((candidate) => (
-                <tr key={candidate._id}>
-                  <td>
-                    <Image
-                      src={candidate.profileImage}
-                      roundedCircle
-                      style={{
-                        width: '50px',
-                        height: '50px',
-                        objectFit: 'cover',
-                      }}
-                    />
-                  </td>
-                  <td>{candidate.fullName}</td>
-                  <td>{candidate.email}</td>
-                  <td>{candidate.bio || 'No bio.'}</td>
-                  <td>
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      onClick={() => handleRemoveCandidate(candidate._id)}
-                    >
-                      Remove
-                    </Button>
-                  </td>
+      {selectedUsers.length > 0 ? (
+        <>
+          <div className="mt-4">
+            <h5 className="mb-3">Selected Candidates</h5>
+            <Table bordered hover responsive>
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Slogan</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
+              </thead>
+              <tbody>
+                {selectedUsers.map((user) => (
+                  <tr key={user._id}>
+                    <td>
+                      <Image
+                        src={user.profileImage}
+                        roundedCircle
+                        style={{
+                          width: '50px',
+                          height: '50px',
+                          objectFit: 'cover',
+                        }}
+                      />
+                    </td>
+                    <td>{user.fullName}</td>
+                    <td>{user.email}</td>
+                    <td>{user.bio || 'No bio.'}</td>
+                    <td>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() => handleRemove(user._id)}
+                      >
+                        Remove
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+
+          <div className="d-flex justify-content-end">
+            <Button variant="dark" onClick={handleFinalize} disabled={loading}>
+              {loading
+                ? 'Adding...'
+                : `Add ${selectedIds.length > 1 ? 'All Candidates' : 'Candidate'}`}
+            </Button>
+          </div>
+        </>
       ) : (
-        <p className="text-danger">No Candidates Added Yet.</p>
+        <p className="text-danger">No Candidates Selected Yet.</p>
       )}
     </>
   );
