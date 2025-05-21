@@ -41,7 +41,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="bg-light min-vh-100 d-flex align-items-center">
+    <div className="bg-light d-flex align-items-center">
       <Container className="py-5" style={{ maxWidth: '600px' }}>
         <h2 className="text-center fw-bold mb-4">Contact Us</h2>
         <p className="text-center text-muted mb-4">

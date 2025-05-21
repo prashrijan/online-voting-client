@@ -19,8 +19,8 @@ const LoginForm = () => {
     password: '',
   };
 
-  const [loading, setLoading] = useState(false); // manual login
-  const [autologinLoading, setAutologinLoading] = useState(true); // initial session check
+  const [loading, setLoading] = useState(false);
+  const [autologinLoading, setAutologinLoading] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
