@@ -3,6 +3,7 @@
 // Home
 export { default as Homepage } from './home/Homepage';
 export { default as AboutPage } from './home/AboutPage';
+export { default as ContactUs } from './home/ContactUs';
 
 // Auth
 export { default as Register } from './auth/Register';
