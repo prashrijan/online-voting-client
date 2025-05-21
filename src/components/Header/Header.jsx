@@ -3,8 +3,8 @@ import { Button } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Logo from '../Logo';
-import './HeaderStyles.css';
+import Logo from '@components/others/Logo';
+import './styles/Header.styles.css';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import defaultProfile from '@assets/images/donut.png';
@@ -23,20 +23,14 @@ const GuestNavbar = () => (
 
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="justify-content-center flex-grow-1 main-nav">
-          <Nav.Link as={Link} to="#" className="nav-link">
-            Live Elections
-          </Nav.Link>
-          <Nav.Link as={Link} to="#" className="nav-link">
-            Features
+          <Nav.Link as={Link} to="/" className="nav-link">
+            Home
           </Nav.Link>
           <Nav.Link as={Link} to="/about" className="nav-link">
             About
           </Nav.Link>
           <Nav.Link as={Link} to="/contact" className="nav-link">
             Contact
-          </Nav.Link>
-          <Nav.Link as={Link} to="/subscriptions" className="nav-link">
-            Subscriptions
           </Nav.Link>
         </Nav>
 
