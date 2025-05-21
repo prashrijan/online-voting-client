@@ -82,7 +82,7 @@ const ManageCandidates = () => {
       ) : candidates.length === 0 ? (
         <Card className="text-center p-4">
           <p>No candidates have been added yet.</p>
-          <Button variant="primary" onClick={() => setShowAddModal(true)}>
+          <Button variant="dark" onClick={() => setShowAddModal(true)}>
             Add Your First Candidate
           </Button>
         </Card>
@@ -104,8 +104,8 @@ const ManageCandidates = () => {
                     src={candidate.profileImage}
                     alt={candidate.fullName}
                     style={{
-                      width: '50px',
-                      height: '50px',
+                      width: '100px',
+                      height: '100px',
                       objectFit: 'cover',
                       borderRadius: '50%',
                     }}
