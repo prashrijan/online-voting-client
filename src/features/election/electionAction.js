@@ -103,6 +103,15 @@ export const deleteElectionAction = (electionId) => async (dispatch) => {
   }
 };
 
+export const addCandidateToElectionAction =
+  async (candidateId, electionId) => async (dispatch) => {
+    try {
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
 export const deleteCandidateFromElectionAction =
   (candidateId, electionId) => async (dispatch) => {
     try {

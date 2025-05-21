@@ -8,6 +8,7 @@ import {
 } from '@features/election/electionAction';
 import Loader from '@components/loader/Loader';
 import SearchCandidateForm from '@components/forms/SelectCandidateForm';
+import AddCandidateForm from '../../components/forms/AddCandidateForm';
 
 const ManageCandidates = () => {
   const { electionId } = useParams();
@@ -25,7 +26,6 @@ const ManageCandidates = () => {
 
     fetchData();
   }, [dispatch]);
-  console.log(candidates);
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -66,11 +66,6 @@ const ManageCandidates = () => {
     } finally {
       setShowDeleteModal(false);
     }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewCandidate((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -148,16 +143,8 @@ const ManageCandidates = () => {
           <Modal.Title>Add New Candidate</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <SearchCandidateForm />
+          <AddCandidateForm />
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowAddModal(false)}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={handleAddCandidate}>
-            Add Candidate
-          </Button>
-        </Modal.Footer>
       </Modal>
 
       {/* Delete Confirmation Modal */}

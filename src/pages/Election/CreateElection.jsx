@@ -59,7 +59,7 @@ const CreateElection = () => {
           {step === 1 ? (
             <CreateElectionForm />
           ) : step == 2 ? (
-            <SearchCandidateForm />
+            <SearchCandidateForm showAddButton={false} />
           ) : (
             <LaunchElectionForm />
           )}

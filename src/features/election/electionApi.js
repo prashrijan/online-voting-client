@@ -108,6 +108,21 @@ export const deleteElectionApi = async (electionId) => {
   }
 };
 
+export const addCandidateToElectionApi = async (candidateId, electionId) => {
+  try {
+    const res = await apiProcessor({
+      method: 'POST',
+      url: `${electionEndPoint}/${electionId}/add-candidate`,
+      isPrivate: true,
+      payload: { candidateId },
+    });
+    return res;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const deleteCandidateFromElectionApi = async (
   candidateId,
   electionId
