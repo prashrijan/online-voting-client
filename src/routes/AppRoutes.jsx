@@ -25,6 +25,7 @@ import {
   PaymentSuccess,
   ElectionResultDetail,
   ElectionResultList,
+  AboutPage,
 } from '@pages';
 
 const AppRoutes = () => {
@@ -38,6 +39,7 @@ const AppRoutes = () => {
         <Route path="/verify-email" element={<VerifyAccount />} />
         <Route path="/forgot-password" element={<ForgetPassword />} />
         <Route path="/google-auth-success" element={<GoogleAuthSuccess />} />
+        <Route path="/about" element={<AboutPage />} />
 
         <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Route>

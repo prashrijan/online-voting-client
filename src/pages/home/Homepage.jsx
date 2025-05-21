@@ -1,8 +1,8 @@
 import React from 'react';
-import Hero from './Hero';
-import './homepage.css';
-import FeatureSection from '@components/featureSection';
-import TestimonialSection from '@components/testimonial';
+import Hero from '@components/home/Hero';
+import FeatureSection from '@components/home/FeatureSection';
+import TestimonialSection from '@components/home/Testimonial';
+import Subscriptions from '@components/home/Subscriptions';
 
 // homepage
 
@@ -12,6 +12,7 @@ const Homepage = () => {
       <Hero />
       <FeatureSection />
       <TestimonialSection />
+      <Subscriptions />
     </>
   );
 };
