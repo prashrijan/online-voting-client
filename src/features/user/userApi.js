@@ -40,8 +40,6 @@ export const updateProfileApi = async (payload) => {
       contentType: 'multipart/form-data',
       showToast: true,
     });
-    console.log(res);
-
     return res;
   } catch (error) {
     console.error(error);

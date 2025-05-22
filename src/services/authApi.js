@@ -15,9 +15,6 @@ import { apiProcessor } from './apiProcessor';
 
 // const authApiEndPoint = conf.baseUrlDev + '/api/v1/auth';
 const authApiEndPoint = conf.baseUrlProduction + '/api/v1/auth';
-console.log(authApiEndPoint);
-
-console.log(authApiEndPoint);
 
 // signining user
 export const signUpUserApi = async (payload) => {
@@ -67,8 +64,6 @@ export const refreshTokenApi = async () => {
       isPrivate: true,
       isRefresh: true,
     });
-
-    console.log(res);
 
     if (!res?.data?.accessToken) {
       throw new Error('Invalid token response');

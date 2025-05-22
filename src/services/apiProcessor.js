@@ -89,7 +89,6 @@ export const apiProcessor = async ({
       'An unknown error occured. Please try again.';
 
     if (errorMessage == 'jwt expired') {
-      console.log('Token expired refreshing');
       try {
         const { data } = await refreshTokenApi();
 

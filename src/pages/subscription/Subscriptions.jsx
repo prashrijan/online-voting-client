@@ -32,7 +32,6 @@ const Subscriptions = () => {
       }
     } else {
       navigate('/login?redirect=/subscriptions');
-      console.log('Please log in first');
     }
   };
 

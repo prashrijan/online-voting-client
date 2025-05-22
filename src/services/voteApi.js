@@ -56,7 +56,6 @@ export const getVoterCounts = async (electionId) => {
       url: `${voteEndPoint}/get-voters-count/${electionId}`,
     });
 
-    console.log(res);
     return res;
   } catch (error) {
     console.log(error);
@@ -86,8 +85,6 @@ export const fetchElectionResultsAction = (id) => async (dispatch) => {
       url: `${voteEndPoint}/results/${id}`,
       isPrivate: true,
     });
-
-    console.log(res);
 
     if (res && res.success) {
       dispatch(setElectionResult(res.data));

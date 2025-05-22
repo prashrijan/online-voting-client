@@ -121,7 +121,6 @@ const EditElection = () => {
         navigate('/user/manage-elections');
       }
     } catch (error) {
-      console.log(error);
       if (error.inner) {
         // Handle errors if validation fails
         const validationErrors = {};

@@ -46,7 +46,7 @@ const LiveVoteChart = ({ electionId }) => {
   useEffect(() => {
     const fetchVotes = async () => {
       const res = await fetchLiveVoteDataApi(electionId);
-      console.log(res);
+
       if (res?.success) {
         const data = res.data.sort((a, b) =>
           a.fullName.localeCompare(b.fullName)

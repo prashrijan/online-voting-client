@@ -22,7 +22,6 @@ const VerifyAccount = () => {
       }
 
       const res = await verifyEmail(token);
-      console.log(res);
 
       if (res?.success) {
         setLoading(false);

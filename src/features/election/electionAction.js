@@ -61,7 +61,6 @@ export const fetchCandidatesAction = (id) => async (dispatch) => {
   try {
     const res = await fetchCandidatesApi(id);
 
-    console.log(res);
     res && res.success && res.data && dispatch(setCandidatesToShow(res.data));
   } catch (error) {
     console.log(error);
@@ -108,7 +107,7 @@ export const addCandidateToElectionAction =
   (candidateId, electionId) => async (dispatch) => {
     try {
       const res = await addCandidateToElectionApi(candidateId, electionId);
-      console.log(res);
+
       if (res && res.status && res.data) {
         await dispatch(fetchCandidatesAction(electionId));
       }

@@ -11,7 +11,7 @@ export const checkoutSessionApi = async () => {
       url: payment_end_point + '/create-checkout-session',
       isPrivate: true,
     });
-    console.log(res);
+
     return res;
   } catch (error) {
     console.error(error);

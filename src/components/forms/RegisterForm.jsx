@@ -29,7 +29,6 @@ const RegisterForm = () => {
   );
 
   const handleRegister = async () => {
-    console.log(errors);
     setLoading(true);
     try {
       const res = await signUpUserApi(form);

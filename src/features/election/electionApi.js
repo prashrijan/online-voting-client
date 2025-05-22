@@ -149,7 +149,7 @@ export const getElectionByCodeApi = async (code) => {
       method: 'GET',
       url: `${electionEndPoint}/code/${code}`,
     });
-    console.log(res);
+
     return res;
   } catch (error) {
     console.error(error);
