@@ -15,6 +15,7 @@ import { apiProcessor } from './apiProcessor';
 
 // const authApiEndPoint = conf.baseUrlDev + '/api/v1/auth';
 const authApiEndPoint = conf.baseUrlProduction + '/api/v1/auth';
+console.log(authApiEndPoint);
 
 console.log(authApiEndPoint);
 
