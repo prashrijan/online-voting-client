@@ -2,8 +2,8 @@ import { apiProcessor } from '@services/apiProcessor';
 
 import { conf } from '../../conf/conf';
 
-const userEndPoint = conf.baseUrlDev + '/api/v1/user';
-// const userEndPoint = conf.baseUrlProduction + '/api/v1/user';
+// const userEndPoint = conf.baseUrlDev + '/api/v1/user';
+const userEndPoint = conf.baseUrlProduction + '/api/v1/user';
 
 export const fetchUserApi = async () => {
   try {
