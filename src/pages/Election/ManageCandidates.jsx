@@ -7,8 +7,8 @@ import {
   fetchCandidatesAction,
 } from '@features/election/electionAction';
 import Loader from '@components/loader/Loader';
-import SearchCandidateForm from '@components/forms/SelectCandidateForm';
-import AddCandidateForm from '../../components/forms/AddCandidateForm';
+
+import AddCandidateForm from '@components/forms/AddCandidateForm';
 
 const ManageCandidates = () => {
   const { electionId } = useParams();
@@ -31,22 +31,6 @@ const ManageCandidates = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [candidateToDelete, setCandidateToDelete] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const [newCandidate, setNewCandidate] = useState({
-    name: '',
-    position: '',
-    bio: '',
-  });
-
-  const handleAddCandidate = () => {
-    const candidate = {
-      ...newCandidate,
-      _id: (candidates.length + 1).toString(),
-    };
-    setCandidates([...candidates, candidate]);
-    setNewCandidate({ name: '', position: '', bio: '' });
-    setShowAddModal(false);
-  };
 
   const handleDeleteConfirmation = (candidate) => {
     setCandidateToDelete(candidate);
