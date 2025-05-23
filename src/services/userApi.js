@@ -1,8 +1,8 @@
 import { conf } from '../conf/conf';
 import { apiProcessor } from './apiProcessor';
 
-// const userEndPoint = conf.baseUrlDev + '/api/v1/user';
-const userEndPoint = conf.baseUrlProduction + '/api/v1/user';
+
+const userEndPoint = conf.baseUrl + '/api/v1/user';
 
 export const sendHelpMessageApi = async (payload) => {
   try {

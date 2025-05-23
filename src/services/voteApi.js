@@ -2,8 +2,7 @@ import { conf } from '../conf/conf';
 import { setElectionResult } from '../features/election/elecitonSlice';
 import { apiProcessor } from './apiProcessor';
 
-// const voteEndPoint = conf.baseUrlDev + '/api/v1/vote';
-const voteEndPoint = conf.baseUrlProduction + '/api/v1/vote';
+const voteEndPoint = conf.baseUrl + '/api/v1/vote';
 
 export const castVoteApi = async (electionId, candidateId) => {
   try {

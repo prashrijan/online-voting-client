@@ -1,8 +1,8 @@
 import { conf } from '../conf/conf';
 import { apiProcessor } from './apiProcessor';
 
-// const payment_end_point = conf.baseUrlDev + '/api/v1/payment';
-const payment_end_point = conf.baseUrlProduction + '/api/v1/payment';
+const payment_end_point = conf.baseUrl + '/api/v1/payment';
+
 
 export const checkoutSessionApi = async () => {
   try {

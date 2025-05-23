@@ -1,8 +1,8 @@
 import { apiProcessor } from '@services/apiProcessor.js';
 import { conf } from '../../conf/conf.js';
 
-// const electionEndPoint = conf.baseUrlDev + '/api/v1/election';
-const electionEndPoint = conf.baseUrlProduction + '/api/v1/election';
+
+const electionEndPoint = conf.baseUrl + '/api/v1/election';
 
 export const fetchElections = async () => {
   try {
