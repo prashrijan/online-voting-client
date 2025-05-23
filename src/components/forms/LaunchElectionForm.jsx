@@ -35,6 +35,8 @@ const LaunchElectionForm = () => {
       if (electionData.coverImageFile) {
         formData.append('coverImage', electionData.coverImageFile);
       }
+      const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      formData.append('timezone', userTimezone);
 
       await dispatch(createElectionAction(formData));
 
