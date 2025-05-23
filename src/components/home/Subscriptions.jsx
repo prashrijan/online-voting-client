@@ -9,7 +9,7 @@ const Subscriptions = () => {
 
   const handleSubscribeClick = (type) => {
     // Redirect to login with redirect to /subscriptions
-    navigate(`/login?redirect=/subscriptions&type=${type}`);
+    navigate(`/login?redirect=/user/subscriptions&type=${type}`);
   };
 
   return (
