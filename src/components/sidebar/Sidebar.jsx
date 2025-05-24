@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   FaHome,
   FaPlus,
@@ -10,17 +10,19 @@ import {
   FaUserCog,
   FaQuestionCircle,
   FaSignOutAlt,
+  FaTimes,
 } from 'react-icons/fa';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Nav } from 'react-bootstrap';
 import { resetUser } from '@features/user/userSlice';
 import { logoutUserApi } from '@services/authApi.js';
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, setShowSidebar }) => {
   const { user } = useSelector((state) => state.user);
   const userName = user?.fullName || 'User';
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
@@ -28,14 +30,11 @@ const Sidebar = () => {
     try {
       await logoutUserApi();
 
-      // Reset user state in redux
       dispatch(resetUser());
 
-      // Clear tokens
       sessionStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
 
-      // Redirect to login page
       navigate('/login');
     } catch (error) {
       console.error('Logout failed', error);
@@ -62,60 +61,67 @@ const Sidebar = () => {
 
   return (
     <>
-      <div
-        className="sidebar p-3 bg-secondary-subtle text-dark h-screen fixed"
-        style={{ width: '250px' }}
+      <aside
+        className={`sidebar d-flex flex-column  ${
+          isOpen ? 'sidebar-open' : 'sidebar-closed'
+        }`}
       >
-        {/* User Profile Section */}
-        <div className="mb-5 fs-4 fw-bold">
-          <p className="mb-1">Hello, 👋</p>
-          <p className="mb-1">{userName}</p>
+        {/* User Greeting */}
+        <div className="mb-4 text-center">
+          <div
+            className="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center overflow-hidden"
+            style={{
+              width: 60,
+              height: 60,
+              fontSize: '1.5rem',
+              userSelect: 'none',
+            }}
+          >
+            {user.profileImage ? (
+              <img
+                src={user.profileImage}
+                alt={`${userName}'s profile`}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            ) : (
+              userName.charAt(0).toUpperCase()
+            )}
+          </div>
+          <h5 className="mt-3 mb-0">Hello,</h5>
+          <p className="text-secondary mb-0 fw-semibold">{userName}</p>
         </div>
 
         {/* Navigation Links */}
-        <nav className="d-flex flex-column gap-3">
-          {links.map((link, index) => (
-            <Link
-              key={index}
-              to={link.to}
-              className="py-2 px-3 d-flex align-items-center gap-3 text-dark text-decoration-none fs-6 fw-medium"
-              style={{
-                transition: 'background-color 0.2s',
-                borderRadius: '5px',
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.backgroundColor = '#fafafa')
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.backgroundColor = 'transparent')
-              }
-            >
-              <span style={{ width: '20px', textAlign: 'center' }}>
-                {link.icon}
-              </span>
-              {link.label}
-            </Link>
-          ))}
+        <Nav className="flex-column gap-2 flex-grow-1 ">
+          {links.map(({ to, icon, label }) => {
+            const isActive = location.pathname === to;
+            return (
+              <Nav.Link
+                as={Link}
+                to={to}
+                key={to}
+                active={isActive}
+                onClick={() => setShowSidebar(false)}
+                className={`d-flex align-items-center gap-3 rounded px-3 py-2 $`}
+              >
+                <span style={{ fontSize: '1.1rem' }}>{icon}</span>
+                <span>{label}</span>
+              </Nav.Link>
+            );
+          })}
+        </Nav>
 
-          {/* Logout Button */}
-          <button
-            className="text-start py-2 px-3 d-flex align-items-center gap-3 border-0 fs-6 fw-medium bg-transparent"
-            onClick={() => setShowLogoutModal(true)}
-            style={{ transition: 'background-color 0.2s', borderRadius: '5px' }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.backgroundColor = '#fafafa')
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.backgroundColor = 'transparent')
-            }
-          >
-            <span style={{ width: '20px', textAlign: 'center' }}>
-              <FaSignOutAlt />
-            </span>
-            Logout
-          </button>
-        </nav>
-      </div>
+        {/* Logout Button */}
+        <Button
+          variant="outline-danger"
+          onClick={() => setShowLogoutModal(true)}
+          className="d-flex align-items-center gap-3 mt-3"
+          style={{ userSelect: 'none' }}
+        >
+          <FaSignOutAlt />
+          <span>Logout</span>
+        </Button>
+      </aside>
 
       {/* Logout Confirmation Modal */}
       <Modal

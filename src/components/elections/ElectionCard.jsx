@@ -83,6 +83,8 @@ function ElectionCard({ cardData }) {
               variant="top"
               src={election.coverImage || defaultImg}
               className="card-image"
+              alt={`${election.title} cover`}
+              loading="lazy"
             />
             <div className={`status-badge ${election.status.toLowerCase()}`}>
               {election.status == 'active' ? 'Active' : 'Upcoming'}

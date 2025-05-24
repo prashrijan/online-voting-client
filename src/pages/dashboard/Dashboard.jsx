@@ -22,15 +22,20 @@ const Dashboard = () => {
   }, [dispatch]);
 
   return (
-    <div className="h-100 bg-light">
-      <div className="w-100">
+    <div className="min-vh-100 bg-light d-flex flex-column">
+      <div className="container flex-grow-1 py-4">
         {loading ? (
           <Loader text="Please wait..." />
         ) : (
           <>
             <Hero />
-            <LiveElections />
-            <UpcomingElections />
+
+            <div className="mt-5">
+              <LiveElections />
+            </div>
+            <div className="mt-4">
+              <UpcomingElections />
+            </div>
           </>
         )}
       </div>

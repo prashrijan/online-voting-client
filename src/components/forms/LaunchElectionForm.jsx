@@ -15,7 +15,6 @@ const LaunchElectionForm = () => {
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      // ✅ Validate election data before submit
       await electionValidationSchema.validate(electionData, {
         abortEarly: false,
       });
@@ -73,8 +72,8 @@ const LaunchElectionForm = () => {
 
   return (
     <div
-      className="d-flex flex-column align-items-center justify-content-center"
-      style={{ maxWidth: '800px', margin: '0 auto' }}
+      className="d-flex flex-column align-items-center justify-content-center px-3"
+      style={{ maxWidth: '900px', margin: '0 auto' }}
     >
       <Card className="mb-4 overflow-hidden w-100">
         {electionData.coverImagePreview ? (
@@ -82,6 +81,7 @@ const LaunchElectionForm = () => {
             variant="top"
             src={electionData.coverImagePreview}
             style={{ height: '250px', objectFit: 'cover' }}
+            className="img-fluid"
           />
         ) : (
           <div
@@ -99,7 +99,9 @@ const LaunchElectionForm = () => {
           </div>
         )}
         <Card.Body>
-          <Card.Title>{electionData.title || 'Untitled Election'}</Card.Title>
+          <Card.Title className="text-truncate" title={electionData.title}>
+            {electionData.title || 'Untitled Election'}
+          </Card.Title>
           <Card.Text>
             <span className="fw-semibold">Start:</span>{' '}
             {electionData.startDate || 'Not set'} at{' '}
@@ -116,11 +118,18 @@ const LaunchElectionForm = () => {
       </Card>
 
       {/* Candidates Table */}
-      <Card className="w-100">
+      <Card className="w-100 mb-3">
         <Card.Header as="h5">Candidates</Card.Header>
-        <Card.Body>
+        <Card.Body className="p-0">
           {displayData.length > 0 ? (
-            <Table striped bordered hover responsive>
+            <Table
+              striped
+              bordered
+              hover
+              responsive="sm"
+              className="mb-0"
+              style={{ minWidth: '350px' }}
+            >
               <thead>
                 <tr>
                   <th>#</th>
@@ -167,8 +176,9 @@ const LaunchElectionForm = () => {
       <Button
         variant="dark"
         onClick={handleSubmit}
-        className="py-2 w-25 my-4 rounded-pill fs-5"
+        className="py-2 w-100 w-md-25 my-4 rounded-pill fs-5"
         disabled={isLoading}
+        style={{ maxWidth: '250px' }}
       >
         {isLoading ? 'Launching...' : 'Launch Election'}
       </Button>

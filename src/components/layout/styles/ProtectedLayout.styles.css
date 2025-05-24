@@ -1,0 +1,34 @@
+/* Desktop Sidebar */
+.sidebar-wrapper {
+  width: 250px;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  border-right: 1px solid #dee2e6;
+}
+
+/* Hide toggle button on desktop */
+@media (min-width: 992px) {
+  .sidebar-toggle-btn {
+    display: none;
+  }
+}
+
+/* Show toggle button on mobile */
+@media (max-width: 991.98px) {
+  .sidebar-wrapper {
+    display: none;
+  }
+
+  .sidebar-toggle-btn {
+    position: fixed;
+    top: 70px;
+    left: 15px;
+    z-index: 1050;
+  }
+}
+
+.chatbot-position {
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+}
