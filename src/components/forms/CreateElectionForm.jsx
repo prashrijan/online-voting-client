@@ -13,16 +13,13 @@ const CreateElectionForm = () => {
   useEffect(() => {
     if (electionData.coverImagePreview && !coverImageFile) {
       fetch(electionData.coverImagePreview)
-        .then((res) => {
-          res.blob();
-        })
+        .then((res) => res.blob())
         .then((blob) => {
           const file = new File([blob], 'cover-image.jpg', { type: blob.type });
-
           setCoverImageFile(file);
         });
     }
-  }, [electionData.coverImagePreview]);
+  }, [electionData.coverImagePreview, coverImageFile]);
 
   const handleUpdate = (key, value) => {
     dispatch(updateElectionField({ key, value }));
@@ -49,8 +46,9 @@ const CreateElectionForm = () => {
       reader.readAsDataURL(file);
     }
   };
+
   return (
-    <Form>
+    <Form style={{ width: '100%' }}>
       <Form.Group controlId="formTitle" className="mb-3">
         <Form.Label className="fw-semibold">Title</Form.Label>
         <Form.Control
@@ -58,6 +56,8 @@ const CreateElectionForm = () => {
           placeholder="Enter title"
           value={electionData.title}
           onChange={(e) => handleUpdate('title', e.target.value)}
+          // Makes input full width on all screens
+          style={{ width: '100%' }}
         />
       </Form.Group>
 
@@ -67,6 +67,7 @@ const CreateElectionForm = () => {
           type="date"
           value={electionData.startDate}
           onChange={(e) => handleUpdate('startDate', e.target.value)}
+          style={{ width: '100%' }}
         />
       </Form.Group>
 
@@ -80,6 +81,7 @@ const CreateElectionForm = () => {
           onChange={(e) =>
             handleUpdate('startTime', to12HourFormat(e.target.value))
           }
+          style={{ width: '100%' }}
         />
       </Form.Group>
 
@@ -89,6 +91,7 @@ const CreateElectionForm = () => {
           type="date"
           value={electionData.endDate}
           onChange={(e) => handleUpdate('endDate', e.target.value)}
+          style={{ width: '100%' }}
         />
       </Form.Group>
 
@@ -102,6 +105,7 @@ const CreateElectionForm = () => {
           onChange={(e) =>
             handleUpdate('endTime', to12HourFormat(e.target.value))
           }
+          style={{ width: '100%' }}
         />
       </Form.Group>
 
@@ -112,14 +116,21 @@ const CreateElectionForm = () => {
           name="visibility"
           value={electionData.visibility}
           onChange={(val) => handleUpdate('visibility', val)}
+          className="w-100 d-flex justify-content-around flex-wrap"
         >
-          <ToggleButton id="public" value="public" variant="outline-primary">
+          <ToggleButton
+            id="public"
+            value="public"
+            variant="outline-primary"
+            className="flex-grow-1 mx-1 my-1"
+          >
             Public
           </ToggleButton>
           <ToggleButton
             id="private"
             value="private"
             variant="outline-secondary"
+            className="flex-grow-1 mx-1 my-1"
           >
             Private
           </ToggleButton>
@@ -128,11 +139,12 @@ const CreateElectionForm = () => {
 
       <Form.Group controlId="formCoverImage" className="mb-3">
         <Form.Label className="fw-semibold">Cover Image</Form.Label>
-        <div className="upload-box">
+        <div className="upload-box" style={{ width: '100%' }}>
           <Form.Control
             type="file"
             accept="image/*"
             onChange={handleFileChange}
+            style={{ width: '100%' }}
           />
           {electionData.coverImagePreview ? (
             <img
@@ -148,14 +160,14 @@ const CreateElectionForm = () => {
             />
           ) : (
             <>
-              <p className="upload-text">
+              <p className="upload-text text-center mt-3">
                 Drag and Drop
                 <br />
                 Or
                 <br />
                 Browse Local Files
               </p>
-              <p className="file-hint">Max File Size: 2MB</p>
+              <p className="file-hint text-center">Max File Size: 2MB</p>
             </>
           )}
         </div>

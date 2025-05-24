@@ -8,18 +8,23 @@ const UpcomingElections = () => {
   const upcoming = publicElection?.filter(
     (election) => election.status === 'pending'
   );
+
   return (
-    <Container className="mt-3 p-2 rounded-4 bg-white">
+    <Container
+      fluid="md"
+      className="mt-3 p-3 rounded-4 bg-white"
+      style={{ maxWidth: '100%' }}
+    >
       <Accordion defaultActiveKey="0">
         <Accordion.Item eventKey="0" className="border-0">
-          <Accordion.Header className="">
-            <h2>Upcomming Elections</h2>
+          <Accordion.Header>
+            <h2 className="mb-0 fs-5 fs-md-4">Upcoming Elections</h2>
           </Accordion.Header>
-          <Accordion.Body>
+          <Accordion.Body className="p-2 p-md-3">
             {upcoming.length > 0 ? (
               <ElectionCard cardData={upcoming} />
             ) : (
-              <p className="m-3">No upcoming elections.</p>
+              <p className="m-3 text-center">No upcoming elections.</p>
             )}
           </Accordion.Body>
         </Accordion.Item>

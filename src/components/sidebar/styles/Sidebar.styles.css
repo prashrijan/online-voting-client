@@ -1,31 +1,39 @@
-/* For desktop - always show sidebar */
-@media (min-width: 992px) {
-  .sidebar {
-    transform: translateX(0) !important;
-  }
-
-  .content-wrapper {
-    margin-left: 250px;
-  }
-
-  /* Hide mobile hamburger button on desktop */
-  .mobile-hamburger {
-    display: none !important;
-  }
+/* Sidebar base */
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  padding: 10rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  transition: transform 0.3s ease-in-out;
+  background-color: #f8f9fa; /* same as bg-light */
+  border-right: 1px solid rgba(0, 0, 0, 0.125);
+  z-index: 1040; /* above main content */
 }
 
-/* For mobile - initial state is hidden */
-@media (max-width: 991.98px) {
+/* Sidebar closed on mobile: slide left */
+.sidebar-closed {
+  transform: translateX(-100%);
+}
+
+/* Sidebar open on mobile: full width */
+.sidebar-open {
+  transform: translateX(0);
+  width: 100%;
+}
+
+.sidebar .nav-link.active {
+  background-color: #212529;
+  color: white;
+}
+
+/* On md and above, sidebar is always visible */
+@media (min-width: 768px) {
   .sidebar {
-    transform: translateX(-100%);
-  }
-
-  .sidebar.show {
-    transform: translateX(0);
-  }
-
-  /* Adjust content to full width on mobile */
-  .content-wrapper {
-    margin-left: 0 !important;
+    transform: none !important;
+    width: 250px !important;
+    position: fixed;
   }
 }

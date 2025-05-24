@@ -44,7 +44,6 @@ const ProfileSettings = () => {
         alert('File must be less than 2MB');
         return;
       }
-
       setSelectedFile(file);
       handleOnChange({
         target: { name: 'profileImage', value: URL.createObjectURL(file) },
@@ -77,10 +76,12 @@ const ProfileSettings = () => {
       <Loader text="Updating your profile" />
     </Container>
   ) : (
-    <Container className="m-5">
+    <Container className="my-5 px-3">
       <GoBackButton />
       <Card className="p-4 shadow-sm rounded-4">
-        <h3 className="mb-4">Profile Settings</h3>
+        <h3 className="mb-4" style={{ fontSize: '1.75rem' }}>
+          Profile Settings
+        </h3>
         <Form onSubmit={(e) => handleOnSubmit(e, onSubmit)}>
           <Form.Group className="mb-3">
             <Form.Label>Full Name</Form.Label>
@@ -89,6 +90,7 @@ const ProfileSettings = () => {
               name="fullName"
               value={form.fullName}
               onChange={handleOnChange}
+              style={{ fontSize: '1rem' }}
             />
           </Form.Group>
 
@@ -100,6 +102,7 @@ const ProfileSettings = () => {
               value={form.email}
               onChange={handleOnChange}
               readOnly
+              style={{ fontSize: '1rem' }}
             />
           </Form.Group>
 
@@ -111,18 +114,22 @@ const ProfileSettings = () => {
               rows={3}
               value={form.bio}
               onChange={handleOnChange}
+              style={{ fontSize: '1rem' }}
             />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Profile Image</Form.Label>
             {form.profileImage && (
-              <div className="mb-3">
+              <div
+                className="mb-3"
+                style={{ maxWidth: '100%', overflow: 'hidden' }}
+              >
                 <img
                   src={form.profileImage}
                   alt="Preview"
                   className="img-thumbnail"
-                  style={{ height: '150px', objectFit: 'cover' }}
+                  style={{ width: '250px', height: 'auto', objectFit: 'cover' }}
                 />
               </div>
             )}
@@ -134,7 +141,7 @@ const ProfileSettings = () => {
             <Form.Text className="text-muted">Max size: 2MB</Form.Text>
           </Form.Group>
 
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="primary" className="w-100">
             Save Changes
           </Button>
         </Form>

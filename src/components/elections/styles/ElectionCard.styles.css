@@ -13,6 +13,9 @@
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
+  overflow: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .election-card:hover {
@@ -183,4 +186,41 @@
   align-items: center;
   font-size: 0.8rem;
   color: #6c757d;
+}
+
+@media (max-width: 468px) {
+  .election-card-container {
+    padding: 0.5rem;
+  }
+
+  .election-card {
+    width: 100% !important; /* full width of container */
+    max-width: 100% !important; /* no max width */
+    box-sizing: border-box; /* include padding/border in width */
+    overflow-x: hidden; /* prevent horizontal scroll */
+  }
+
+  .card-image-container {
+    width: 100% !important;
+    overflow: hidden;
+  }
+
+  .card-image {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Fix any potential padding/margin causing overflow */
+  .card-body,
+  .card-footer {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  /* Reduce font sizes if needed */
+  .card-title {
+    font-size: 1.1rem;
+  }
 }
