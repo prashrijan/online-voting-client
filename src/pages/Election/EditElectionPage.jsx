@@ -9,7 +9,6 @@ import {
   Card,
   Row,
   Col,
-  Alert,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -20,6 +19,7 @@ import useForm from '@hooks/useForm';
 import { to12HourFormat, to24HourFormat } from '@utils/time';
 import { editElectionValidationSchema } from '@validation/EditElectionValidation';
 import { toast } from 'react-toastify';
+
 const EditElection = () => {
   const { electionId } = useParams();
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const EditElection = () => {
         setLoading(true);
         dispatch(fetchElectionAction(electionId));
       } catch (err) {
-        setError('Failed to fetch election');
+        toast.error('Failed to fetch election');
       } finally {
         setLoading(false);
       }
@@ -74,7 +74,6 @@ const EditElection = () => {
   const handleTimeChange = (e) => {
     const { name, value } = e.target;
     const time12h = to12HourFormat(value);
-
     handleOnChange({ target: { name, value: time12h } });
   };
 
@@ -86,7 +85,7 @@ const EditElection = () => {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 2 * 1024 * 1024) {
-        alert('File size must be less than 2MB');
+        toast.error('File size must be less than 2MB');
         return;
       }
       const reader = new FileReader();
@@ -101,7 +100,6 @@ const EditElection = () => {
 
   const onSubmit = async () => {
     try {
-      // Validate the form
       if (editElectionValidationSchema) {
         await editElectionValidationSchema.validate(form, {
           abortEarly: false,
@@ -122,25 +120,17 @@ const EditElection = () => {
       }
     } catch (error) {
       if (error.inner) {
-        // Handle errors if validation fails
-        const validationErrors = {};
         let errorMessage = 'Please fix the following errors:\n';
-
         error.inner.forEach((err) => {
-          validationErrors[err.path] = err.message;
           errorMessage += `${err.path}: ${err.message}\n`;
         });
-
-        // Show toast notification with all errors
         toast.error(errorMessage, {
-          autoClose: 3000,
+          autoClose: 4000,
           closeOnClick: true,
           pauseOnHover: false,
           progress: undefined,
         });
       } else {
-        // General error handling
-
         toast.error('Failed to update election', {
           autoClose: 3000,
           closeOnClick: true,
@@ -152,9 +142,10 @@ const EditElection = () => {
       setLoading(false);
     }
   };
+
   if (loading) {
     return (
-      <Container className="my-4">
+      <Container className="my-4 text-center">
         <p>Loading...</p>
       </Container>
     );
@@ -162,18 +153,18 @@ const EditElection = () => {
 
   if (!election) {
     return (
-      <Container className="my-4">
+      <Container className="my-4 text-center">
         <p>Election not found</p>
       </Container>
     );
   }
 
   return (
-    <div className=" w-100 h-100 bg-light p-5 ">
-      <Container className="w-100 d-flex align-items-center justify-content-center flex-column">
+    <div className="bg-light p-3 p-md-5 min-vh-100 d-flex flex-column align-items-center">
+      <Container className="w-100 d-flex flex-column align-items-center">
         <h2 className="mb-4 fw-bold text-center">Edit Election</h2>
 
-        <Card className=" w-75 p-4 rounded-5 border shadow">
+        <Card className="w-100 w-md-75 p-4 rounded-4 border shadow">
           <Card.Body>
             <Form onSubmit={(e) => handleOnSubmit(e, onSubmit)}>
               <Form.Group className="mb-3">
@@ -184,11 +175,12 @@ const EditElection = () => {
                   value={form.title}
                   onChange={handleOnChange}
                   required
+                  placeholder="Enter election title"
                 />
               </Form.Group>
 
               <Row>
-                <Col md={6}>
+                <Col xs={12} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="fw-semibold">Start Date</Form.Label>
                     <Form.Control
@@ -200,7 +192,7 @@ const EditElection = () => {
                     />
                   </Form.Group>
                 </Col>
-                <Col md={6}>
+                <Col xs={12} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="fw-semibold">Start Time</Form.Label>
                     <Form.Control
@@ -215,7 +207,7 @@ const EditElection = () => {
               </Row>
 
               <Row>
-                <Col md={6}>
+                <Col xs={12} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="fw-semibold">End Date</Form.Label>
                     <Form.Control
@@ -227,7 +219,7 @@ const EditElection = () => {
                     />
                   </Form.Group>
                 </Col>
-                <Col md={6}>
+                <Col xs={12} md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label className="fw-semibold">End Time</Form.Label>
                     <Form.Control
@@ -258,6 +250,7 @@ const EditElection = () => {
                           ? 'primary'
                           : 'outline-primary'
                       }
+                      size="sm"
                     >
                       Public
                     </ToggleButton>
@@ -269,21 +262,23 @@ const EditElection = () => {
                           ? 'secondary'
                           : 'outline-secondary'
                       }
+                      size="sm"
                     >
                       Private
                     </ToggleButton>
                   </ToggleButtonGroup>
                 </div>
               </Form.Group>
-              <Form.Group className="mb-3">
+
+              <Form.Group className="mb-4">
                 <Form.Label className="fw-semibold">Cover Image</Form.Label>
                 {form.coverImage && (
-                  <div className="mb-3">
+                  <div className="mb-3 text-center">
                     <img
                       src={form.coverImage}
                       alt="Current cover"
                       className="img-fluid rounded"
-                      style={{ maxHeight: '200px' }}
+                      style={{ maxHeight: '200px', maxWidth: '100%' }}
                     />
                   </div>
                 )}
@@ -297,14 +292,20 @@ const EditElection = () => {
                 </Form.Text>
               </Form.Group>
 
-              <div className="d-flex justify-content-between">
+              <div className="d-flex flex-column flex-md-row justify-content-between gap-3">
                 <Button
                   variant="secondary"
                   onClick={() => navigate('/user/manage-elections')}
+                  className="w-100 w-md-auto"
                 >
                   Cancel
                 </Button>
-                <Button variant="primary" type="submit" disabled={loading}>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  disabled={loading}
+                  className="w-100 w-md-auto"
+                >
                   {loading ? 'Saving...' : 'Save Changes'}
                 </Button>
               </div>

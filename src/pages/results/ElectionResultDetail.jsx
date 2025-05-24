@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchElectionResultsAction } from '@services/voteApi.js';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table, Row, Col } from 'react-bootstrap'; // Added Row, Col
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { fetchElectionAction } from '@features/election/electionAction';
@@ -114,18 +114,25 @@ const ElectionResultDetail = () => {
             </tbody>
           </Table>
 
-          <div className="d-flex justify-content-between align-items-center mt-3">
-            <div>
+          {/* Responsive info section */}
+          <Row className="mt-3 align-items-center text-center text-md-start">
+            <Col xs={12} md="auto" className="mb-2 mb-md-0">
               <strong>Total Votes:</strong> {totalVotes}
-            </div>
-            <div>
+            </Col>
+            <Col xs={12} md="auto" className="mb-2 mb-md-0">
               <strong>Winner{winners.length > 1 ? 's' : ''}:</strong>{' '}
               {winners.map((w) => w.name).join(', ')}
-            </div>
-            <Button variant="primary" onClick={generatePDF}>
-              Download PDF
-            </Button>
-          </div>
+            </Col>
+            <Col
+              xs={12}
+              md="auto"
+              className="d-flex justify-content-center justify-content-md-start"
+            >
+              <Button variant="primary" onClick={generatePDF}>
+                Download PDF
+              </Button>
+            </Col>
+          </Row>
         </>
       )}
     </div>
