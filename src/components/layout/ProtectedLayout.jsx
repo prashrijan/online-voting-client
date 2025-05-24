@@ -86,7 +86,7 @@ const ProtectedLayout = () => {
           )}
 
           {/* Main content */}
-          <div className="flex-grow-1 overflow-auto p-3">
+          <div className="flex-grow-1 p-3">
             <Outlet />
             <div
               className="position-fixed"
