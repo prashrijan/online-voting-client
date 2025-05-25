@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { autologin, fetchUserAction } from '@features/user/userAction';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../loader/Loader';
+import { toast } from 'react-toastify';
 
 const LoginForm = () => {
   const formInitialValues = {
@@ -22,6 +23,7 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const [autologinLoading, setAutologinLoading] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -51,6 +53,35 @@ const LoginForm = () => {
       tryAutoLogin();
     }
   }, [user?._id, redirect, location.pathname]);
+
+  useEffect(() => {
+    const errorParam = searchParams.get('error');
+
+    if (errorParam === 'google-failed') {
+      toast.error(
+        'Google login failed: This email is already registered. Please sign in with your email and password.',
+        {
+          autoClose: 3000,
+          closeOnClick: true,
+          pauseOnHover: false,
+          progress: undefined,
+        }
+      );
+    } else if (errorParam) {
+      toast.error('Login Failed. Please try again.', {
+        autoClose: 3000,
+        closeOnClick: true,
+        pauseOnHover: false,
+        progress: undefined,
+      });
+    }
+
+    if (errorParam) {
+      const cleanUrl =
+        location.pathname + location.search.replace(/(\?|&)error=[^&]*/g, '');
+      window.history.replaceState({}, '', cleanUrl);
+    }
+  }, [location.search]);
 
   const { form, handleOnChange, handleOnSubmit, errors } = useForm(
     formInitialValues,

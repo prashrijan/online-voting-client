@@ -59,6 +59,7 @@ Chunaab is a platform for you to host voting events. This project aims to make h
 
 ## Project Structure (Detailed)
 
+```
 .
 ├── public/ # Static assets (images, favicon, index.html)
 │ ├── chunaabFavicon.svg # Favicon for the application
@@ -211,6 +212,8 @@ Chunaab is a platform for you to host voting events. This project aims to make h
 ├── vercel.json # Vercel deployment configuration
 └── vite.config.js # Vite build configuration
 
+```
+
 ## Contributing
 
 Contributions are welcome! Please follow these steps:
@@ -232,3 +235,7 @@ Contributions are welcome! Please follow these steps:
 
 This is a test from pawan.
 hello
+
+```
+
+```
