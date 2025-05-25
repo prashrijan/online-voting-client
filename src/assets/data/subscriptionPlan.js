@@ -20,3 +20,19 @@ export const subscriptionPlans = [
     variant: 'dark',
   },
 ];
+
+export const subscriptionPlansLoggedIn = [
+  {
+    type: 'Free',
+    description:
+      'Get started with our basic features at no cost. Ideal for individuals and small groups.',
+    features: ['Create up to 2 elections per day', 'Basic analytics'],
+  },
+  {
+    type: 'Pro',
+    description:
+      'Unlock advanced features for growing organizations and power users.',
+    features: ['Unlimited elections', 'Priority support', 'Email support'],
+    price: '$5 one-time payment',
+  },
+];

@@ -1,6 +1,6 @@
 /* Active Vote Button */
 .button.active {
-  background-color: #010914; /* Bootstrap primary */
+  background-color: #010914;
   color: white;
   border: none;
 }

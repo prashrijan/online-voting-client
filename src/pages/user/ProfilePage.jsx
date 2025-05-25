@@ -63,7 +63,7 @@ const ProfilePage = () => {
         </div>
 
         <Button
-          variant="primary"
+          variant="dark"
           className="px-4 py-2 rounded-pill fw-medium shadow-sm"
           onClick={() => navigate('/user/profile/edit')}
         >

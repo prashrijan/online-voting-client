@@ -246,9 +246,7 @@ const EditElection = () => {
                       id="public"
                       value="public"
                       variant={
-                        form.visibility === 'public'
-                          ? 'primary'
-                          : 'outline-primary'
+                        form.visibility === 'public' ? 'dark' : 'outline-dark'
                       }
                       size="sm"
                     >
@@ -301,7 +299,7 @@ const EditElection = () => {
                   Cancel
                 </Button>
                 <Button
-                  variant="primary"
+                  variant="dark"
                   type="submit"
                   disabled={loading}
                   className="w-100 w-md-auto"

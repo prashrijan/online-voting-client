@@ -121,7 +121,7 @@ const CreateElectionForm = () => {
           <ToggleButton
             id="public"
             value="public"
-            variant="outline-primary"
+            variant="outline-dark"
             className="flex-grow-1 mx-1 my-1"
           >
             Public

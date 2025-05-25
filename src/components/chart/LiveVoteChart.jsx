@@ -22,7 +22,6 @@ ChartJS.register(
   Legend
 );
 
-// Define a fixed palette of visually distinct colors
 const fixedColors = [
   '#FF6384',
   '#36A2EB',
@@ -38,21 +37,23 @@ const fixedColors = [
   '#87CEEB',
 ];
 
-const LiveVoteChart = ({ electionId }) => {
+const LiveVoteChart = ({ electionId, type }) => {
   const [voteData, setVoteData] = useState([]);
   const [lastUpdated, setLastUpdated] = useState(null);
-  const [chartType, setChartType] = useState('bar');
 
   useEffect(() => {
     const fetchVotes = async () => {
-      const res = await fetchLiveVoteDataApi(electionId);
-
-      if (res?.success) {
-        const data = res.data.sort((a, b) =>
-          a.fullName.localeCompare(b.fullName)
-        );
-        setVoteData(data);
-        setLastUpdated(new Date().toLocaleTimeString());
+      try {
+        const res = await fetchLiveVoteDataApi(electionId);
+        if (res?.success) {
+          const data = res.data.sort((a, b) =>
+            a.fullName.localeCompare(b.fullName)
+          );
+          setVoteData(data);
+          setLastUpdated(new Date().toLocaleTimeString());
+        }
+      } catch (error) {
+        console.error('Failed to fetch live vote data:', error);
       }
     };
 
@@ -61,7 +62,7 @@ const LiveVoteChart = ({ electionId }) => {
     return () => clearInterval(interval);
   }, [electionId]);
 
-  const commonChartData = {
+  const chartData = {
     labels: voteData.map((c) => c.fullName),
     datasets: [
       {
@@ -81,14 +82,13 @@ const LiveVoteChart = ({ electionId }) => {
       legend: {
         position: 'top',
         labels: {
-          generateLabels: (chart) => {
-            return chart.data.labels.map((label, index) => ({
-              text: label, // Label will be the candidate's name
-              fillStyle: chart.data.datasets[0].backgroundColor[index], // Color of the bar
-              strokeStyle: chart.data.datasets[0].backgroundColor[index], // Border color (optional)
-              lineWidth: 1, // Border width (optional)
-            }));
-          },
+          generateLabels: (chart) =>
+            chart.data.labels.map((label, index) => ({
+              text: label,
+              fillStyle: chart.data.datasets[0].backgroundColor[index],
+              strokeStyle: chart.data.datasets[0].backgroundColor[index],
+              lineWidth: 1,
+            })),
           font: { size: 14, weight: 'bold' },
         },
       },
@@ -110,9 +110,7 @@ const LiveVoteChart = ({ electionId }) => {
     plugins: {
       legend: {
         position: 'bottom',
-        labels: {
-          font: { size: 14, weight: 'bold' },
-        },
+        labels: { font: { size: 14, weight: 'bold' } },
       },
       tooltip: {
         callbacks: {
@@ -125,45 +123,27 @@ const LiveVoteChart = ({ electionId }) => {
 
   return (
     <div className="w-100">
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <select
-          className="form-select w-auto"
-          value={chartType}
-          onChange={(e) => setChartType(e.target.value)}
-        >
-          <option value="bar">Bar Chart</option>
-          <option value="pie">Pie Chart</option>
-        </select>
-      </div>
-
-      {chartType === 'bar' ? (
+      {type === 'bar' ? (
         <div
           style={{
             width: '100%',
-            height: '400px',
+            height: 400,
             margin: '0 auto',
             position: 'relative',
           }}
         >
-          <Bar
-            data={commonChartData}
-            options={{
-              ...barOptions,
-              responsive: true,
-              maintainAspectRatio: false,
-            }}
-          />
+          <Bar data={chartData} options={barOptions} />
         </div>
       ) : (
         <div
           style={{
-            maxWidth: '400px',
-            height: '400px',
+            maxWidth: 400,
+            height: 400,
             margin: '0 auto',
             position: 'relative',
           }}
         >
-          <Pie data={commonChartData} options={pieOptions} />
+          <Pie data={chartData} options={pieOptions} />
         </div>
       )}
 

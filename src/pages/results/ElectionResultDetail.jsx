@@ -128,7 +128,7 @@ const ElectionResultDetail = () => {
               md="auto"
               className="d-flex justify-content-center justify-content-md-start"
             >
-              <Button variant="primary" onClick={generatePDF}>
+              <Button variant="dark" onClick={generatePDF}>
                 Download PDF
               </Button>
             </Col>

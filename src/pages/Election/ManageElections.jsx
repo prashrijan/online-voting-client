@@ -141,7 +141,7 @@ const ManageElections = () => {
 
                   <div className="d-flex justify-content-evenly gap-2 mt-4">
                     <Button
-                      variant="outline-primary"
+                      variant="outline-dark"
                       size="sm"
                       onClick={() => handleEdit(election._id)}
                     >

@@ -80,7 +80,7 @@ const CreateElection = () => {
               &lt; Back
             </button>
             <button
-              className="btn btn-primary text-light px-4 py-2 flex-grow-1 flex-md-grow-0"
+              className="btn btn-dark text-light px-4 py-2 flex-grow-1 flex-md-grow-0"
               onClick={handleNext}
               disabled={step === 3}
               style={{ minWidth: 120 }}

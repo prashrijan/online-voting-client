@@ -23,18 +23,30 @@ const GuestFooter = () => {
               digital age.
             </p>
             <div style={{ display: 'flex', gap: '1rem', fontSize: '1.25rem' }}>
-              <a href="#">
+              <NavLink
+                to="/"
+                style={{ color: '#212529', textDecoration: 'none' }}
+              >
                 <FaFacebook />
-              </a>
-              <a href="#">
+              </NavLink>
+              <NavLink
+                to="/"
+                style={{ color: '#212529', textDecoration: 'none' }}
+              >
                 <FaTwitter />
-              </a>
-              <a href="#">
+              </NavLink>
+              <NavLink
+                to="/"
+                style={{ color: '#212529', textDecoration: 'none' }}
+              >
                 <FaInstagram />
-              </a>
-              <a href="#">
+              </NavLink>
+              <NavLink
+                to="/"
+                style={{ color: '#212529', textDecoration: 'none' }}
+              >
                 <FaGithub />
-              </a>
+              </NavLink>
             </div>
           </Col>
           <Col md={4}>
@@ -110,18 +122,30 @@ const UserFooter = () => {
               Thanks for being a part of the Chunaab community.
             </p>
             <div style={{ display: 'flex', gap: '1rem', fontSize: '1.25rem' }}>
-              <a href="#">
+              <NavLink
+                to="/"
+                style={{ color: '#212529', textDecoration: 'none' }}
+              >
                 <FaFacebook />
-              </a>
-              <a href="#">
+              </NavLink>
+              <NavLink
+                to="/"
+                style={{ color: '#212529', textDecoration: 'none' }}
+              >
                 <FaTwitter />
-              </a>
-              <a href="#">
+              </NavLink>
+              <NavLink
+                to="/"
+                style={{ color: '#212529', textDecoration: 'none' }}
+              >
                 <FaInstagram />
-              </a>
-              <a href="#">
+              </NavLink>
+              <NavLink
+                to="/"
+                style={{ color: '#212529', textDecoration: 'none' }}
+              >
                 <FaGithub />
-              </a>
+              </NavLink>
             </div>
           </Col>
           <Col md={4}>

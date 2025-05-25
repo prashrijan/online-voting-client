@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import profileimg from '@assets/images/donut.png';
@@ -18,21 +18,23 @@ import { Button, Modal } from 'react-bootstrap';
 const ElectionVoting = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
   const [hasVoted, setHasVoted] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [candidateToVote, setCandidateToVote] = useState(null);
+  const [chartType, setChartType] = useState('bar');
 
   const election = useSelector((state) => state?.election?.electionToShow);
   const candidates = useSelector((state) => state?.election?.candidatesToShow);
+  const user = useSelector((state) => state?.user?.user);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       await dispatch(fetchElectionAction(id));
       await dispatch(fetchCandidatesAction(id));
-
       const res = await checkVoteStatusApi(id);
       setHasVoted(res.data); // true or false from API
       setLoading(false);
@@ -88,7 +90,13 @@ const ElectionVoting = () => {
       <div className="container p-4 rounded-5 shadow-sm bg-white">
         <div>
           <span
-            className={`p-1 m-1 px-3 ${election.status == 'active' ? 'bg-success' : election.status == 'pending' ? 'bg-warning' : 'bg-danger'} text-light rounded-pill`}
+            className={`p-1 m-1 px-3 ${
+              election.status === 'active'
+                ? 'bg-success'
+                : election.status === 'pending'
+                  ? 'bg-warning'
+                  : 'bg-danger'
+            } text-light rounded-pill`}
           >
             {election.status.toUpperCase()}
           </span>
@@ -126,8 +134,30 @@ const ElectionVoting = () => {
         {/* Live Updates */}
         <div className="bg-white p-4 shadow-sm rounded-4">
           <h2 className="fs-4 fw-semibold mb-3">Live Updates</h2>
-          {election.status == 'active' ? (
-            <LiveVoteChart electionId={id} />
+
+          {election.status === 'active' ? (
+            <>
+              <div className="mb-3 d-flex align-items-center gap-3">
+                <select
+                  id="chartType"
+                  className="form-select w-auto"
+                  value={chartType}
+                  onChange={(e) => {
+                    const selected = e.target.value;
+                    if (selected === 'pie' && !user?.isPaid) {
+                      navigate('/user/subscriptions');
+                    } else {
+                      setChartType(selected);
+                    }
+                  }}
+                >
+                  <option value="bar">Bar Chart</option>
+                  <option value="pie">Pie Chart</option>
+                </select>
+              </div>
+
+              <LiveVoteChart electionId={id} type={chartType} />
+            </>
           ) : (
             'Live Updates will show when the election starts.'
           )}
@@ -137,17 +167,17 @@ const ElectionVoting = () => {
         <div className="flex-grow-1 bg-white p-4 shadow-sm rounded-4">
           <h2 className="mb-4 fw-semibold">Candidates</h2>
           <div className="d-flex align-items-center flex-wrap g-4">
-            {candidates.length == 0 ? (
-              <p>No candidates has been added for this election.</p>
+            {candidates.length === 0 ? (
+              <p>No candidates have been added for this election.</p>
             ) : (
               candidates?.map((candidate) => (
-                <div className="m-2 " key={candidate._id}>
+                <div className="m-2" key={candidate._id}>
                   <CandidateCard
                     name={candidate.fullName}
                     slogan={candidate.bio}
                     imageUrl={candidate.profileImage || profileimg}
                     onVote={
-                      election.status == 'active'
+                      election.status === 'active'
                         ? () => handleVoteConfirmation(candidate)
                         : null
                     }
@@ -165,8 +195,8 @@ const ElectionVoting = () => {
             <Modal.Title>Confirm Vote</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Are you sure you want to vote{' '}
-            <strong>{candidateToVote?.fullName}</strong>
+            Are you sure you want to vote for{' '}
+            <strong>{candidateToVote?.fullName}</strong>?
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowModal(false)}>

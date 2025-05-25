@@ -20,7 +20,7 @@ const PaymentSuccess = () => {
           features.
         </p>
         <Button
-          variant="primary"
+          variant="dark"
           className="px-4 py-2 rounded-pill fw-semibold"
           onClick={() => navigate('/user')}
         >

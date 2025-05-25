@@ -69,7 +69,7 @@ const Sidebar = ({ isOpen, setShowSidebar }) => {
         {/* User Greeting */}
         <div className="mb-4 text-center">
           <div
-            className="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center overflow-hidden"
+            className="rounded-circle bg-dark text-white d-inline-flex align-items-center justify-content-center overflow-hidden"
             style={{
               width: 60,
               height: 60,

@@ -3,21 +3,7 @@ import './styles/Subscriptions.styles.css';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { checkoutSessionApi } from '@services/paymentApi';
-
-const subscriptionPlans = [
-  {
-    type: 'Free',
-    description:
-      'Get started with our basic features at no cost. Ideal for individuals and small groups.',
-    features: ['Create up to 2 elections per month', 'Basic analytics'],
-  },
-  {
-    type: 'Pro',
-    description:
-      'Unlock advanced features for growing organizations and power users.',
-    features: ['Unlimited elections', 'Priority support', 'Email support'],
-  },
-];
+import { subscriptionPlansLoggedIn } from '@assets/data/subscriptionPlan';
 
 const Subscriptions = () => {
   const navigate = useNavigate();
@@ -39,7 +25,7 @@ const Subscriptions = () => {
     <Container className="py-5">
       <h2 className="text-center mb-4">⭐ Choose Your Subscription</h2>
       <Row className="justify-content-center g-4">
-        {subscriptionPlans.map((plan) => {
+        {subscriptionPlansLoggedIn.map((plan) => {
           const isCurrentPlan =
             (plan.type === 'Free' && !user.isPaid) ||
             (plan.type === 'Pro' && user.isPaid);
@@ -50,8 +36,11 @@ const Subscriptions = () => {
             <Col xs={12} md={6} lg={5} key={plan.type}>
               <Card className={`subscription-card ${plan.type.toLowerCase()}`}>
                 <Card.Body>
-                  <Card.Title className="mb-2 fs-3 fw-bold">
-                    {plan.type} Plan
+                  <Card.Title className="mb-2 fs-3 fw-bold text-dark">
+                    {plan.type} Plan {}
+                    {plan.price && (
+                      <span className="text-muted fs-5">({plan.price})</span>
+                    )}
                   </Card.Title>
                   <Card.Text className="mb-3">{plan.description}</Card.Text>
                   <ListGroup variant="flush" className="mb-4">
@@ -65,7 +54,7 @@ const Subscriptions = () => {
                   {/* Hide Free plan button if user is already paid */}
                   {!(user.isPaid && plan.type === 'Free') && (
                     <Button
-                      variant={isCurrentPlan ? 'outline-secondary' : 'primary'}
+                      variant={isCurrentPlan ? 'outline-secondary' : 'dark'}
                       disabled={isCurrentPlan}
                       className="w-100"
                       onClick={
