@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchUserAction } from '@features/user/userAction';
 import Loader from '@components/loader/Loader';
@@ -17,15 +17,14 @@ const GoogleAuthSuccess = () => {
       sessionStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
 
-      setTimeout(() => {
-        navigate('/user');
-      }, 1000);
-
-      dispatch(fetchUserAction());
+      dispatch(fetchUserAction())
+        .then(() => navigate('/user'))
+        .catch(() => navigate('/loigin'));
     } else {
-      navigate('/login');
+      navigate('/login?error="google-failed');
     }
-  }, [navigate]);
+  }, [dispatch, navigate]);
+
   return (
     <div className="d-flex flex-column justify-content-center align-items-center min-vh-100">
       <Loader text="Logging you in..." />
