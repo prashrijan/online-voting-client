@@ -21,7 +21,7 @@ const GoogleAuthSuccess = () => {
         .then(() => navigate('/user'))
         .catch(() => navigate('/loigin'));
     } else {
-      navigate('/login?error="google-failed');
+      navigate('/login');
     }
   }, [dispatch, navigate]);
 
