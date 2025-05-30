@@ -5,49 +5,7 @@ import { FaLinkedin } from 'react-icons/fa6';
 import { FaSquareGithub } from 'react-icons/fa6';
 import { FaSquareInstagram } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
-
-const founders = [
-  {
-    name: 'Prashrijan Shreshta',
-    role: 'Founder & CEO',
-    img: '/images/prashrijan.jpg',
-    linkedin: 'https://www.linkedin.com/in/prashrijanshrestha/',
-    github: 'https://github.com/prashrijan',
-    instagram: 'https://www.instagram.com/prashrijan_/',
-  },
-  {
-    name: 'Anuska Shrestha',
-    role: 'Frontend Developer',
-    img: '/images/anuska.jpg',
-    linkedin: 'https://www.linkedin.com/in/anuska-shrestha-065571287/',
-    github: 'https://github.com/ayeanuska',
-    instagram: 'https://www.instagram.com/aye_anuska/',
-  },
-  {
-    name: 'Pawan Bhattrai',
-    role: 'Project Manager & Technical Author',
-    img: '/images/pawan.jpg',
-    linkedin: 'https://www.linkedin.com/in/pawan-bhattarai-australia/',
-    github: 'https://github.com/iampawannn',
-    instagram: 'https://www.instagram.com/iampawannnn/',
-  },
-  {
-    name: 'Shubik Bhatt',
-    role: 'Frontend Developer & UI/UX Designer',
-    img: '/images/shubik.jpg',
-    linkedin: 'https://www.linkedin.com/in/shubik-bhatt/',
-    github: 'https://github.com/ShubikB',
-    instagram: 'https://www.instagram.com/shubik_bhatt/',
-  },
-  {
-    name: 'Bishwo Sunar',
-    role: 'Frontend Developer',
-    img: '/images/bishwo.jpeg',
-    linkedin: '',
-    github: 'https://github.com/iambeeshow',
-    instagram: 'https://www.instagram.com/iambeeshow_/',
-  },
-];
+import { founders } from '@assets/data/founders';
 
 const AboutPage = () => {
   return (
