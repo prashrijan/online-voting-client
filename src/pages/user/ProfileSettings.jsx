@@ -102,8 +102,17 @@ const ProfileSettings = () => {
               value={form.email}
               onChange={handleOnChange}
               readOnly
-              style={{ fontSize: '1rem' }}
+              disabled
+              style={{
+                fontSize: '1rem',
+                border: '1px solid red',
+                backgroundColor: '#f8d7da',
+                color: '#721c24',
+              }}
             />
+            <Form.Text className="text-danger">
+              Email is read-only and cannot be updated.
+            </Form.Text>
           </Form.Group>
 
           <Form.Group className="mb-3">
