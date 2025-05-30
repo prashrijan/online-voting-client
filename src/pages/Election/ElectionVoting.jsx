@@ -152,7 +152,17 @@ const ElectionVoting = () => {
                   }}
                 >
                   <option value="bar">Bar Chart</option>
-                  <option value="pie">Pie Chart</option>
+                  <option
+                    value="pie"
+                    className={!user?.isPaid ? 'text-muted' : ''}
+                  >
+                    Pie Chart{' '}
+                    {!user?.isPaid && (
+                      <span className="badge bg-warning text-dark ms-2">
+                        (Premium)
+                      </span>
+                    )}
+                  </option>
                 </select>
               </div>
 
