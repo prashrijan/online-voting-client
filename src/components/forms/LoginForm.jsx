@@ -67,13 +67,6 @@ const LoginForm = () => {
           progress: undefined,
         }
       );
-    } else if (errorParam) {
-      toast.error('Login Failed. Please try again.', {
-        autoClose: 3000,
-        closeOnClick: true,
-        pauseOnHover: false,
-        progress: undefined,
-      });
     }
 
     if (errorParam) {
