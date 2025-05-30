@@ -66,7 +66,7 @@ const Hero = () => {
       >
         <h4 className="text-center mb-3">Join a Live Election</h4>
         <hr />
-        <p className="text-center mb-4">Enter your 6-digit Election Code</p>
+        <p className="text-center mb-4">Enter your 8-digit Election Code</p>
 
         <Form
           onSubmit={(e) => {
@@ -81,7 +81,6 @@ const Hero = () => {
                 className="bg-light border-dark rounded-pill text-center"
                 placeholder="c 8 f 3 e 4 a 5"
                 maxLength={8}
-                pattern="\d{8}"
                 value={electionCode}
                 onChange={handleInputChange}
                 aria-label="Election Code"
