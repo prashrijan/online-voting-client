@@ -301,7 +301,8 @@ const LiveVoteChart = ({ electionId, type }) => {
                     }}
                   />
                   <span className="text-nowrap">
-                    {candidate.fullName} ({candidate.voteCount} votes)
+                    {candidate.fullName} ({candidate.voteCount}{' '}
+                    {candidate.voteCount <= 1 ? 'vote' : 'votes'})
                   </span>
                 </div>
               ))}
