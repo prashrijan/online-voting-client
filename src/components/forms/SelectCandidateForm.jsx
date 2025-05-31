@@ -26,9 +26,11 @@ const SearchCandidateForm = () => {
   useEffect(() => {
     const debounceFunction = setTimeout(() => {
       if (search) {
-        const matches = activeUsers.filter((candidate) =>
-          candidate.email.toLowerCase().includes(search.toLowerCase())
-        );
+        const matches = activeUsers
+          .filter((candidate) =>
+            candidate.email.toLowerCase().includes(search.toLowerCase())
+          )
+          .slice(0, 5);
         setFiltered(matches);
       } else {
         setFiltered([]);
@@ -36,7 +38,7 @@ const SearchCandidateForm = () => {
     }, 500);
 
     return () => clearTimeout(debounceFunction);
-  }, [search]);
+  }, [search, activeUsers]);
 
   const handleAddCandidate = (candidate) => {
     dispatch(addCandidate(candidate));
@@ -72,7 +74,7 @@ const SearchCandidateForm = () => {
         <Dropdown.Menu show className="mt-2 shadow" style={{ width: '25rem' }}>
           {filtered.map((candidate) => (
             <Dropdown.Item
-              key={candidate.id}
+              key={candidate._id}
               className="p-2"
               onClick={() => handleAddCandidate(candidate)}
             >
@@ -83,7 +85,9 @@ const SearchCandidateForm = () => {
                     <p className="mb-1">{candidate.email}</p>
                     <small className="text-muted">
                       {candidate.bio
-                        ? candidate.bio
+                        ? candidate.bio.length > 30
+                          ? candidate.bio.slice(0, 30) + '...'
+                          : candidate.bio
                         : "User hasn't added any slogan yet."}
                     </small>
                   </Col>
@@ -121,7 +125,7 @@ const SearchCandidateForm = () => {
             </thead>
             <tbody>
               {displayData.map((candidate) => (
-                <tr key={candidate.id}>
+                <tr key={candidate._id}>
                   <td>
                     <Image
                       src={candidate.profileImage}
