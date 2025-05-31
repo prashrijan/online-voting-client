@@ -16,7 +16,15 @@ const CandidateCard = ({ name, slogan, imageUrl, onVote, hasVoted }) => {
       />
       <Card.Body className="text-center">
         <Card.Title className="fw-bold fs-4">{name}</Card.Title>
-        <Card.Text className="text-muted fst-italic">"{slogan}"</Card.Text>
+        <Card.Text className="text-muted fst-italic">
+          "
+          {slogan
+            ? slogan.length > 30
+              ? slogan.slice(0, 30) + '...'
+              : slogan
+            : "User hasn't added any slogan yet."}
+          "
+        </Card.Text>
         {onVote ? (
           <Button
             onClick={onVote}
