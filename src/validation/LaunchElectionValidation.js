@@ -15,7 +15,7 @@ export const electionValidationSchema = Yup.object().shape({
 
   startTime: Yup.string().required('Start time is required'),
 
-  endDate: Yup.date().required('End date is required'),cd 
+  endDate: Yup.date().required('End date is required'),
   // .test(
   //   'is-after-start',
   //   'End date must be after start date',
