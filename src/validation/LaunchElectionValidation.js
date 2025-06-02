@@ -15,16 +15,15 @@ export const electionValidationSchema = Yup.object().shape({
 
   startTime: Yup.string().required('Start time is required'),
 
-  endDate: Yup.date()
-    .required('End date is required')
-    .test(
-      'is-after-start',
-      'End date must be after start date',
-      function (value) {
-        const { startDate } = this.parent;
-        return new Date(value) > new Date(startDate);
-      }
-    ),
+  endDate: Yup.date().required('End date is required'),cd 
+  // .test(
+  //   'is-after-start',
+  //   'End date must be after start date',
+  //   function (value) {
+  //     const { startDate } = this.parent;
+  //     return new Date(value) > new Date(startDate);
+  //   }
+  // ),
 
   endTime: Yup.string().required('End time is required'),
 
