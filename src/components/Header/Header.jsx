@@ -74,7 +74,7 @@ const UserNavbar = () => {
             <Nav.Link as={Link} to="/user/my-elections" className="nav-link">
               My Elections
             </Nav.Link>
-            <Nav.Link as={Link} to="#" className="nav-link">
+            <Nav.Link as={Link} to="/user/results" className="nav-link">
               Results
             </Nav.Link>
             <Nav.Link as={Link} to="/user/help-center" className="nav-link">
