@@ -33,6 +33,6 @@ export const subscriptionPlansLoggedIn = [
     description:
       'Unlock advanced features for growing organizations and power users.',
     features: ['Unlimited elections', 'Priority support', 'Email support'],
-    price: '$5 one-time payment',
+    price: '$1 one-time payment',
   },
 ];
