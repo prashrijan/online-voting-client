@@ -9,7 +9,7 @@ export const subscriptionPlans = [
   },
   {
     type: 'Pro',
-    price: '$5',
+    price: '$1',
     description: 'For serious organizers needing full access and control.',
     features: [
       'Unlimited elections',
