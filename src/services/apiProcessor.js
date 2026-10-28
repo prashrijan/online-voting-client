@@ -85,7 +85,7 @@ export const apiProcessor = async ({
     console.log(error);
 
     const errorMessage =
-      error.response.data?.message ||
+      error.response?.data?.message ||
       error.message ||
       'An unknown error occured. Please try again.';
 
